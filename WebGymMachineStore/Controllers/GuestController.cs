@@ -13,6 +13,7 @@ namespace WebGymMachineStore.Controllers
         [HttpGet]
         public IActionResult HomePage()//html
         {
+            // doofdogodigl
             return View();
         }
         [HttpGet]
