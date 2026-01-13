@@ -1,0 +1,106 @@
+﻿@using Models;
+@model MachineCatalogeViewModel
+@{
+    ViewData["Title"] = "MachineCatalog";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+<script>
+    function submitForm() {
+        // Get the form element by its ID
+        const form = document.getElementById('myForm');
+
+        // Call the submit() method
+        form.submit();
+
+    }
+    function resetFilters() {
+        window.location.href = window.location.pathname;
+    }
+</script>
+<link href="~/stylesheets/catalogpage.css" rel="stylesheet" />
+<div class="catalog-container">
+    <form method="get" asp-controller="Guest" asp-action="MachineCatalog" id="myForm">
+        <aside class="filters">
+            <h3>Filter By Brands:</h3>
+            <select name="selectedBrandId" onchange="submitForm()">
+                <option value="0">All Brand</option>
+                @foreach (GymMachineBrand brand in Model.Brands)
+                {
+                    @if (Model.SelectedBrandId!=null && brand.BrandId == int.Parse(Model.SelectedBrandId))
+                    {
+                        <option value="@brand.BrandId" selected >@brand.BrandName</option>
+                    }
+                    else
+                    {
+                        <option value="@brand.BrandId">@brand.BrandName</option>
+                    }
+                   
+                }
+            </select>
+
+            <h3>Filter By Price:</h3>
+            @if (Model.Sort == "1")
+            {
+                <label>
+                    <input class="price" type="radio" name="sort" value="1" onchange="submitForm()" checked> Lowest To Highest
+                </label><br>
+                <label>
+                    <input class="price" type="radio" name="sort" value="2" onchange="submitForm()">  Highest To Lowest
+                </label>
+
+                <br>
+            }
+            else if (Model.Sort == "2")
+            {
+                <label>
+                    <input type="radio" name="sort" value="1" onchange="submitForm()"> Lowest To Highest
+                </label>
+
+                <br>
+                <label>
+                    <input type="radio" name="sort" value="2" onchange="submitForm()" checked>  Highest To Lowest
+                </label>
+
+                <br>
+
+            }
+
+            else if (Model.Sort == "-1")
+            {
+                <label>
+                    <input type="radio" name="sort" value="1" onchange="submitForm()"> Lowest To Highest
+                </label>
+
+                <br>
+                <label>
+                    <input type="radio" name="sort" value="2" onchange="submitForm()">  Highest To Lowest
+                </label>
+
+                <br>
+
+            }
+            <button type="button" onclick="resetFilters()" class="reset-btn">
+                Reset Filters
+            </button>
+            </aside>
+    </form>
+
+    <section class="products">
+
+        @foreach(GymMachine gymMachine in Model.Machines)
+        {
+            <div class="product-card">
+                <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
+                    <img class="image-size" src="http://localhost:5138/DataImages/MachineImages/@gymMachine.MachineImage">
+                </a>
+                <div class="product-info">
+                    <span>@gymMachine.MachineName</span>
+                    <span>@gymMachine.MachinePrice$</span>
+                    <span class="cart">🛒</span>
+                </div>
+            </div>
+        }
+    </section>
+
+</div>
+

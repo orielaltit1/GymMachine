@@ -1,0 +1,21 @@
+﻿@using Models;
+@model MachineViewModel;
+@{
+    ViewData["Title"] = "ProductPage";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+<div class="image-of-product">
+    <img src="http://localhost:5138/DataImages/MachineImages/@Model.Machine.MachineImage" />
+</div>
+
+<div class="product-info">
+    <h1>@Model.Machine.MachineName</h1>
+    <p>
+        @Model.Machine.MachineDescription
+    </p>
+    <p>@Model.Machine.MachinePrice$</p>
+    <button type="button">Buy</button>
+    <button type="button">Add To Cart</button>
+</div>
+

@@ -1,0 +1,65 @@
+﻿@using Models;
+@using Models.ViewModel
+@model RegitrationViewModel
+@{
+    ViewData["Title"] = "Registration";
+    Layout = "~/Views/Shared/MasterPage.cshtml";
+}
+
+<link href="~/stylesheets/registrationpage.css" rel="stylesheet" />
+<form  asp-action="RegistrationClient" asp-controller="Guest"
+      method="post" class="formRegistration">
+    <header class="header">
+        <h1 class="page-title">Sign Up</h1>
+        <p class="under-page-title">Fill in this page to create an account</p>
+    </header>
+    
+    <ul class="fields">
+        <li class="fields">
+            <input  asp-for="Client.ClientFirstName" class="first-name" type="text" placeholder="First Name" size="30" value="Oriel" />
+            <span asp-validation-for=Client.ClientFirstName class="error-message" ></span>
+
+            <input asp-for="Client.ClientLastName" class="last-name" type="text"  placeholder="Last Name" size="30" value="Altit"/>
+            <span asp-validation-for="Client.ClientLastName" class="error-message" ></span>
+        </li>
+
+        <li class="fields">
+            <input class="gender" asp-for="Client.ClientGender" type="radio" value="Male" checked /><span class="option">Male</span>
+            <input class="gender" asp-for="Client.ClientGender" type="radio" value="Female" /><span class="option">Female</span>
+        </li>
+
+        <li class="fields">
+            <input asp-for="Client.ClientId" class="id" type="text" placeholder="Id" size="66" value="123456789" />
+            <span asp-valiation-for="Client.ClientId" class="error-message"></span>
+        </li>
+
+        <li class="fields">
+            <input asp-for="Client.ClientEmail" class="email"  type="text" placeholder="Email" size="66" value="orielatit@gmail.com" />
+        </li>
+
+        <li class="fields">
+            <input asp-for="Client.ClientPassword" class="password"  type="text" placeholder="Password" size="66" value="oriel123"/>
+        </li>
+
+        <li class="fields">
+            <input asp-for="Client.ClientAdress" class="adress"  type="text" placeholder="Adress" size="66" value="ashkelon"/>
+        </li>
+
+        <li class="fields">
+            <select asp-for="Client.CityId" class="city">
+                <option value="2" >*Select City</option>
+                @foreach (City city in Model.Cities)
+                {
+                    <option value="@city.CityId">@city.CityName</option>
+                }
+            </select>
+        </li>
+
+        <li class="fields">
+            <button class="button" type="submit">Send Request</button>
+            <button class="button" type="reset">Clear Form</button>
+        </li>
+
+    </ul>
+</form>
+
