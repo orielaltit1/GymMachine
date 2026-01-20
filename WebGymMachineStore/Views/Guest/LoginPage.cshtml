@@ -13,13 +13,13 @@
 
 
     <div class="field">
-        <input asp-for="Email" type="email" name="email" placeholder="example@mail.com" required />
+        <input asp-for="Email" value="david.levi@mail.com" type="email" name="email" placeholder="example@mail.com" required />
         <span asp-validation-for="Email"></span>
     </div>
 
 
     <div class="field">
-        <input asp-for="Password" type="password" name="password" placeholder="••••••••" required />
+        <input asp-for="Password" value="Dav123!" type="password" name="password" placeholder="••••••••" required />
         <span asp-validation-for="Password"></span>
     </div>
 
@@ -27,7 +27,12 @@
     <div class="actions">
         <button class="tg-btn" type="submit">Sign In</button>
     </div>
-
+    @if (ViewBag.Messege != null)
+    {
+        <div class="my-error-msg">
+            @ViewBag.Messege
+        </div>
+    }
 
     <div class="extra">
         <span>You dont have an account?</span>

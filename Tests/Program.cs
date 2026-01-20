@@ -83,7 +83,6 @@ namespace Tests
             Client client = new Client();
             client.ClientFirstName = "john";
             client.ClientLastName = "Css";
-            client.ClientId = 1234567891;
             client.ClientEmail = "orielaltit8@gmail.com";
             client.ClientPassword = "";
 

@@ -123,17 +123,13 @@ namespace WebGymMachineStore.Controllers
             Client.AddParameter("email", loginViewModel.Email);
             Client.AddParameter("password", loginViewModel.Password);
             string id = Client.Get();
-            if (id != "")
+            if (id != null)
             {
                 HttpContext.Session.SetString("ClientId", id);// session is an object - hashtable 
-                return RedirectToAction("HomePage", "Guest");
+                return RedirectToAction("ClientHomePage", "Client");
             }
             ViewBag.Messege = "Email or password are incorrect";
             return View("LoginPage", loginViewModel);
         }
-
-
-
-
     }
 }
