@@ -13,6 +13,7 @@ namespace WebApiClient
         HttpClient httpClient; // מי שמעביר את הבקשות ומקבל את התשובות
         //אובייקט שמכיל את ההודעה שאנחנו רוצים לשלוח
         UriBuilder uriBuilder;//יודע להרכיב את הכתובת של הבקשה  
+        
 
         public WebClient()
         {

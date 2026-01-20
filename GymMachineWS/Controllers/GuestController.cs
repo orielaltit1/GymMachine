@@ -125,6 +125,26 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();
             }
         }
-
+        [HttpGet]
+        [Produces("application/json")]
+        public string Login(string email, string password)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                string clientId = this.repositoryUnitOfWork.ClientRepository.Login(email, password);
+                return clientId;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
     }
 }

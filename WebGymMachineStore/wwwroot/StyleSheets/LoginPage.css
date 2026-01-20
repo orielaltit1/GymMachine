@@ -1,0 +1,189 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+}
+
+.modal-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    z-index: 1001;
+    text-align: center;
+}
+
+    .modal-box button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .modal-box button.login-btn {
+            background-color: #000;
+            color: #fff;
+        }
+
+            .modal-box button.login-btn:hover {
+                background-color: #222;
+            }
+
+        .modal-box button.register-btn {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+
+            .modal-box button.register-btn:hover {
+                background-color: #e0e0e0;
+            }
+
+        .modal-box button:active {
+            transform: scale(0.97);
+        }
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.store-name {
+    font-size: 28px;
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #000; /* שחור */
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px; /* מרווח אותיות יוקרתי */
+    padding: 8px 12px;
+    transition: color 0.2s ease;
+}
+
+    .nav-link:hover {
+        color: #666; /* אפור כהה, לא כחול */
+    }
+
+    .nav-link.active {
+        color: #000;
+        font-weight: 600;
+    }
+
+.search-box input {
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 20px;
+    border: 1px solid gray;
+}
+
+hr {
+    border: 0.5px solid #ccc;
+    margin: 0;
+}
+
+.card {
+    width: 600px;
+    margin: 60px auto;
+    border: 1px solid #c1c1c1;
+    padding: 20px;
+    box-shadow: 10px 10px 5px #d1d1d1;
+    block-size: 600px;
+}
+
+.header {
+    margin-left: 10px;
+}
+
+    .header h1 {
+        margin-top: 50px;
+        font-weight: 700;
+    }
+
+header p {
+    margin-top: -20px;
+    padding-top: 20px;
+    font-weight: 500;
+}
+
+.field {
+    list-style: none;
+    margin: 5px;
+}
+
+    .field input {
+        block-size: 26px;
+        width: 100%;
+    }
+
+.actions {
+    margin-top: 1.5rem;
+}
+
+.tg-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 999px; /* כפתור עגול */
+    background: #111111; /* שחור יוקרתי */
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px; /* ריווח אותיות */
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+    .tg-btn:hover {
+        background: #000000;
+        transform: translateY(-1px); /* הרמה קלה */
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+
+    .tg-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+.extra {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #374151;
+}

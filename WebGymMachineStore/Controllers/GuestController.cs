@@ -102,6 +102,36 @@ namespace WebGymMachineStore.Controllers
             list.Client = client;
             return list;
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            LoginViewModel loginViewModel = new LoginViewModel();
+            return View("LoginPage", loginViewModel);
+        }
+        [HttpPost]
+        public IActionResult LoginClient(LoginViewModel loginViewModel)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View("LoginPage", loginViewModel);
+            }
+            WebClient<string> Client = new WebClient<string>();
+            Client.Schema = "http";
+            Client.Host = "localhost";
+            Client.Port = 5138;
+            Client.Path = "Api/Guest/Login";
+            Client.AddParameter("email", loginViewModel.Email);
+            Client.AddParameter("password", loginViewModel.Password);
+            string id = Client.Get();
+            if (id != "")
+            {
+                HttpContext.Session.SetString("ClientId", id);// session is an object - hashtable 
+                return RedirectToAction("HomePage", "Guest");
+            }
+            ViewBag.Messege = "Email or password are incorrect";
+            return View("LoginPage", loginViewModel);
+        }
+
 
 
 

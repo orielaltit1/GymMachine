@@ -16,26 +16,7 @@ namespace GymMachineWS.Controllers
         {
             this.repositoryUnitOfWork = new RepositoryUnitOfWork();
         }
-        [HttpPost]
-        public string Login(string email, string password)
-        {
-            try
-            {
-                this.repositoryUnitOfWork.ConnectDb();
-                string clientId = this.repositoryUnitOfWork.ClientRepository.Login(email ,password);
-                return clientId;
-            }
-            catch (Exception ex)
-            {
-                string error = ex.Message;
-                Console.WriteLine(error);
-                return null;
-            }
-            finally
-            {
-                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
-            }
-        }
+        
 
         [HttpGet]
         public List<CartItem> GetCart(string orderId)
