@@ -23,6 +23,7 @@ namespace WebGymMachineStore.Controllers
         [HttpGet]
         public IActionResult Profile()
         {
+            Response.Headers["Cache-Control"] = "no-store";
             string clientIdStr = HttpContext.Session.GetString("ClientId");
 
             if (clientIdStr == null)
@@ -38,6 +39,11 @@ namespace WebGymMachineStore.Controllers
             Client client = webClient.Get();
             return View("Profile",client);
         }
-        
+        public IActionResult Logout()
+        {
+            Response.Headers["Cache-Control"] = "no-store";
+            HttpContext.Session.Clear(); // מוחק את כל ה־session
+            return RedirectToAction("HomePage", "Guest");
+        }
     }
 }
