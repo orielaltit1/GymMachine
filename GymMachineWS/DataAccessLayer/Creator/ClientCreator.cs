@@ -9,10 +9,11 @@ public class ClientCreator : IModelCreator<Client>
         return new Client()
         {
             ClientAdress = Convert.ToString(reader["ClientAdress"]),
-            CityId = Convert.ToInt16(reader["ClientCity"]),
-            ClientEmail = Convert.ToString(reader["ClientEmil"]),
+            CityId = Convert.ToInt16(reader["CityId"]),
+            ClientEmail = Convert.ToString(reader["ClientEmail"]),
             ClientFirstName = Convert.ToString(reader["ClientFirstName"]),
             ClientGender = Convert.ToString(reader["ClientGender"]),
+            ClientPicture = Convert.ToString(reader["ClientPicture"]),
             ClientId = Convert.ToString(reader["ClientId"]),
             ClientLastName = Convert.ToString(reader["ClientLastName"]),
             ClientPassword = Convert.ToString(reader["ClientPassword"]),

@@ -7,7 +7,7 @@ using Models.ViewModel;
 
 namespace GymMachineWS.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("Api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace GymMachineWS.Controllers
         {
             this.repositoryUnitOfWork = new RepositoryUnitOfWork();
         }
-        
+
 
         [HttpGet]
         public List<CartItem> GetCart(string orderId)
@@ -38,6 +38,28 @@ namespace GymMachineWS.Controllers
 
 
         }
-        
+        [HttpGet("{id}")]
+        public ActionResult<Client> GetData(string id)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                Client dataClient = this.repositoryUnitOfWork.ClientRepository.GetById(id);
+
+                if (dataClient == null)
+                    return NotFound();
+
+                return Ok(dataClient);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(500);
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
     }
 }

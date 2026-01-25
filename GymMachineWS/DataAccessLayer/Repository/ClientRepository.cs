@@ -19,13 +19,13 @@ namespace GymMachineWS
             string sql = $@"INSERT INTO Clients
                             ( 
                             ClientFirstName, ClientLastName, ClientId, 
-                            ClientGender, ClientEmail, ClientPassword, 
+                            ClientGender, ClientEmail, ClientPassword, ClientPicture
                             ClientAdress, CityId, ClientSalt
                             )
                             VALUES
                             (
                             @ClientFirstName, @ClientLastName, @ClientId, 
-                            @ClientGender, @ClientEmail, @ClientPassword, 
+                            @ClientGender, @ClientEmail, @ClientPassword, @ClientPicture
                             @ClientAdress, @CityId, @ClientSalt
                             )";
             this.dbContext.AddParamter("@ClientFirstName", item.ClientFirstName);
@@ -34,6 +34,7 @@ namespace GymMachineWS
             this.dbContext.AddParamter("@ClientGender", item.ClientGender);
             this.dbContext.AddParamter("@ClientEmail", item.ClientEmail);
             this.dbContext.AddParamter("@ClientPassword", item.ClientPassword);
+            this.dbContext.AddParamter("@ClientPicture", item.ClientPicture);
             this.dbContext.AddParamter("@ClientAdress", item.ClientAdress);
             this.dbContext.AddParamter("@CityId", item.CityId);
             string salt = GanerateSalt();
@@ -67,7 +68,6 @@ namespace GymMachineWS
             this.dbContext.AddParamter("@clientID", id);
             return  this.dbContext.Delete(sql)>0;
         }
-
         public List<Client> GetAll()
         {
             List<Client> clients = new List<Client>();
@@ -97,7 +97,7 @@ namespace GymMachineWS
         {
             string sql = $@"UPDATE Clients SET ClientFirstName=@ClientFirstName, ClientLastName=@ClientLastName,
                             ClientGender=@ClientGender, ClientEmail=@ClientEmail,  
-                            ClientPassword=@ClientPassword, ClientAdress=@ClientAdress, CityId=@CityId
+                            ClientPassword=@ClientPassword, ClientPicture=@ClientPicture, ClientAdress=@ClientAdress, CityId=@CityId
                             WHERE ClientId=@ClientId";
             //לבדוק שאין INJECTION
             this.dbContext.AddParamter("@ClientFirstName", item.ClientFirstName);
@@ -105,6 +105,7 @@ namespace GymMachineWS
             this.dbContext.AddParamter("@ClientGender", item.ClientGender);
             this.dbContext.AddParamter("@ClientEmail", item.ClientEmail);
             this.dbContext.AddParamter("@ClientPassword", item.ClientPassword);
+            this.dbContext.AddParamter("@ClientPicture", item.ClientPicture);
             this.dbContext.AddParamter("@ClientAdress", item.ClientAdress);
             this.dbContext.AddParamter("@CityId", item.CityId);
             this.dbContext.AddParamter("@ClientId", item.ClientId);

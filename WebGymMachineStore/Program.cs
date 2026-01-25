@@ -47,5 +47,6 @@ app.MapControllerRoute(
     name: "catalog",
     pattern: "{controller=Guest}/{action=MachineCatalog}/{id?}");
 
+
 // מפעיל את האפליקציה
 app.Run();

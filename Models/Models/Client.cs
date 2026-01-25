@@ -16,6 +16,7 @@ namespace Models
         string clientGender;
         string clientEmail;
         string clientPassword;
+        string clientPicture;
         string clientAdress;
         int cityId;
         string? clientSalt;
@@ -77,6 +78,12 @@ namespace Models
             set { clientPassword = value; 
                 ValidateProperty(value, "ClientPassword");
             }
+        }
+        [Required(ErrorMessage = "Please Enter Your Picture")]
+        public string ClientPicture
+        {
+            get { return clientPicture; }
+            set { clientPicture = value;}
         }
         [Required(ErrorMessage = "Please Enter Your Adress")]
         public string ClientAdress

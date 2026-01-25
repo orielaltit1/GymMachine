@@ -1,0 +1,177 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+}
+
+.modal-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    z-index: 1001;
+    text-align: center;
+}
+
+    .modal-box button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 12px;
+        font-size: 15px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .modal-box button.login-btn {
+            background-color: #000;
+            color: #fff;
+        }
+
+            .modal-box button.login-btn:hover {
+                background-color: #222;
+            }
+
+        .modal-box button.register-btn {
+            background-color: #f2f2f2;
+            color: #000;
+        }
+
+            .modal-box button.register-btn:hover {
+                background-color: #e0e0e0;
+            }
+
+        .modal-box button:active {
+            transform: scale(0.97);
+        }
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.store-name {
+    font-size: 28px;
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #000; /* שחור */
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px; /* מרווח אותיות יוקרתי */
+    padding: 8px 12px;
+    transition: color 0.2s ease;
+}
+
+    .nav-link:hover {
+        color: #666; /* אפור כהה, לא כחול */
+    }
+
+    .nav-link.active {
+        color: #000;
+        font-weight: 600;
+    }
+
+.search-box input {
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 20px;
+    border: 1px solid gray;
+}
+
+hr {
+    border: 0.5px solid #ccc;
+    margin: 0;
+}
+
+.profile-container {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.profile-card {
+    width: 280px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.edit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    .edit-btn:hover {
+        background: #222;
+    }
+
+.profile-details {
+    width: 700px;
+    flex: 1;
+    background: #fff;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+    .profile-details h3 {
+        margin-bottom: 25px;
+    }
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+    

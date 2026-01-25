@@ -1,0 +1,35 @@
+﻿@model Models.Client
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/ClientMasterPage.cshtml";
+}
+<link href="~/stylesheets/profilepage.css" rel="stylesheet" />
+<div class="profile-container">
+    
+    <div class="profile-card">
+        <img src="http://localhost:5138/DataImages/ClientPicture/@Model.ClientPicture" class="profile-img" />
+        <h2>@Model.ClientFirstName @Model.ClientLastName</h2>
+        <button class="edit-btn">Edit Profile</button>
+    </div>
+
+    <div class="profile-details">
+        <h3>Personal Information</h3>
+
+        <div class="info-row">
+            <span>Client Email:</span>
+            <span>@Model.ClientEmail</span>
+        </div>
+
+        <div class="info-row">
+            <span>Client Adress:</span>
+            <span>@Model.ClientAdress</span>
+        </div>
+
+        <div class="info-row">
+            <span>Client Gender:</span>
+            <span>@Model.ClientGender</span>
+        </div>
+    </div>
+
+</div>
+
