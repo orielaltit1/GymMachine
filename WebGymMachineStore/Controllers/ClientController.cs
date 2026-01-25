@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Experimental;
+using Models;
+
 
 namespace WebGymMachineStore.Controllers
 {
@@ -12,6 +15,21 @@ namespace WebGymMachineStore.Controllers
             }
 
             return View();
+        }
+        public IActionResult Profile()
+        {
+            if (HttpContext.Session.GetString("ClientId") == null)
+            {
+                return RedirectToAction("LoginPage", "Guest");
+            }
+
+            Client model = new Client();
+            {
+                
+                
+            };
+
+            return View(model);
         }
     }
 }
