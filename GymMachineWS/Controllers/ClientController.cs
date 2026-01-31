@@ -38,6 +38,16 @@ namespace GymMachineWS.Controllers
 
 
         }
+        [HttpGet]
+        public Order EmptyCart(string id)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                Order dataClient = this.repositoryUnitOfWork.OrderRepository.GetById(id);
+                if()
+            }
+        }
         [HttpGet("{id}")]
         public ActionResult<Client> GetData(string id)
         {

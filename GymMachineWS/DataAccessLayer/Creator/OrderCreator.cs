@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using Models.Models;
+using Models;
 
 
 namespace GymMachineWS.DataAccessLayer

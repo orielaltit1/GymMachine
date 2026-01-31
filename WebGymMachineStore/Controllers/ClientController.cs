@@ -2,6 +2,7 @@
 using Microsoft.Build.Experimental;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Models.ViewModel;
 using System.Net;
 using WebApiClient;
 
@@ -45,5 +46,16 @@ namespace WebGymMachineStore.Controllers
             HttpContext.Session.Clear(); // מוחק את כל ה־session
             return RedirectToAction("HomePage", "Guest");
         }
+        public IActionResult CartItem(string machineId)
+        {
+            string clientId = HttpContext.Session.GetString("ClientId");
+            if()
+            {
+
+            }
+
+
+        }
+
     }
 }

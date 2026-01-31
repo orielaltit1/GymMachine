@@ -61,9 +61,10 @@ namespace WebGymMachineStore.Controllers
             return View(list);
 
         }
+        
 
         [HttpPost]
-        public IActionResult RegistrationClient(Client client)//IFormFile formFile 
+        public async Task<IActionResult> RegistrationClient(Client client, IFormFile file)//IFormFile formFile 
         {
             if(ModelState.IsValid == false)
             {
@@ -76,6 +77,29 @@ namespace WebGymMachineStore.Controllers
                 list.Client = client;
                 return View("Registration", list);
             }
+            if (file != null && file.Length > 0)
+            {
+                string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+
+                string folderPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/DataImages/ClientPicture"
+                );
+
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                string fullPath = Path.Combine(folderPath, fileName);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                client.ClientPicture = "/images/clients/" + fileName;
+            }
             WebClient<Client> user = new WebClient<Client>();
             user.Schema = "http";
             user.Host = "localhost";
@@ -85,7 +109,7 @@ namespace WebGymMachineStore.Controllers
             if (ok == true)
             {
                  HttpContext.Session.SetString("clientId", client.ClientId);// session is an object - hashtable 
-                return RedirectToAction("HomePage", "Guest");
+                return RedirectToAction("Profile", "Client");
             }
             ViewBag.Messege = "Registration faild. Try again";
             return View(GetRegitrationViewModel(client));

@@ -1,4 +1,4 @@
-﻿using Models.Models;
+﻿using Models;
 using System.Data;
 
 namespace GymMachineWS.DataAccessLayer

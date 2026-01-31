@@ -29,6 +29,11 @@
         </li>
 
         <li class="fields">
+            <input type="file" asp-for="Client.ClientPicture" accept="image/*" />
+            <span asp-validation-for="Client.ClientPicture">Add an image of your self</span>
+        </li>
+
+        <li class="fields">
             <input asp-for="Client.ClientId" class="id" type="text" placeholder="Id" size="66" value="123456789" />
             <span asp-valiation-for="Client.ClientId" class="error-message"></span>
         </li>

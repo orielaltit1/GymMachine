@@ -79,8 +79,8 @@ namespace Models
                 ValidateProperty(value, "ClientPassword");
             }
         }
-        [Required(ErrorMessage = "Please Enter Your Picture")]
-        public string ClientPicture
+       
+        public string? ClientPicture
         {
             get { return clientPicture; }
             set { clientPicture = value;}
