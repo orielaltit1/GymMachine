@@ -1,0 +1,24 @@
+﻿<Window x:Class="StoreOwnerApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StoreOwnerApplication"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        ResizeMode="NoResize"
+        WindowStyle="None" MouseDown="Window_MouseDown">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Height="50" Width="800" Background="Black">
+            <TextBlock Margin="350,10,10,20">
+                <Hyperlink x:Name="ExitBtn" Click="Exitbtn"><Run Text="close app"/></Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Width="792" Height="392">
+            
+        </StackPanel>
+        
+    </StackPanel>
+
+
+</Window>
