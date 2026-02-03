@@ -9,6 +9,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using StoreOwnerApplication.Frames;
 
 namespace StoreOwnerApplication
 {
@@ -17,9 +18,12 @@ namespace StoreOwnerApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        StartPage startPage;
+        LoginPage loginPage;
         public MainWindow()
         {
             InitializeComponent();
+            ViewStartPage();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -31,6 +35,27 @@ namespace StoreOwnerApplication
         private void Exitbtn(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private void ViewStartPage()
+        {
+            if(this.startPage == null)
+                this.startPage = new StartPage();
+            this.ContentFrame.Content = this.startPage;
+        }
+        private void ViewLoginPage()
+        {
+            if (this.loginPage == null)
+                this.loginPage = new LoginPage();
+            this.ContentFrame.Content = this.loginPage;//החלפת מסך
+        }
+
+        private void EmailLogin_Click(object sender, RoutedEventArgs e)
+        {
+            ViewLoginPage();
+        }
+        private void StartPage_Click(object sender, RoutedEventArgs e)
+        {
+            ViewStartPage();
         }
     }
 }

@@ -7,18 +7,38 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         ResizeMode="NoResize"
-        WindowStyle="None" MouseDown="Window_MouseDown">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" Height="50" Width="800" Background="Black">
-            <TextBlock Margin="350,10,10,20">
-                <Hyperlink x:Name="ExitBtn" Click="Exitbtn"><Run Text="close app"/></Hyperlink>
+        WindowStyle="None"
+        MouseDown="Window_MouseDown"
+        BorderBrush="Transparent"
+        >
+
+    <Window.Resources>
+        <Style x:Key="Links" TargetType="Hyperlink">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="TextDecorations" Value="None"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="Transparent" BorderThickness="2">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Height="60" Width="800" Background="Black">
+                <TextBlock Margin="1,-8,0,0">
+                    <Hyperlink Style="{StaticResource Links}" Foreground="Red" x:Name="ExitBtn" Click="Exitbtn" FontSize="20" TextDecorations="None" >x</Hyperlink>
+                </TextBlock>
+                <Label Margin="2, 10 ,20,15" Content="GymMachineStore" HorizontalAlignment="Left" Foreground="White" FontSize="20"></Label>
+                <TextBlock Margin="350, 10 ,20,15" FontSize="20" Height="31">
+                    <Hyperlink Style="{StaticResource Links}" Click="EmailLogin_Click">
+                        Login
+                    </Hyperlink>
+                </TextBlock>
+            <TextBlock Margin="0,10,20,15" Height="31" >
+                <Hyperlink Style="{StaticResource Links}" x:Name="StartPage" Click="StartPage_Click" FontSize="20">
+                    HomePage
+                </Hyperlink>
             </TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" Width="792" Height="392">
-            
-        </StackPanel>
-        
+                <Label x:Name="label" Content="Label"/>
+            </StackPanel>
+        <Frame x:Name="ContentFrame" Height="400" Width="800" NavigationUIVisibility="Hidden"/>
     </StackPanel>
-
-
+    </Border>
 </Window>
