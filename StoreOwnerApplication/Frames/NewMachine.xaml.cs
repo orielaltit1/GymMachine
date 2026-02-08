@@ -10,21 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace StoreOwnerApplication.Frames
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for NewMachine.xaml
     /// </summary>
-    public partial class LoginPage : UserControl
+    public partial class NewMachine : Window
     {
-        public LoginPage()
+        public NewMachine()
         {
             InitializeComponent();
         }
-
-        
     }
 }
