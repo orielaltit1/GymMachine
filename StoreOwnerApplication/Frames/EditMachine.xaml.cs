@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace StoreOwnerApplication.Frames
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for EditMachine.xaml
     /// </summary>
-    public partial class LoginPage : UserControl
+    public partial class EditMachine : UserControl
     {
-        public LoginPage()
+        public EditMachine()
         {
             InitializeComponent();
         }
-
-        
     }
 }

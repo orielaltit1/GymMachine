@@ -10,6 +10,18 @@
 
   <ItemGroup>
     <None Remove="Images\9461_69.jpg" />
+    <None Remove="Images\Search-Image.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Search-Image.gif">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

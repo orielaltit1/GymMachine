@@ -20,6 +20,7 @@ namespace StoreOwnerApplication
     {
         StartPage startPage;
         LoginPage loginPage;
+        MacinesPage macinesPage;
         public MainWindow()
         {
             InitializeComponent();
@@ -42,20 +43,31 @@ namespace StoreOwnerApplication
                 this.startPage = new StartPage();
             this.ContentFrame.Content = this.startPage;
         }
+        private void ViewMachinesPage()
+        {
+            if (this.macinesPage == null)
+                this.macinesPage = new MacinesPage();
+            this.ContentFrame.Content = this.macinesPage;
+        }
         private void ViewLoginPage()
         {
             if (this.loginPage == null)
                 this.loginPage = new LoginPage();
             this.ContentFrame.Content = this.loginPage;//החלפת מסך
         }
-
-        private void EmailLogin_Click(object sender, RoutedEventArgs e)
-        {
-            ViewLoginPage();
-        }
         private void StartPage_Click(object sender, RoutedEventArgs e)
         {
             ViewStartPage();
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            ViewLoginPage();
+        }
+
+        private void MachinesPage_Click(object sender, RoutedEventArgs e)
+        {
+            ViewMachinesPage(); 
         }
     }
 }
