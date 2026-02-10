@@ -25,6 +25,8 @@ namespace StoreOwnerApplication
         {
             InitializeComponent();
             ViewStartPage();
+            MenuTextVisibility = Visibility.Visible;
+            DataContext = this;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -68,6 +70,40 @@ namespace StoreOwnerApplication
         private void MachinesPage_Click(object sender, RoutedEventArgs e)
         {
             ViewMachinesPage(); 
+        }
+        private bool _isExpanded = false;
+        private void ToggleMenu_Click(object sender, RoutedEventArgs e)
+        {
+            _isExpanded = !_isExpanded;
+
+            MenuColumn.Width = _isExpanded
+                ? new GridLength(200)
+                : new GridLength(60);
+
+            MenuTextVisibility = _isExpanded
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            // רענון Binding
+            DataContext = null;
+            DataContext = this;
+        }
+
+        public Visibility MenuTextVisibility { get; set; } = Visibility.Collapsed;
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ViewStartPage();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ViewLoginPage();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            ViewMachinesPage();
         }
     }
 }

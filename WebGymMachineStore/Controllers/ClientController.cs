@@ -35,7 +35,7 @@ namespace WebGymMachineStore.Controllers
             WebClient<Client> webClient = new WebClient<Client>();
             webClient.Schema = "http";
             webClient.Host = "localhost";
-            webClient.Port = 5138;
+            webClient.Port = 5138;// web service port
             webClient.Path = $"Api/Client/{clientId}";
             Client client = webClient.Get();
             return View("Profile",client);

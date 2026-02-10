@@ -14,7 +14,7 @@ namespace Models
         string machineId;
         string machinePrice;
         string machineImage;
-        int brandId;
+        string brandId;
 
         [Required(ErrorMessage = "Please Enter Machine Name")]
         [RegularExpression("^[A-Za-z]+$", ErrorMessage = "Please Enter Only English Letters")]
@@ -56,7 +56,7 @@ namespace Models
                   ValidateProperty(value, "MachineDescription");
             }
         }
-        public int BrandId
+        public string BrandId
         {
             get { return brandId; }
             set { brandId = value;

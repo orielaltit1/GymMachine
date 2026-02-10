@@ -10,6 +10,10 @@
 
   <ItemGroup>
     <None Remove="Images\9461_69.jpg" />
+    <None Remove="Images\HomeIcon.png" />
+    <None Remove="Images\ListIcon.png" />
+    <None Remove="Images\LoginIcon.png" />
+    <None Remove="Images\MenuIcon.png" />
     <None Remove="Images\Search-Image.gif" />
   </ItemGroup>
 
@@ -21,6 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\ListIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApiClient\WebApiClient.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 
@@ -29,6 +38,9 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Resource>
+    <Resource Include="Images\HomeIcon.png" />
+    <Resource Include="Images\LoginIcon.png" />
+    <Resource Include="Images\MenuIcon.png" />
   </ItemGroup>
 
 </Project>
