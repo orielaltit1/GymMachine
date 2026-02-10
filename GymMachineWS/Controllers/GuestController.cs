@@ -146,5 +146,7 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
         }
+
+
     }
 }

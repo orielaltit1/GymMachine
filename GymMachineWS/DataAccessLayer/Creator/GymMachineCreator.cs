@@ -12,6 +12,7 @@ namespace GymMachineWS
             gymMachine.MachineDescription = Convert.ToString(reader["MachineDescription"]);
             gymMachine.MachinePrice = Convert.ToString(reader["MachinePrice"]);
             gymMachine.MachineImage = Convert.ToString(reader["MachineImage"]);
+            gymMachine.BrandId = Convert.ToString(reader["BrandId"]);
             return gymMachine;
         }
         

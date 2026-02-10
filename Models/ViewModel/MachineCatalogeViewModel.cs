@@ -18,7 +18,7 @@ namespace Models
 
         public string Sort { get; set; }
         
-        
+
     }
 }
     

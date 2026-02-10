@@ -12,4 +12,9 @@ namespace Models
         public GymMachine Machine { get; set; }
         public int SelectAmount { get; set; }
     }
+    public class AdminMachineViewModel
+    {
+        public GymMachine Machine { get; set; }
+        public GymMachineBrand Brand { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using Models;
+using WebApiClient;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,28 +25,35 @@ namespace StoreOwnerApplication.Frames
     public partial class MacinesPage : UserControl
     {
         EditMachine editMachine;
+        List<AdminMachineViewModel> machines;
+        public MacinesPage()
+        {
+            InitializeComponent(); // טוען את רכיבי ה-XAML
+            GetMachines();
+            
+
+            // חיבור מקור הנתונים של ה-ListView לרשימה שיצרנו
+            // מעכשיו ה-ListView יציג את מה שיש בתוך Machines
+            
+        }
         // רשימה מסוג ObservableCollection היא מיוחדת ל-WPF.
         // ברגע שמוסיפים או מסירים ממנה פריט, המסך מתעדכן אוטומטית בלי צורך לרענן ידנית.
         public ObservableCollection<GymMachine> Machines { get; set; }
 
-        // הבנאי (Constructor) - הפונקציה שרצה ראשונה כשיוצרים את הדף
-        public MacinesPage()
+        private async Task GetMachines()
         {
-            InitializeComponent(); // טוען את רכיבי ה-XAML
-
-            // אתחול הרשימה עם כמה נתונים לדוגמה
-            Machines = new ObservableCollection<GymMachine>
-            {
-                
-                new GymMachine { MachineName = "Treadmill 3000", MachinePrice = "5,000 NIS" },
-                new GymMachine { MachineName = "Chest Press", MachinePrice = "3,200 NIS" },
-                new GymMachine { MachineName = "Dumbbell Set", MachinePrice = "800 NIS" }
-            };
-
-            // חיבור מקור הנתונים של ה-ListView לרשימה שיצרנו
-            // מעכשיו ה-ListView יציג את מה שיש בתוך Machines
-            MachinesListView.ItemsSource = Machines;
+            WebClient<List<AdminMachineViewModel>> webClient = new WebClient<List<AdminMachineViewModel>>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5138;
+            webClient.Path = "api/Admin/GetMachines";
+            this.machines = await webClient.GetAsync(); // פעולה הזאת מביאה את הנתונים
+            MachinesListView.ItemsSource = this.machines;
+            this.DataContext = this.machines;
         }
+
+        // הבנאי (Constructor) - הפונקציה שרצה ראשונה כשיוצרים את הדף
+        
         private void ViewMachinePage()
         {
             if (this.editMachine == null)
