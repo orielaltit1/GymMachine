@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace StoreOwnerApplication.Frames
@@ -17,7 +18,7 @@ namespace StoreOwnerApplication.Frames
     /// <summary>
     /// Interaction logic for NewMachine.xaml
     /// </summary>
-    public partial class NewMachine : Window
+    public partial class NewMachine : Page
     {
         public NewMachine()
         {

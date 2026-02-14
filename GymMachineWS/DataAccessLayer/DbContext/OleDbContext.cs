@@ -20,7 +20,7 @@ namespace GymMachineWS
             // מורכב מ2 חלקים
             //מהו סוג של מסד נתונים
             //מיקום הקובץ במחשב
-            string path = @"C:\ProjectGymMachine\GymMachine\GymMachineWS";
+            string path = @"C:\Users\shaaltit\Desktop\ProjectGymMachine\GymMachine\GymMachineWS";
             this.connection.ConnectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={path}\App_Data\GymMachineStore.accdb";
             //this.connection.ConnectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={Directory.GetCurrentDirectory()}\App_Data\GymMachineStore.accdb";
             this.command = new OleDbCommand();

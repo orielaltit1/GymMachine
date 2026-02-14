@@ -17,6 +17,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StoreOwnerApplication.Frames;
 
+
+
+
 namespace StoreOwnerApplication.Frames
 {
     /// <summary>
@@ -24,7 +27,6 @@ namespace StoreOwnerApplication.Frames
     /// </summary>
     public partial class MacinesPage : UserControl
     {
-        EditMachine editMachine;
         List<AdminMachineViewModel> machines;
         public MacinesPage()
         {
@@ -52,21 +54,18 @@ namespace StoreOwnerApplication.Frames
             this.DataContext = this.machines;
         }
 
-        // הבנאי (Constructor) - הפונקציה שרצה ראשונה כשיוצרים את הדף
-        
-        private void ViewMachinePage()
-        {
-            if (this.editMachine == null)
-                this.editMachine = new EditMachine();
-           // this.ContentFrame.Content = this.editMachine;//החלפת מסך
-        }
+       
         // פונקציה המופעלת בלחיצה על כפתור "Add Machine"
         private void AddMachine_Click(object sender, RoutedEventArgs e)
         {
             // יצירת אובייקט חדש והוספתו לרשימה
             // ה-ObservableCollection יעדכן את המסך מיד
             //Machines.Add(new GymMachine { MachineName = "New Machine", MachinePrice = "0 NIS" });
+            NewMachine nextPage = new NewMachine();
+            NavigationService.Navigate(nextPage);
             
+
+
         }
 
         // פונקציה המופעלת בלחיצה על כפתור "Delete" בתוך אחת השורות
