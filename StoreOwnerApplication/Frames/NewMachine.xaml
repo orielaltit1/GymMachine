@@ -6,54 +6,79 @@
       xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
       mc:Ignorable="d" FontSize="25"
       d:DesignHeight="450" d:DesignWidth="630"
-      Title="NewMachine">
+      Title="NewMachine" Background="#F5F5F5">
 
-    <Grid Background="#F5F5F5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- כותרת -->
-            <RowDefinition Height="Auto"/>
-            <!-- Machine Name Label -->
-            <RowDefinition Height="Auto"/>
-            <!-- Machine Name TextBox -->
-            <RowDefinition Height="Auto"/>
-            <!-- Machine Price Label -->
-            <RowDefinition Height="Auto"/>
-            <!-- Machine Price TextBox -->
-            <RowDefinition Height="Auto"/>
-            <!-- Machine Brand Label -->
-            <RowDefinition Height="Auto"/>
-            <!-- ComboBox -->
-            <RowDefinition Height="Auto"/>
-            <!-- Save Button -->
-            <RowDefinition Height="*"/>
-            <!-- רווח גמיש לתחתית -->
-        </Grid.RowDefinitions>
+    <Grid>
 
-        <TextBlock Text="Add Machine" FontWeight="Black" FontSize="36" 
-            HorizontalAlignment="Center" Margin="0,20,0,10" Foreground="#333"/>
-        <Grid>
-            <Label Content="Machine Name" Margin="27,93,443,-41" FontSize="20" FontWeight="Bold" />
-            <TextBox Margin="27,129,293,0" d:LayoutOverrides="HorizontalAlignment"   />
-            <Label Content="Machine Price" Margin="27,183,443,0" FontSize="20" FontWeight="Bold"/>
-            <TextBox Margin="27,221,293,0" d:LayoutOverrides="HorizontalAlignment"  />
-            <Label Content="Machine Brand" Margin="27,283,443,0" FontSize="20" FontWeight="Bold"/>
-            <ComboBox x:Name="BrandComboBox" Margin="27,321,293,0" d:LayoutOverrides="HorizontalAlignment"  />
-            <Button x:Name="saveButton" Content="Save" Width="100" Height="40" 
-                HorizontalAlignment="Left" Margin="27,370,0,0" VerticalAlignment="Top"
-                Background="#4CAF50" Foreground="White" FontWeight="Bold" />
-        </Grid>
-        
-        <Button x:Name="goBack_btn" Width="20" Height="20" Margin="0, 5 ,700 ,50" Background="Transparent"
-        BorderBrush="Transparent" Click="goBack_btn_Click">
-            <Image Source="/Images/GoBackIcon.png" Width="20" Height="30" />
+        <!-- כפתור חזור -->
+        <Button x:Name="goBack_btn"
+                Width="30"
+                Height="30"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="15"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Click="goBack_btn_Click">
+            <Image Source="/Images/GoBackIcon.png" />
         </Button>
-        <Frame x:Name="MainFrame2"
-           Background="White"
-           NavigationUIVisibility="Hidden"
-           Visibility="Collapsed"
-           Panel.ZIndex="10"/>
+
+        <!-- תוכן מרכזי -->
+        <StackPanel Width="350"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    >
+
+            <TextBlock Text="Add Machine"
+                       FontSize="36"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"
+                       Foreground="#333"/>
+
+            <!-- Machine Name -->
+            <Label Content="Machine Name"
+                   FontSize="18"
+                   FontWeight="Bold"/>
+            <TextBox Height="40"
+                     FontSize="16"/>
+
+            <!-- Machine Price -->
+            <Label Content="Machine Price"
+                   FontSize="18"
+                   FontWeight="Bold"/>
+            <TextBox Height="40"
+                     FontSize="16"/>
+
+            <Label Content="Machine Description"
+               FontSize="18"
+               FontWeight="Bold"/>
+            <TextBox Height="40"
+                FontSize="16"/>
+
+            <!-- Machine Brand -->
+            <Label Content="Machine Brand"
+                   FontSize="18"
+                   FontWeight="Bold"/>
+            <ComboBox x:Name="BrandComboBox"
+                      Height="40"
+                      FontSize="16"/>
+
+            <!-- Save Button -->
+            <Button x:Name="Save_Btn" 
+                    Click="Save_Btn_Click"
+                    Content="Save"
+                    Height="45"
+                    Margin="0,20,0,0"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    Background="#4CAF50"
+                    Foreground="White"
+                    BorderBrush="Transparent"
+                    Cursor="Hand"/>
+
+        </StackPanel>
+
     </Grid>
-    
 
 </Page>

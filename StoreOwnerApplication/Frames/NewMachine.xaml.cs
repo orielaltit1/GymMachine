@@ -31,8 +31,7 @@ namespace StoreOwnerApplication.Frames
 
         private void goBack_btn_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame2.Visibility = Visibility.Visible;
-            MainFrame2.Navigate(new MacinesPage());
+            
         }
         private async Task GetBrands()
         {
@@ -45,6 +44,10 @@ namespace StoreOwnerApplication.Frames
             BrandComboBox.ItemsSource = brands;
             BrandComboBox.DisplayMemberPath = "BrandName";
         }
-        
+
+        private void Save_Btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
