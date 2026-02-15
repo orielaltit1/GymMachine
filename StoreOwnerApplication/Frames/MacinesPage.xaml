@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="630">
+             d:DesignHeight="450" d:DesignWidth="630">
 
-    <Grid Background="#F5F5F5">
+    <Grid Background="#F5F5F5" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -29,10 +29,10 @@
             <Button Grid.Column="1" Content="+ Add Machine" Background="#007ACC" Foreground="White" 
                     FontWeight="Bold" Padding="10,5" Margin="10,0,0,0"
                     Click="AddMachine_Click"/>
-
+            
         </Grid>
-
-        <ListView x:Name="MachinesListView" Grid.Row="2" Margin="30,10" 
+        
+            <ListView x:Name="MachinesListView" Grid.Row="2" Margin="30,10" 
                   BorderThickness="0" Background="Transparent"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=3}" >
             
@@ -58,6 +58,15 @@
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            
         </ListView>
+            <Frame x:Name="MainFrame"
+               Grid.Row="0"
+               Grid.RowSpan="3"
+               Background="White"
+               NavigationUIVisibility="Hidden"
+               Visibility="Collapsed"
+               Panel.ZIndex="10"/>
+        
     </Grid>
 </UserControl>

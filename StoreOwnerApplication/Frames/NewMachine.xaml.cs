@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebApiClient;
 
 namespace StoreOwnerApplication.Frames
 {
@@ -20,9 +22,29 @@ namespace StoreOwnerApplication.Frames
     /// </summary>
     public partial class NewMachine : Page
     {
+        List<GymMachineBrand> brands;
         public NewMachine()
         {
             InitializeComponent();
+            GetBrands();
         }
+
+        private void goBack_btn_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame2.Visibility = Visibility.Visible;
+            MainFrame2.Navigate(new MacinesPage());
+        }
+        private async Task GetBrands()
+        {
+            WebClient<List<GymMachineBrand>> webClient = new WebClient<List<GymMachineBrand>>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5138;
+            webClient.Path = "api/Admin/GetBrands";
+            this.brands = await webClient.GetAsync(); // פעולה הזאת מביאה את הנתונים
+            BrandComboBox.ItemsSource = brands;
+            BrandComboBox.DisplayMemberPath = "BrandName";
+        }
+        
     }
 }

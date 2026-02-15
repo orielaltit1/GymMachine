@@ -45,6 +45,27 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
+
+        }
+        [HttpGet]
+        public List<GymMachineBrand> GetBrands()
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                List<GymMachineBrand> brands = this.repositoryUnitOfWork.GymMachineBrandRepository.GetAll();
+                return brands;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
         }
         
     }
