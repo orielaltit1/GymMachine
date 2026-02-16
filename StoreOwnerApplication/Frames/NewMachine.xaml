@@ -33,35 +33,43 @@
                        FontSize="36"
                        FontWeight="Black"
                        HorizontalAlignment="Center"
-                       Margin="0,0,0,20"
+                       Margin="0,0,0,10"
                        Foreground="#333"/>
 
             <!-- Machine Name -->
             <Label Content="Machine Name"
                    FontSize="18"
                    FontWeight="Bold"/>
-            <TextBox Height="40"
+            <TextBox Height="30"
                      FontSize="16"/>
 
             <!-- Machine Price -->
             <Label Content="Machine Price"
                    FontSize="18"
                    FontWeight="Bold"/>
-            <TextBox Height="40"
+            <TextBox Height="30"
                      FontSize="16"/>
 
+            <!-- Machine Description -->
             <Label Content="Machine Description"
                FontSize="18"
                FontWeight="Bold"/>
-            <TextBox Height="40"
+            <TextBox Height="30"
                 FontSize="16"/>
 
+            <!-- Machine Image -->
+            <Label Content="Machine Image"
+                FontSize="18"
+                FontWeight="Bold"/>
+            <TextBox Height="30"
+                FontSize="16"/>
+            
             <!-- Machine Brand -->
             <Label Content="Machine Brand"
                    FontSize="18"
                    FontWeight="Bold"/>
             <ComboBox x:Name="BrandComboBox"
-                      Height="40"
+                      Height="30"
                       FontSize="16"/>
 
             <!-- Save Button -->

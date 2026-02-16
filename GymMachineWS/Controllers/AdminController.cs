@@ -67,6 +67,27 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
         }
+
+        [HttpGet]
+        public bool AddMachine(GymMachine gymMachine)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                bool result = this.repositoryUnitOfWork.GymMachineRepository.Create(gymMachine);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return false;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
         
     }
 }

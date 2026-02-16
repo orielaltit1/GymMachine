@@ -47,7 +47,7 @@ namespace StoreOwnerApplication.Frames
 
         private void Save_Btn_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
     }
 }
