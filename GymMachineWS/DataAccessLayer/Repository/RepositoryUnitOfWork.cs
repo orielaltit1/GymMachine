@@ -96,5 +96,20 @@
         {
             this.oleDbContext.CloseConnection();
         }
+
+        public void OpenTransaction()
+        {
+            this.oleDbContext.BeginTransaction();
+        }
+
+        public void commit()
+        {
+            this.oleDbContext.Commit();
+        }
+
+        public void rollback()
+        {
+            this.oleDbContext.RollBack();
+        }
     }
 }

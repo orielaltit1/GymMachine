@@ -76,7 +76,7 @@
                     Close
                 </Hyperlink>
             </TextBlock>
-                
+
 
 
         </StackPanel>
@@ -84,10 +84,10 @@
         <!-- CONTENT -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="11*"/>
-                <RowDefinition Height="39*"/>
+                <RowDefinition/>
+                <RowDefinition Height="0*"/>
             </Grid.RowDefinitions>
-            <Frame  x:Name="ContentFrame"  NavigationUIVisibility="Hidden" Width="740" Margin="0,0,0,0" Grid.RowSpan="2"/>
+            <Frame  x:Name="ContentFrame"  NavigationUIVisibility="Hidden" HorizontalAlignment="Center" />
         </Grid>
     </Grid>
 

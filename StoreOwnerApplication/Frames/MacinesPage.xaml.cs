@@ -61,8 +61,9 @@ namespace StoreOwnerApplication.Frames
             // יצירת אובייקט חדש והוספתו לרשימה
             // ה-ObservableCollection יעדכן את המסך מיד
             //Machines.Add(new GymMachine { MachineName = "New Machine", MachinePrice = "0 NIS" });
-            MainFrame.Visibility = Visibility.Visible;
-            MainFrame.Navigate(new NewMachine());
+            NewMachineWindow newMachineWindow = new NewMachineWindow();
+            bool? result = newMachineWindow.ShowDialog();
+
         }
 
         // פונקציה המופעלת בלחיצה על כפתור "Delete" בתוך אחת השורות

@@ -69,11 +69,12 @@ namespace GymMachineWS.Controllers
         }
 
         [HttpGet]
-        public bool AddMachine(GymMachine gymMachine)
+        public bool AddMachine(GymMachine gymMachine, IFormFile file)
         {
             try
             {
                 this.repositoryUnitOfWork.ConnectDb();
+                this.repositoryUnitOfWork.OpenTransaction();
                 bool result = this.repositoryUnitOfWork.GymMachineRepository.Create(gymMachine);
                 return result;
             }

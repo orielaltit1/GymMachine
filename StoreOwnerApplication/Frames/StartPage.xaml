@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="740" >
+             Height="450" Width="740" >
 
-    <Canvas>
-        <Image Source="/Images/9461_69.jpg"  Width="740" Height="450"/>
-    </Canvas>
+    <StackPanel>
+        <Image Source="/Images/9461_69.jpg"/>
+    </StackPanel>
 </UserControl>

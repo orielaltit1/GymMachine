@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="630">
+             Height="450" Width="740">
     <Canvas>
         <TextBox x:Name="EmailLogin" Canvas.Left="37" Canvas.Top="135" HorizontalAlignment="Left" VerticalAlignment="Center" Width="361" Height="32"/>
         <Label Canvas.Left="37" Canvas.Top="21" Height="84" Width="232" FontSize="50" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center">LOGIN</Label>
