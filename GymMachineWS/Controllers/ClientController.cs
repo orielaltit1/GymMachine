@@ -62,5 +62,15 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();
             }
         }
+
+        [HttpGet]
+        public Order GetOpenOrder(int clientId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                
+            }
+        }
     }
 }

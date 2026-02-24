@@ -81,51 +81,48 @@
         
                 CornerRadius="20"
                 Padding="40"
-                HorizontalAlignment="Left"
-                Margin="24,20,0,20" Grid.Column="2">
-                
+                HorizontalAlignment="Center" Width="320" Height="360" VerticalAlignment="Center">
+
                 <!-- צד שמאל -->
-            <StackPanel Grid.Column="0"
+                <StackPanel Grid.Column="0"
                         VerticalAlignment="Center">
 
-                <!--Machine Name-->
-                <TextBlock Text="Machine Name" FontWeight="Bold"/>
-                <TextBox x:Name="MachineNameTextBox"
+                    <!--Machine Name-->
+                    <TextBlock Text="Machine Name" FontWeight="Bold"/>
+                    <TextBox x:Name="MachineNameTextBox"
                          Height="28"
                          Margin="0,3,0,8"/>
 
-                <!--Machine Price-->
-                <TextBlock Text="Machine Price" FontWeight="Bold"/>
-                <TextBox x:Name="MachinePriceTextBox"
+                    <!--Machine Price-->
+                    <TextBlock Text="Machine Price" FontWeight="Bold"/>
+                    <TextBox x:Name="MachinePriceTextBox"
                          Height="28"
                          Margin="0,3,0,8"/>
 
-                <!--Machine Description-->
-                <TextBlock Text="Description" FontWeight="Bold"/>
-                <TextBox x:Name="MachineDescriptionTextBox"
+                    <!--Machine Description-->
+                    <TextBlock Text="Description" FontWeight="Bold"/>
+                    <TextBox x:Name="MachineDescriptionTextBox"
                          Height="50"
                          AcceptsReturn="True"
                          TextWrapping="Wrap"
                          Margin="0,3,0,8"/>
 
-                <!--Machine Brand-->
-                <TextBlock Text="Machine Brand" FontWeight="Bold"/>
-                <ComboBox x:Name="BrandComboBox"
+                    <!--Machine Brand-->
+                    <TextBlock Text="Machine Brand" FontWeight="Bold"/>
+                    <ComboBox x:Name="BrandComboBox"
                           DisplayMemberPath="BrandName"
                           SelectedValuePath="BrandId"
                           Height="30"
                           Margin="0,3,0,0"/>
 
-            </StackPanel>
+                </StackPanel>
             </Border>
-                
+
             <Border Background="White"
-                    
                         CornerRadius="20"
                         Padding="40"
-                        HorizontalAlignment="Left"
-                        Margin="24,20,0,20" Grid.Column="2">
-                
+                        HorizontalAlignment="Center" Grid.Column="2" Width="320" Margin="0,5,0,5">
+
                 <!-- צד ימין -->
                 <StackPanel Grid.Column="2"
                         VerticalAlignment="Center"
@@ -153,9 +150,8 @@
         <!-- Save -->
         <Button Grid.Row="2"
                 x:Name="Save_Btn"
-                Content="Save"
-                Height="50"
-                Width="300"
+                Content="Save" 
+                Width="400"
                 Style="{StaticResource GreenButtonStyle}" Click="Save_Btn_Click"/>
 
     </Grid>

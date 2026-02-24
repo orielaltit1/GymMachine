@@ -47,6 +47,27 @@ namespace GymMachineWS.Controllers
             }
 
         }
+
+        [HttpGet]
+        public List<Client> GetClients()
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                List<Client> clients = this.repositoryUnitOfWork.ClientRepository.GetAll();
+                return clients;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
         [HttpGet]
         public List<GymMachineBrand> GetBrands()
         {
@@ -89,6 +110,26 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
         }
-        
+
+        [HttpGet]
+        public bool DeleteMachine(string id)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();                
+                bool result = this.repositoryUnitOfWork.GymMachineRepository.Delete(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return false;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
     }
 }

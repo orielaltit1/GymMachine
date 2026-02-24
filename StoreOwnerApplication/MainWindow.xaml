@@ -66,12 +66,22 @@
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Image Source="/Images/ListIcon.png" Width="20" Margin="9,0,10,0"/>
                     <TextBlock Text="Machines"
-               Margin="20,0,0,0"
-               Visibility="{Binding MenuTextVisibility, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+                        Margin="20,0,0,0"
+                        Visibility="{Binding MenuTextVisibility, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                     </TextBlock>
                 </StackPanel>
             </Button>
-            <TextBlock Margin="17,270,10,0">
+            <Button x:Name="Client_btn" Style="{StaticResource MenuButtonStyle}" Click="Client_btn_Click">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Image Source="/Images/ClientIcon.png" Width="20" Margin="9,0,8,0" />
+
+                    <TextBlock Text="ClientCatalog"
+                       Margin="20,0,0,0"
+                       Visibility="{Binding MenuTextVisibility,
+                       RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </StackPanel>
+            </Button>
+            <TextBlock Margin="17,230,10,0">
                 <Hyperlink Style="{StaticResource Links}" Foreground="White" x:Name="ExitBtn" Click="Exitbtn" FontSize="10" TextDecorations="None" >
                     Close
                 </Hyperlink>

@@ -21,6 +21,8 @@ namespace Models
         int cityId;
         string? clientSalt;
 
+        public string FullName => $"{ClientFirstName} {ClientLastName}";
+
         [Required(ErrorMessage ="Please Enter First Name")]
         [StringLength(15,MinimumLength = 2,ErrorMessage ="Client Name Cant Be Longer Then 15 And Less Then 2")]
         [FirstLetterCapitalAttribut(ErrorMessage = "First Letter Must Be Capital Letter")]

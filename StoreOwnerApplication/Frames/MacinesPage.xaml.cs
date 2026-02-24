@@ -80,5 +80,10 @@ namespace StoreOwnerApplication.Frames
                 Machines.Remove(machineToDelete);
             }
         }
+
+        private void Delete_btn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

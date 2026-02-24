@@ -21,6 +21,7 @@ namespace StoreOwnerApplication
         StartPage startPage;
         LoginPage loginPage;
         MacinesPage macinesPage;
+        ClientPage clientPage;
         public MainWindow()
         {
             InitializeComponent();
@@ -57,20 +58,13 @@ namespace StoreOwnerApplication
                 this.loginPage = new LoginPage();
             this.ContentFrame.Content = this.loginPage;//החלפת מסך
         }
-        private void StartPage_Click(object sender, RoutedEventArgs e)
+        private void ViewClientPage()
         {
-            ViewStartPage();
+            if (this.clientPage == null)
+                this.clientPage = new ClientPage();
+            this.ContentFrame.Content = this.clientPage;//החלפת מסך
         }
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            ViewLoginPage();
-        }
-
-        private void MachinesPage_Click(object sender, RoutedEventArgs e)
-        {
-            ViewMachinesPage(); 
-        }
+        
         private bool _isExpanded = false;
         private void ToggleMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -104,6 +98,11 @@ namespace StoreOwnerApplication
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             ViewMachinesPage();
+        }
+
+        private void Client_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewClientPage();
         }
     }
 }
