@@ -99,8 +99,6 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.DisconnectDb();
             }
-            
-
         }
 
         [HttpGet]

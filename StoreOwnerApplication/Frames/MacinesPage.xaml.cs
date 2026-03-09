@@ -1,9 +1,10 @@
 ﻿using Models;
-using WebApiClient;
+using StoreOwnerApplication.Frames;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using StoreOwnerApplication.Frames;
+using WebApiClient;
 
 
 
@@ -28,19 +29,13 @@ namespace StoreOwnerApplication.Frames
     public partial class MacinesPage : UserControl
     {
         List<AdminMachineViewModel> machines;
+        public ObservableCollection<GymMachine> MachinesList { get; set; }
         public MacinesPage()
         {
             InitializeComponent(); // טוען את רכיבי ה-XAML
             GetMachines();
-            
-
-            // חיבור מקור הנתונים של ה-ListView לרשימה שיצרנו
-            // מעכשיו ה-ListView יציג את מה שיש בתוך Machines
-            
+            MachinesList = new ObservableCollection<GymMachine>();
         }
-        // רשימה מסוג ObservableCollection היא מיוחדת ל-WPF.
-        // ברגע שמוסיפים או מסירים ממנה פריט, המסך מתעדכן אוטומטית בלי צורך לרענן ידנית.
-        public ObservableCollection<GymMachine> Machines { get; set; }
 
         private async Task GetMachines()
         {
@@ -67,23 +62,28 @@ namespace StoreOwnerApplication.Frames
         }
 
         // פונקציה המופעלת בלחיצה על כפתור "Delete" בתוך אחת השורות
-        private void DeleteMachine_Click(object sender, RoutedEventArgs e)
+        private async void Delete_btn_Click_1(object sender, RoutedEventArgs e)
         {
-            // ה-sender הוא האלמנט שלחצו עליו. אנחנו ממירים אותו ל-Button
-            Button btn = sender as Button;
-
-            // בדיקה: האם ההמרה הצליחה והאם יש בתוך ה-Tag אובייקט מסוג GymMachine?
-            // (זוכר שב-XAML שמנו Tag="{Binding}"? זה בדיוק בשביל השורה הזו)
-            if (btn != null && btn.Tag is GymMachine machineToDelete)
+            var button = sender as Button;
+            if (button != null && button.DataContext is GymMachine selectedMachine)
             {
-                // מחיקת המכונה הספציפית מהרשימה
-                Machines.Remove(machineToDelete);
+                WebClient<bool> webClient = new WebClient<bool>();
+                webClient.Schema = "http";
+                webClient.Host = "localhost";
+                webClient.Port = 5138;
+                webClient.Path = $"api/Admin/DeleteMachine/{selectedMachine.MachineId}";
+
+                bool ok = await webClient.GetAsync();
+                if (ok)
+                {
+                    MachinesList.Remove(selectedMachine); // אין צורך ב-FirstOrDefault
+                }
+                else
+                {
+                    // מומלץ תמיד להוסיף הודעה במקרה של כישלון כדי שהמשתמש ידע מה קרה
+                    MessageBox.Show("The system failed");
+                }
             }
-        }
-
-        private void Delete_btn_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

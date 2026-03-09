@@ -51,8 +51,7 @@
 
                             <Button x:Name="Delete_btn" Grid.Column="1" Content="Delete" Background="#FF4444" Foreground="White" 
                                     Padding="10,5" BorderThickness="0"
-                                    Click="Delete_btn_Click"
-                                    Tag="{Binding}"/>
+                                    Click="Delete_btn_Click_1"/>
                             <TextBlock Text="{Binding Brand.BrandName}" Foreground="Gray" FontSize="12" Margin="9,34,0,6" d:LayoutOverrides="Width"/>
                             <TextBlock Text="{Binding Machine.MachinePrice}" Foreground="Gray" FontSize="12" Margin="90,34,286,-3" Width="84"/>
                         </Grid>

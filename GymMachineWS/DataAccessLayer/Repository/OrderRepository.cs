@@ -74,10 +74,12 @@ namespace GymMachineWS.DataAccessLayer
         public List<CartItem> GetCartItems(string orderId)
         {
             List<CartItem> cartItems = new List<CartItem>();
-            string sql = $@"SELECT LinkMachineOrder.MachineId, LinkMachineOrder.OrderId,
-                             LinkMachineOrder.Price, LinkMachineOrder.Amount
-                             FROM LinkMachineOrder
-                             WHERE (((LinkMachineOrder.OrderId)=@orderId));";
+            string sql = $@"SELECT
+                                *
+                            FROM
+                                OrderItem
+                            WHERE
+                                OrderId = @orderId;";
             this.dbContext.AddParamter("@orderId", orderId);
             using (IDataReader reader = this.dbContext.Select(sql))
             {
@@ -89,6 +91,30 @@ namespace GymMachineWS.DataAccessLayer
             return cartItems;
         }
 
-        
+        public Order GetOpenOrderByClientId(int clientId)
+        {
+            string sql = @"SELECT *
+               FROM [Order]
+               WHERE ClientId = @clientId
+               AND OrderPayet = 0";
+
+            this.dbContext.AddParamter("@clientId", clientId);
+
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                if (reader.Read())
+                {
+                    Order order = new Order
+                    {
+                        OrderId = (int)reader["OrderId"],
+                        ClientId = (int)reader["ClientId"],
+                        OrderPayet = (bool)reader["OrderPayet"]
+                    };
+                    return order;
+                }
+            }
+
+            return null;
+        }
     }
 }

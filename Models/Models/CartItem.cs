@@ -10,8 +10,8 @@ namespace Models
     {
        public string MachineId { get; set; }
        public string OrderId { get; set; }
-       public string Price { get; set; }
-       public string Amount { get; set; }
+       public decimal Price { get; set; }
+       public int Amount { get; set; }
 
     }
 }

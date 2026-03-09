@@ -15,6 +15,7 @@ namespace Models
         string machinePrice;
         string machineImage;
         string brandId;
+        bool isActive;
 
         [Required(ErrorMessage = "Please Enter Machine Name")]
         [RegularExpression("^[A-Za-z]+$", ErrorMessage = "Please Enter Only English Letters")]
@@ -63,5 +64,7 @@ namespace Models
                   ValidateProperty(value, "BrandId");
                 }
         }
+
+        public bool IsActive { get; set; }
     }
 }

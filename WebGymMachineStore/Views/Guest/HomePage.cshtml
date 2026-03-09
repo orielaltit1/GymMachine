@@ -3,6 +3,16 @@
     ViewData["Title"] = "HomePage";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
+@{
+    if (Context.Session.GetString("ClientId") != null)
+    {
+        Layout = "~/Views/Shared/ClientMasterPage.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/MasterPage.cshtml";
+    }
+}
 <link href="~/stylesheets/homepage.css" rel="stylesheet" />
 <img class="main-banner-image" src="~/images/9461_69.jpg" />
 

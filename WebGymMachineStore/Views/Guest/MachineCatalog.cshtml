@@ -4,6 +4,16 @@
     ViewData["Title"] = "MachineCatalog";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
+@{
+    if (Context.Session.GetString("ClientId") != null)
+    {
+        Layout = "~/Views/Shared/ClientMasterPage.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/MasterPage.cshtml";
+    }
+}
 <script>
     function submitForm() {
         // Get the form element by its ID
@@ -18,6 +28,7 @@
     }
 </script>
 <link href="~/stylesheets/catalogpage.css" rel="stylesheet" />
+
 <div class="catalog-container">
     <form method="get" asp-controller="Guest" asp-action="MachineCatalog" id="myForm">
         <aside class="filters">

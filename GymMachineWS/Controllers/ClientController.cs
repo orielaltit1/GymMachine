@@ -2,12 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Models.Models;
 using Models.ViewModel;
 
 namespace GymMachineWS.Controllers
 {
-    [Route("Api/[controller]")]
+    [Route("Api/[controller]/[action]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
@@ -38,7 +37,26 @@ namespace GymMachineWS.Controllers
 
 
         }
+        [HttpGet("{machineId}")]
+        public GymMachine GetMachine(string machineId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                return this.repositoryUnitOfWork.GymMachineRepository.GetById(machineId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
         
+
         [HttpGet("{id}")]
         public ActionResult<Client> GetData(string id)
         {
@@ -63,14 +81,73 @@ namespace GymMachineWS.Controllers
             }
         }
 
-        [HttpGet]
-        public Order GetOpenOrder(int clientId)
+        [HttpGet("{clientId}")]
+        public ActionResult<Order> GetOpenOrder(int clientId)
         {
             try
             {
                 this.repositoryUnitOfWork.ConnectDb();
-                
+
+                Order order = this.repositoryUnitOfWork
+                    .OrderRepository
+                    .GetOpenOrderByClientId(clientId);
+
+                if (order == null)
+                    return NotFound(); // Returns a 404 status code
+
+                return Ok(order);// Returns a 200 status code with data
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
+
+        [HttpGet("{clientId}")]
+        public ActionResult<Client> GetClientById(string clientId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                return this.repositoryUnitOfWork.ClientRepository.GetById(clientId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
+
+        [HttpGet("{orderId}")]
+        public ActionResult<List<CartItem>> GetCartItem(string orderId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+
+                List<CartItem> items =
+                    this.repositoryUnitOfWork
+                    .OrderRepository
+                    .GetCartItems(orderId);
+
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
+
+    
     }
 }

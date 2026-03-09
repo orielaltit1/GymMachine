@@ -31,7 +31,9 @@ namespace GymMachineWS.DataAccessLayer
 
         public bool Delete(string id)
         {
-            string sql = $@"DELETE FROM GymMachine WHERE MachineId=@machineId";
+            string sql = $@"UPDATE GymMachine
+                            SET IsActive = No
+                            WHERE MachineId = @MachineId;";
             this.dbContext.AddParamter("@machineId", id);
             return this.dbContext.Delete(sql) > 0;
         }

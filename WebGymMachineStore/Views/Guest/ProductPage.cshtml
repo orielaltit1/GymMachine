@@ -15,7 +15,10 @@
         @Model.Machine.MachineDescription
     </p>
     <p>@Model.Machine.MachinePrice$</p>
-    <button type="button">Buy</button>
-    <button type="button">Add To Cart</button>
+    @if (Context.Session.GetString("ClientId") != null)
+    {
+        <button type="button">Add To Cart</button>
+    }
+    
 </div>
 

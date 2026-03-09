@@ -111,7 +111,7 @@ namespace GymMachineWS.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public bool DeleteMachine(string id)
         {
             try

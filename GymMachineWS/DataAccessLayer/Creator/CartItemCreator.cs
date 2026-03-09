@@ -10,10 +10,10 @@ namespace GymMachineWS
         {
             return new CartItem()
             {
-                 Amount = Convert.ToString(reader["Amount"]),
+                 Amount = Convert.ToUInt16(reader["Amount"]),
                  MachineId = Convert.ToString(reader["MachineId"]),
                  OrderId = Convert.ToString(reader["OrderId"]),
-                 Price = Convert.ToString(reader["Price"]),
+                 Price = Convert.ToDecimal(reader["Price"]),
             };
         }
     }
