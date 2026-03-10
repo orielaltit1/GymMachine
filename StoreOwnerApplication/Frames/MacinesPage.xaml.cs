@@ -29,12 +29,13 @@ namespace StoreOwnerApplication.Frames
     public partial class MacinesPage : UserControl
     {
         List<AdminMachineViewModel> machines;
-        public ObservableCollection<GymMachine> MachinesList { get; set; }
+        public ObservableCollection<AdminMachineViewModel> MachinesList { get; set; }
         public MacinesPage()
         {
             InitializeComponent(); // טוען את רכיבי ה-XAML
             GetMachines();
-            MachinesList = new ObservableCollection<GymMachine>();
+            MachinesList = new ObservableCollection<AdminMachineViewModel>();
+            MachinesListView.ItemsSource = MachinesList;
         }
 
         private async Task GetMachines()
@@ -44,9 +45,15 @@ namespace StoreOwnerApplication.Frames
             webClient.Host = "localhost";
             webClient.Port = 5138;
             webClient.Path = "api/Admin/GetMachines";
-            this.machines = await webClient.GetAsync(); // פעולה הזאת מביאה את הנתונים
-            MachinesListView.ItemsSource = this.machines;
-            this.DataContext = this.machines;
+            var dataFromServer = await webClient.GetAsync(); // פעולה הזאת מביאה את הנתונים
+            if (dataFromServer != null)
+            {
+                MachinesList.Clear(); // מרוקן את הרשימה הקיימת בלי לנתק אותה
+                foreach (var item in dataFromServer)
+                {
+                    MachinesList.Add(item); // מוסיף לרשימה המחוברת
+                }
+            }
         }
 
        
@@ -64,24 +71,40 @@ namespace StoreOwnerApplication.Frames
         // פונקציה המופעלת בלחיצה על כפתור "Delete" בתוך אחת השורות
         private async void Delete_btn_Click_1(object sender, RoutedEventArgs e)
         {
+            // 1. קבלת הכפתור שנלחץ
             var button = sender as Button;
-            if (button != null && button.DataContext is GymMachine selectedMachine)
-            {
-                WebClient<bool> webClient = new WebClient<bool>();
-                webClient.Schema = "http";
-                webClient.Host = "localhost";
-                webClient.Port = 5138;
-                webClient.Path = $"api/Admin/DeleteMachine/{selectedMachine.MachineId}";
 
-                bool ok = await webClient.GetAsync();
-                if (ok)
+            // 2. ה-DataContext הוא מסוג AdminMachineViewModel (לא GymMachine!)
+            if (button != null && button.DataContext is AdminMachineViewModel viewModel)
+            {
+                // 3. הוספת הודעת אישור (Confirmation)
+                var result = MessageBox.Show(
+                    $"Are you sure you want to delete {viewModel.Machine.MachineName}?",
+                    "Confirm Delete",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    MachinesList.Remove(selectedMachine); // אין צורך ב-FirstOrDefault
-                }
-                else
-                {
-                    // מומלץ תמיד להוסיף הודעה במקרה של כישלון כדי שהמשתמש ידע מה קרה
-                    MessageBox.Show("The system failed");
+                    // 4. קריאה לשרת עם ה-ID הנכון
+                    WebClient<bool> webClient = new WebClient<bool>();
+                    webClient.Schema = "http";
+                    webClient.Host = "localhost";
+                    webClient.Port = 5138;
+                    webClient.Path = $"api/Admin/DeleteMachine/{viewModel.Machine.MachineId}";
+
+                    bool ok = await webClient.GetAsync();
+
+                    if (ok)
+                    {
+                        // 5. הסרה מה-ObservableCollection שמוצג ברשימה
+                        // חשוב: אנחנו מסירים את ה-ViewModel כולו, לא רק את המכונה
+                        MachinesList.Remove(viewModel);
+                    }
+                    else
+                    {
+                        MessageBox.Show("The system failed to delete the machine.");
+                    }
                 }
             }
         }

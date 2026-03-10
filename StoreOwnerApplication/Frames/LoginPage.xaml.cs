@@ -25,6 +25,9 @@ namespace StoreOwnerApplication.Frames
             InitializeComponent();
         }
 
-        
+        private void button_Login_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

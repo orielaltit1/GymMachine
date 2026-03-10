@@ -33,8 +33,7 @@
         </Grid>
         
             <ListView x:Name="MachinesListView" Grid.Row="2" Margin="30,10" 
-                  BorderThickness="0" Background="Transparent"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=3}"  >
+                  BorderThickness="0" Background="Transparent">
             
             <ListView.ItemTemplate>
                 <DataTemplate>

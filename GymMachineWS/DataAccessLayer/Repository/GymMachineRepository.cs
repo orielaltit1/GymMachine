@@ -70,6 +70,27 @@ namespace GymMachineWS.DataAccessLayer
             }
             return gymMachines;
         }
+
+        public List<GymMachine> GetAllActives()
+        {
+            List<GymMachine> gymMachines = new List<GymMachine>();
+            string sql = $@"SELECT
+                                GymMachine.*
+                            FROM
+                                GymMachine
+                            WHERE
+                                IsActive = True;";
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                while (reader.Read())
+                {
+                    gymMachines.Add(this.factoryModles.GymMachineCreator.CreateMoldel(reader));
+                }
+            }
+            return gymMachines;
+
+        }
+
         public GymMachine GetById(string id)
         {
             string sql = $@"SELECT * FROM GymMachine WHERE MachineId=@machineId";

@@ -25,7 +25,7 @@ namespace GymMachineWS.Controllers
             try
             {
                 this.repositoryUnitOfWork.ConnectDb(); //Open Connection
-                List<GymMachine> machine = this.repositoryUnitOfWork.GymMachineRepository.GetAll();
+                List<GymMachine> machine = this.repositoryUnitOfWork.GymMachineRepository.GetAllActives();
                 foreach(GymMachine gymMachine in machine)
                 {
                     AdminMachineViewModel machineViewModel = new AdminMachineViewModel();
