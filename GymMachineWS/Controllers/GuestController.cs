@@ -131,13 +131,17 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.ConnectDb();
                 string clientId = this.repositoryUnitOfWork.ClientRepository.Login(email, password);
+                if(clientId == null)
+                {
+                    return "fail";
+                }
                 return clientId;
             }
             catch (Exception ex)
             {
                 string error = ex.Message;
                 Console.WriteLine(error);
-                return null;
+                return "error";
             }
             finally
             {

@@ -6,12 +6,59 @@
              xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
              mc:Ignorable="d" 
              Height="450" Width="740">
-    <Canvas>
-        <Label Canvas.Left="37" Canvas.Top="11" Height="84" Width="232" FontSize="50" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center">LOGIN</Label>
-        <Label x:Name="label" Content="Email" Canvas.Left="34" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" Height="43" Width="72"/>
-        <TextBox x:Name="EmailLogin" Canvas.Left="37" Canvas.Top="135" HorizontalAlignment="Left" VerticalAlignment="Center" Width="361" Height="32"/>
-        <Label x:Name="label_Copy" Content="Password" Canvas.Left="34" Canvas.Top="190" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Height="43" Width="116"/>
-        <TextBox x:Name="PassLogin" Canvas.Left="37" Canvas.Top="225" Width="361" Height="31" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button x:Name="button_Login" Content="Submit" Canvas.Left="37" Canvas.Top="280" Height="28" Width="361" HorizontalAlignment="Left" VerticalAlignment="Center" Click="button_Login_Click"/>
-    </Canvas>
+
+
+    <UserControl.Resources>
+        <Style x:Key="GreenButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#4CAF50"/>
+            <Setter Property="FontSize" Value="15"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            CornerRadius="12"
+                            Padding="10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>    
+    
+    <Grid Background="White">
+        
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+
+            <TextBlock Text="LOGIN" FontSize="42" FontWeight="Heavy" Margin="0,0,0,20" Foreground="#333"/>
+
+            <!-- הודעת שגיאה -->
+            <TextBlock x:Name="EmailError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed" />
+
+            <TextBlock Text="Email" FontWeight="DemiBold"/>
+            <TextBox  x:Name="EmailTextBox" Height="19"  Margin="0, 5, 0 , 0"/>
+
+            <!-- הודעת שגיאה -->
+            <TextBlock x:Name="PasswordError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed" Margin="0, 40, 0 ,-40"/>
+
+            <TextBlock Text="Password" FontWeight="DemiBold" Margin="0, 40, 0 ,0"/>
+            <PasswordBox x:Name="PasswordBox" Height="19" Margin="0, 5, 0 , 0"/>
+
+            <Button x:Name="button_Login" Content="Submit" Height="40" Margin="0,15,0,0" 
+                    Foreground="White" FontWeight="Bold" Cursor="Hand" Style="{StaticResource GreenButtonStyle}" Click="button_Login_Click"/>
+
+            <TextBlock x:Name="SubmitError"
+               Foreground="Red"
+               FontSize="12"
+               Visibility="Collapsed" Margin="0,5,0,0"/>
+
+        </StackPanel>
+    </Grid>
 </UserControl>

@@ -49,62 +49,7 @@ namespace WebGymMachineStore.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult AddToCart(int machineId)
-        {
-            // 1️⃣ בדיקה אם הלקוח מחובר
-            string clientIdStr = HttpContext.Session.GetString("ClientId");
-            if (clientIdStr == null)
-                return RedirectToAction("LoginPage", "Guest");
-
-            int clientId = int.Parse(clientIdStr);
-
-            // 2️⃣ קבלת Order פתוחה מה-API
-            WebClient<Order> orderClient = new WebClient<Order>();
-            orderClient.Schema = "http";
-            orderClient.Host = "localhost";
-            orderClient.Port = 5138;
-            orderClient.Path = $"Api/Client/GetOpenOrder/{clientId}";
-
-            Order order = orderClient.Get();
-
-            // 3️⃣ אם אין Order פתוחה – צור אחת חדשה
-            if (order == null)
-            {
-                order = new Order
-                {
-                    ClientId = clientId,
-                    OrderPayet = false,
-                    OrderDate = DateTime.Now
-                };
-
-                // שליחה ל-API כדי לשמור במסד
-                WebClient<Order> createOrderClient = new WebClient<Order>();
-                createOrderClient.Schema = "http";
-                createOrderClient.Host = "localhost";
-                createOrderClient.Port = 5138;
-                createOrderClient.Path = "Api/Client/CreateOrder";
-                order = createOrderClient.Post(order); // מניחים שה-API מחזיר את ה-Order עם OrderId
-            }
-
-            // 4️⃣ הוספת הפריט לעגלה דרך API
-            CartItem cartItem = new CartItem
-            {
-                MachineId = machineId,
-                OrderId = order.OrderId,
-                Amount = 1
-            };
-
-            WebClient<CartItem> cartClient = new WebClient<CartItem>();
-            cartClient.Schema = "http";
-            cartClient.Host = "localhost";
-            cartClient.Port = 5138;
-            cartClient.Path = "Api/Client/AddCartItem";
-            cartClient.Post(cartItem);
-
-            // 5️⃣ הפניה לעמוד Cart
-            return RedirectToAction("Cart");
-        }
+        
 
         [HttpGet]
         public IActionResult Registration()

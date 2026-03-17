@@ -25,9 +25,9 @@ namespace StoreOwnerApplication
         public MainWindow()
         {
             InitializeComponent();
-            ViewStartPage();
-            MenuTextVisibility = Visibility.Visible;
-            DataContext = this;
+            SidebarMenu.Visibility = Visibility.Collapsed;
+            MenuColumn.Width = new GridLength(0);
+            ContentFrame.Navigate(new LoginPage());
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -36,10 +36,6 @@ namespace StoreOwnerApplication
                 this.DragMove();
         }
 
-        private void Exitbtn(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
         private void ViewStartPage()
         {
             if(this.startPage == null)
@@ -103,6 +99,18 @@ namespace StoreOwnerApplication
         private void Client_btn_Click(object sender, RoutedEventArgs e)
         {
             ViewClientPage();
+        }
+
+        private void Logout_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new LoginPage());
+            SidebarMenu.Visibility = Visibility.Collapsed;
+            MenuColumn.Width = new GridLength(0);
+        }
+
+        private void ExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

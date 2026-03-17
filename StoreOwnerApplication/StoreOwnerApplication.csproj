@@ -15,8 +15,10 @@
     <None Remove="Images\HomeIcon.png" />
     <None Remove="Images\ListIcon.png" />
     <None Remove="Images\LoginIcon.png" />
+    <None Remove="Images\LogoutIcon.png" />
     <None Remove="Images\MenuIcon.png" />
     <None Remove="Images\Search-Image.gif" />
+    <None Remove="Images\XButton.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,7 +46,9 @@
     </Resource>
     <Resource Include="Images\HomeIcon.png" />
     <Resource Include="Images\LoginIcon.png" />
+    <Resource Include="Images\LogoutIcon.png" />
     <Resource Include="Images\MenuIcon.png" />
+    <Resource Include="Images\XButton.png" />
   </ItemGroup>
 
 </Project>

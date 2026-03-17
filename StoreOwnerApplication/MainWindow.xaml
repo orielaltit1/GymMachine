@@ -33,7 +33,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- SIDEBAR -->
-        <StackPanel Background="Gray" Grid.Column="0">
+        <StackPanel x:Name="SidebarMenu" Background="Gray" Grid.Column="0">
 
             <!-- Hamburger -->
             <Button Content="☰"
@@ -44,7 +44,7 @@
                 Click="ToggleMenu_Click"/>
 
             <!-- MENU ITEM -->
-            <Button Style="{StaticResource MenuButtonStyle}" Click="Button_Click">
+            <Button x:Name="HomeBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click">
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Image Source="/Images/HomeIcon.png" Width="20" Margin="9,0,8,0" />
                     <TextBlock Text="Home"
@@ -53,16 +53,7 @@
                            RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource MenuButtonStyle}" Click="Button_Click_1">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Image Source="/Images/LoginIcon.png" Width="20" Margin="9,0,10,0"  />
-                    <TextBlock Text="Login"
-                           Margin="20,0,0,0"
-                           Visibility="{Binding MenuTextVisibility, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource MenuButtonStyle}" Click="Button_Click_2">
+            <Button x:Name="MachinesBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click_2">
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Image Source="/Images/ListIcon.png" Width="20" Margin="9,0,10,0"/>
                     <TextBlock Text="Machines"
@@ -81,9 +72,21 @@
                        RelativeSource={RelativeSource AncestorType=Window}}"/>
                 </StackPanel>
             </Button>
-            <TextBlock Margin="17,230,10,0">
-                <Hyperlink Style="{StaticResource Links}" Foreground="White" x:Name="ExitBtn" Click="Exitbtn" FontSize="10" TextDecorations="None" >
-                    Close
+            <Button x:Name="Logout_btn" Style="{StaticResource MenuButtonStyle}" Click="Logout_btn_Click">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <Image Source="/Images/LogoutIcon.png" Width="20" Margin="9,0,8,0" />
+
+                    <TextBlock Text="ClientCatalog"
+                       Margin="20,0,0,0"
+                       Visibility="{Binding MenuTextVisibility,
+                       RelativeSource={RelativeSource AncestorType=Window}}"/>  
+                </StackPanel>
+            </Button>
+
+            <TextBlock Margin="20,220,0,0">
+                <Hyperlink Style="{StaticResource Links}" Foreground="White" x:Name="ExitBtn" Click="ExitBtn_Click" FontSize="10" TextDecorations="None" >
+                    <Image Source="/Images/XButton.png" Width="20"/>
+
                 </Hyperlink>
             </TextBlock>
 
