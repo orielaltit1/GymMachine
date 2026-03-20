@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StoreOwnerApplication.Frames"
              mc:Ignorable="d" 
-             Height="450" Width="740">
+             Height="450" Width="800">
 
-    <Grid Background="#F5F5F5" >
+    <Grid Background="#F5F5F5" Margin="60,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>

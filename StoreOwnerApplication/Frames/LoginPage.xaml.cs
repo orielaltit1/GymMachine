@@ -31,7 +31,7 @@ namespace StoreOwnerApplication.Frames
 
             MainWindow main = (MainWindow)Application.Current.MainWindow;
 
-            main.SidebarMenu.Visibility = Visibility.Visible;
+            main.MenuPanel.Visibility = Visibility.Visible;
 
             main.ContentFrame.Navigate(new StartPage());
         }
@@ -103,8 +103,8 @@ namespace StoreOwnerApplication.Frames
                 else
                 {
                     MainWindow main = (MainWindow)Application.Current.MainWindow;
-                    main.SidebarMenu.Visibility = Visibility.Visible;
-                    main.MenuColumn.Width = new GridLength(60);
+                    main.MenuPanel.Visibility = Visibility.Visible;
+                    main.MenuPanel.Width = 60;
                     main.ContentFrame.Navigate(new StartPage());
                 }
             }

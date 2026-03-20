@@ -13,11 +13,6 @@
         >
 
     <Window.Resources>
-        <Style x:Key="Links" TargetType="Hyperlink">
-            <Setter Property="FontSize" Value="20"></Setter>
-            <Setter Property="TextDecorations" Value="None"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
-        </Style>
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -27,81 +22,84 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="MenuColumn" Width="60"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+
+        <!-- תוכן באמצע -->
+        <Grid x:Name="MainContent">
+            <Frame x:Name="ContentFrame"
+               NavigationUIVisibility="Hidden"
+               HorizontalAlignment="Center" />
+        </Grid>
+
+        <!-- רקע כהה -->
+        <Grid x:Name="Overlay"
+          Background="#80000000"
+          Visibility="Collapsed"
+          Panel.ZIndex="1"/>
 
         <!-- SIDEBAR -->
-        <StackPanel x:Name="SidebarMenu" Background="Gray" Grid.Column="0">
+        <Border x:Name="MenuPanel"
+            Width="60"
+            Background="Gray"
+            HorizontalAlignment="Left"
+            Panel.ZIndex="2">
 
-            <!-- Hamburger -->
-            <Button Content="☰"
-                FontSize="20"
-                Foreground="White"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                Click="ToggleMenu_Click"/>
+            <StackPanel>
 
-            <!-- MENU ITEM -->
-            <Button x:Name="HomeBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Image Source="/Images/HomeIcon.png" Width="20" Margin="9,0,8,0" />
-                    <TextBlock Text="Home"
+                <!-- Hamburger -->
+                <Button Content="☰"
+                    FontSize="20"
+                    Foreground="White"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Click="ThreeLines_Click"/>
+
+                <!-- MENU ITEM -->
+                <Button x:Name="HomeBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Images/HomeIcon.png" Width="20" Margin="9,0,8,0" />
+                        <TextBlock Text="Home"
                            Margin="20,0,0,0"
-                           Visibility="{Binding MenuTextVisibility,
-                           RelativeSource={RelativeSource AncestorType=Window}}"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="MachinesBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click_2">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Image Source="/Images/ListIcon.png" Width="20" Margin="9,0,10,0"/>
-                    <TextBlock Text="Machines"
-                        Margin="20,0,0,0"
-                        Visibility="{Binding MenuTextVisibility, RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-            <Button x:Name="Client_btn" Style="{StaticResource MenuButtonStyle}" Click="Client_btn_Click">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Image Source="/Images/ClientIcon.png" Width="20" Margin="9,0,8,0" />
+                           Visibility="Visible"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="MachinesBtn" Style="{StaticResource MenuButtonStyle}" Click="Button_Click_2">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Images/ListIcon.png" Width="20" Margin="9,0,10,0"/>
+                        <TextBlock Text="Machines"
+                            Margin="20,0,0,0"
+                            Visibility="Visible">
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Client_btn" Style="{StaticResource MenuButtonStyle}" Click="Client_btn_Click">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Images/ClientIcon.png" Width="20" Margin="9,0,8,0" />
 
-                    <TextBlock Text="ClientCatalog"
-                       Margin="20,0,0,0"
-                       Visibility="{Binding MenuTextVisibility,
-                       RelativeSource={RelativeSource AncestorType=Window}}"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="Logout_btn" Style="{StaticResource MenuButtonStyle}" Click="Logout_btn_Click">
-                <StackPanel Orientation="Horizontal" Margin="10">
-                    <Image Source="/Images/LogoutIcon.png" Width="20" Margin="9,0,8,0" />
+                        <TextBlock Text="ClientCatalog"
+                           Margin="20,0,0,0"
+                           Visibility="Visible"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Logout_btn" Style="{StaticResource MenuButtonStyle}" Click="Logout_btn_Click">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Images/LogoutIcon.png" Width="20" Margin="9,0,8,0" />
 
-                    <TextBlock Text="ClientCatalog"
-                       Margin="20,0,0,0"
-                       Visibility="{Binding MenuTextVisibility,
-                       RelativeSource={RelativeSource AncestorType=Window}}"/>  
-                </StackPanel>
-            </Button>
+                        <TextBlock Text="ClientCatalog"
+                           Margin="20,0,0,0"
+                           Visibility="Visible"/>
+                    </StackPanel>
+                </Button>
 
-            <TextBlock Margin="20,220,0,0">
-                <Hyperlink Style="{StaticResource Links}" Foreground="White" x:Name="ExitBtn" Click="ExitBtn_Click" FontSize="10" TextDecorations="None" >
-                    <Image Source="/Images/XButton.png" Width="20"/>
+                <TextBlock Margin="20,220,0,0">
+                    <Hyperlink Foreground="White" x:Name="ExitBtn" Click="ExitBtn_Click" FontSize="10" TextDecorations="None" >
+                        <Image Source="/Images/XButton.png" Width="20"/>
 
-                </Hyperlink>
-            </TextBlock>
+                    </Hyperlink>
+                </TextBlock>
 
+            </StackPanel>
+        </Border>
 
-
-        </StackPanel>
-
-        <!-- CONTENT -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="0*"/>
-            </Grid.RowDefinitions>
-            <Frame  x:Name="ContentFrame"  NavigationUIVisibility="Hidden" HorizontalAlignment="Center" />
-        </Grid>
     </Grid>
 
 

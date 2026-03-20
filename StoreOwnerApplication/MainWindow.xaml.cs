@@ -25,9 +25,10 @@ namespace StoreOwnerApplication
         public MainWindow()
         {
             InitializeComponent();
-            SidebarMenu.Visibility = Visibility.Collapsed;
-            MenuColumn.Width = new GridLength(0);
             ContentFrame.Navigate(new LoginPage());
+            MenuPanel.Visibility = Visibility.Collapsed;
+            MenuPanel.Width = 0;
+            DataContext = this;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -61,25 +62,9 @@ namespace StoreOwnerApplication
             this.ContentFrame.Content = this.clientPage;//החלפת מסך
         }
         
-        private bool _isExpanded = false;
-        private void ToggleMenu_Click(object sender, RoutedEventArgs e)
-        {
-            _isExpanded = !_isExpanded;
-
-            MenuColumn.Width = _isExpanded
-                ? new GridLength(200)
-                : new GridLength(60);
-
-            MenuTextVisibility = _isExpanded
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-
-            // רענון Binding
-            DataContext = null;
-            DataContext = this;
-        }
-
-        public Visibility MenuTextVisibility { get; set; } = Visibility.Collapsed;
+        
+        
+        
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -104,13 +89,35 @@ namespace StoreOwnerApplication
         private void Logout_btn_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(new LoginPage());
-            SidebarMenu.Visibility = Visibility.Collapsed;
-            MenuColumn.Width = new GridLength(0);
+            MenuPanel.Visibility = Visibility.Collapsed;
+            MenuPanel.Width = 0;
         }
 
         private void ExitBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private bool _isExpanded = false;
+        private void ThreeLines_Click(object sender, RoutedEventArgs e)
+        {
+            _isExpanded = !_isExpanded;
+
+            double targetWidth = _isExpanded ? 200 : 60;
+
+            var animation = new DoubleAnimation
+            {
+                To = targetWidth,
+                Duration = TimeSpan.FromMilliseconds(300)
+            };
+
+            MenuPanel.BeginAnimation(WidthProperty, animation);
+
+            MenuTextVisibility = _isExpanded
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+        public Visibility MenuTextVisibility{ get; set; } = Visibility.Collapsed;
+
     }
 }
