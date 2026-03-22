@@ -195,20 +195,20 @@ namespace WebApiClient
             }
         }
 
-        public async Task<bool> PostAsync(bool data, Stream file)
+        public async Task<bool> PostAsync(T data, Stream file)
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
-                requestMessage.Method = HttpMethod.Post;//
-                requestMessage.RequestUri = this.uriBuilder.Uri;//כתובת של בקשה
-                MultipartFormDataContent multiPartContent = new MultipartFormDataContent();
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+                MultipartFormDataContent multipartContent = new MultipartFormDataContent();
                 string jsonData = JsonSerializer.Serialize(data);
                 StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                multiPartContent.Add(stringContent, "data");
+                multipartContent.Add(stringContent, "data");
                 StreamContent fileContent = new StreamContent(file);
-                multiPartContent.Add(fileContent, "file", "fileName");
-                requestMessage.Content = multiPartContent;
-                using (HttpResponseMessage responseMessage = this.httpClient.SendAsync(requestMessage).Result)
+                multipartContent.Add(fileContent, "file", "file");
+                requestMessage.Content = multipartContent;
+                using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
                 {
                     return responseMessage.IsSuccessStatusCode;
                 }

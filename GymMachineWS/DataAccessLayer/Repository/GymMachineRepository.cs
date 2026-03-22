@@ -13,15 +13,14 @@ namespace GymMachineWS.DataAccessLayer
         {
             string sql = $@"INSERT INTO GymMachine
                             ( 
-                            MachineName, MachineId, MachineDescription, MachinePrice, MachineImage, BrandId
+                            MachineName, MachineDescription, MachinePrice, MachineImage, BrandId
                             )
                             VALUES
                             (
-                            @machineName, @machineId, @machineDescription, 
+                            @machineName, @machineDescription, 
                             @bachinePrice, @machineImage, @brandId            
                             )";
             this.dbContext.AddParamter("@machineName", item.MachineName);
-            this.dbContext.AddParamter("@machineId", item.MachineId.ToString());
             this.dbContext.AddParamter("@machineDescription", item.MachineDescription);
             this.dbContext.AddParamter("@machinePrice", item.MachinePrice);
             this.dbContext.AddParamter("@machineImage", item.MachineImage);

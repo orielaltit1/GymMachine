@@ -22,7 +22,7 @@ namespace WebApiClient
 
         Task<bool> PostAsync(T data);
 
-        Task<bool> PostAsync(bool data, Stream file);
+        Task<bool> PostAsync(T data, Stream file);
 
         Task<bool> PostAsync(T data, List<Stream> files);
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Models;
 using Models.ViewModel;
+using System.Text.Json;
 
 namespace GymMachineWS.Controllers
 {
@@ -89,25 +90,36 @@ namespace GymMachineWS.Controllers
             }
         }
 
-        [HttpGet]
-        public bool AddMachine(GymMachine gymMachine, IFormFile file)
+        [HttpPost]
+        public bool AddNewMachine()
         {
+            string jsonString = Request.Form["data"];
+            GymMachine newMachine = JsonSerializer.Deserialize<GymMachine>(jsonString);
+            IFormFile file = Request.Form.Files[0];
             try
             {
                 this.repositoryUnitOfWork.ConnectDb();
                 this.repositoryUnitOfWork.OpenTransaction();
-                bool result = this.repositoryUnitOfWork.GymMachineRepository.Create(gymMachine);
-                return result;
+                bool ok = this.repositoryUnitOfWork.GymMachineRepository.Create(newMachine);
+                string machineId = this.repositoryUnitOfWork.GetLastInsertedId().ToString();
+                // Image saving logic here
+                using (var stream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(),
+                                                                "wwwroot", "DataImages", "MachineImages",
+                                                                machineId + newMachine.MachineImage), FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                this.repositoryUnitOfWork.Commit();
+                return true;
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
-                Console.WriteLine(error);
+                this.repositoryUnitOfWork.Rollback();
                 return false;
             }
             finally
             {
-                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+                this.repositoryUnitOfWork.DisconnectDb();
             }
         }
 

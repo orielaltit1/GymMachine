@@ -69,29 +69,45 @@ namespace StoreOwnerApplication.Frames
         private async void Save_Btn_Click(object sender, RoutedEventArgs e)
         {
             GymMachine gymMachine = new GymMachine();
-            gymMachine.MachineName = MachineNameTextBox.Text;
-            gymMachine.MachinePrice = MachinePriceTextBox.Text;
-            gymMachine.MachineDescription = MachineDescriptionTextBox.Text;
+            //gymMachine.MachineName = MachineNameTextBox.Text;
+            //gymMachine.MachinePrice = MachinePriceTextBox.Text;
+            //gymMachine.MachineDescription = MachineDescriptionTextBox.Text;
+            gymMachine.MachineName = "Oriel";
+            gymMachine.MachinePrice = "100";
+            gymMachine.MachineDescription = "adsdsd wasdasd";
             gymMachine.MachineImage = System.IO.Path.GetExtension(this.imagePath);
-            Stream stream = new FileStream(imagePath,FileMode.Open, FileAccess.Read);
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                MessageBox.Show("Please choose an image");
+                return;
+            }
+            if (BrandComboBox.SelectedValue == null)
+            {
+                MessageBox.Show("Please select a brand");
+                return;
+            }
             gymMachine.BrandId = this.BrandComboBox.SelectedValue.ToString();
+            
             WebClient<GymMachine> webClient = new WebClient<GymMachine>();
-            webClient.Schema = "http";
             webClient.Schema = "http";
             webClient.Host = "localhost";
             webClient.Port = 5138;
-            webClient.Path = "api/Admin/AddMachine";
-            bool ok = await webClient.PostAsync(gymMachine);
-            if(ok)
+            webClient.Path = "api/Admin/AddNewMachine";
+            
+            using (Stream stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
             {
-                MessageBox.Show("The Machine Add Successfully!");
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Faild To Add a Machine","",MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                bool ok = await webClient.PostAsync(gymMachine, stream);
 
+                if (ok)
+                {
+                    MessageBox.Show("The Machine Add Successfully!");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Faild To Add a Machine", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

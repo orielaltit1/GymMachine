@@ -102,14 +102,20 @@
             this.oleDbContext.BeginTransaction();
         }
 
-        public void commit()
+        public void Commit()
         {
             this.oleDbContext.Commit();
         }
 
-        public void rollback()
+        public void Rollback()
         {
             this.oleDbContext.RollBack();
+        }
+
+        public object GetLastInsertedId()
+        {
+            string sql = "SELECT @@IDENTITY";
+            return this.oleDbContext.GetValue(sql);
         }
     }
 }
