@@ -33,9 +33,11 @@ namespace StoreOwnerApplication.Frames
         public MacinesPage()
         {
             InitializeComponent(); // טוען את רכיבי ה-XAML
-            GetMachines();
+            
             MachinesList = new ObservableCollection<AdminMachineViewModel>();
             MachinesListView.ItemsSource = MachinesList;
+
+            GetMachines();
         }
 
         private async Task GetMachines()
@@ -45,7 +47,12 @@ namespace StoreOwnerApplication.Frames
             webClient.Host = "localhost";
             webClient.Port = 5138;
             webClient.Path = "api/Admin/GetMachines";
-            var dataFromServer = await webClient.GetAsync(); // פעולה הזאת מביאה את הנתונים
+            var dataFromServer = await webClient.GetAsync();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                CountTextBlock.Text = $"Total machines: {dataFromServer.Count}";
+                CountTextBlock.Visibility = Visibility.Visible;
+            }); // פעולה הזאת מביאה את הנתונים
             if (dataFromServer != null)
             {
                 MachinesList.Clear(); // מרוקן את הרשימה הקיימת בלי לנתק אותה
@@ -58,14 +65,19 @@ namespace StoreOwnerApplication.Frames
 
        
         // פונקציה המופעלת בלחיצה על כפתור "Add Machine"
-        private void AddMachine_Click(object sender, RoutedEventArgs e)
+        private async void AddMachine_Click(object sender, RoutedEventArgs e)
         {
             // יצירת אובייקט חדש והוספתו לרשימה
             // ה-ObservableCollection יעדכן את המסך מיד
             //Machines.Add(new GymMachine { MachineName = "New Machine", MachinePrice = "0 NIS" });
-            NewMachineWindow newMachineWindow = new NewMachineWindow();
-            bool? result = newMachineWindow.ShowDialog();
 
+            NewMachineWindow window = new NewMachineWindow();
+
+            bool? result = window.ShowDialog(); // מחכה לסגירה
+            if (result == true) // רק אם ההוספה הצליחה
+            {
+                await GetMachines(); // ריענון הרשימה
+            }
         }
 
         // פונקציה המופעלת בלחיצה על כפתור "Delete" בתוך אחת השורות
@@ -92,6 +104,7 @@ namespace StoreOwnerApplication.Frames
                     webClient.Host = "localhost";
                     webClient.Port = 5138;
                     webClient.Path = $"api/Admin/DeleteMachine/{viewModel.Machine.MachineId}";
+
 
                     bool ok = await webClient.GetAsync();
 

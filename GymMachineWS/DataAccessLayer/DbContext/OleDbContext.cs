@@ -39,6 +39,13 @@ namespace GymMachineWS
         public void Commit()
         {
             this.transaction.Commit();
+            this.transaction = null;
+        }
+
+        public void RollBack()
+        {
+            this.transaction.Rollback();
+            this.transaction = null;
         }
 
         public int Delete(string sql)
@@ -56,10 +63,6 @@ namespace GymMachineWS
             this.connection.Open();
         }
 
-        public void RollBack()
-        {
-            this.transaction.Rollback();
-        }
 
         public IDataReader Select(string sql)
         {
@@ -73,17 +76,23 @@ namespace GymMachineWS
         {
             return ChangeDb(sql);
         }
-        private int ChangeDb(string sql) 
+        private int ChangeDb(string sql)
         {
             this.command.CommandText = sql;
+
+            if (this.transaction != null)
+            {
+                this.command.Transaction = this.transaction; 
+            }
+
             int records = this.command.ExecuteNonQuery();
             this.command.Parameters.Clear();
             return records;
         }
-     
-     
 
-       
+
+
+
         public Object GetValue(String sql)
         {
             this.command.CommandText = sql;

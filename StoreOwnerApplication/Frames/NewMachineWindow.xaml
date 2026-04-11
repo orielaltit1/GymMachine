@@ -87,18 +87,36 @@
                 <StackPanel Grid.Column="0"
                         VerticalAlignment="Center">
 
+                    <!-- הודעת שגיאה שם-->
+                    <TextBlock x:Name="MachineNameError"
+                       Foreground="Red"
+                       FontSize="10"
+                       Visibility="Collapsed"
+                       />
                     <!--Machine Name-->
                     <TextBlock Text="Machine Name" FontWeight="Bold"/>
                     <TextBox x:Name="MachineNameTextBox"
                          Height="28"
                          Margin="0,3,0,8"/>
-
+                    
+                    <!-- הודעת שגיאה מחיר-->
+                    <TextBlock x:Name="MachinePriceError"
+                       Foreground="Red"
+                       FontSize="10"
+                       Visibility="Collapsed"
+                       />
                     <!--Machine Price-->
                     <TextBlock Text="Machine Price" FontWeight="Bold"/>
                     <TextBox x:Name="MachinePriceTextBox"
                          Height="28"
                          Margin="0,3,0,8"/>
 
+                    <!-- הודעת שגיאה תיאור-->
+                    <TextBlock x:Name="MachineDescriptionError"
+                       Foreground="Red"
+                       FontSize="10"
+                       Visibility="Collapsed"
+                       />
                     <!--Machine Description-->
                     <TextBlock Text="Description" FontWeight="Bold"/>
                     <TextBox x:Name="MachineDescriptionTextBox"
@@ -107,6 +125,11 @@
                          TextWrapping="Wrap"
                          Margin="0,3,0,8"/>
 
+                    <TextBlock x:Name="MachineBrandError"
+                       Foreground="Red"
+                       FontSize="10"
+                       
+                       />
                     <!--Machine Brand-->
                     <TextBlock Text="Machine Brand" FontWeight="Bold"/>
                     <ComboBox x:Name="BrandComboBox"
@@ -128,6 +151,11 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center">
 
+                    <TextBlock x:Name="MachineImageError"
+                       Foreground="Red"
+                       FontSize="10"
+                       Visibility="Collapsed"
+                       />
                     <TextBlock Text="Machine Image"
                            FontWeight="Bold"
                            Margin="0,0,0,10"

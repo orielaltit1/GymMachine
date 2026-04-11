@@ -17,19 +17,24 @@
         <TextBlock Text="Gym Machines" FontWeight="Black" FontSize="36" 
                    HorizontalAlignment="Center" Margin="0,20,0,10" Foreground="#333"/>
 
-        <Grid Grid.Row="1" Margin="30,10,30,10">
+        <Grid Grid.Row="1" Margin="30,10,30,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="SearchTextBox" Padding="5" Height="30" 
-                     Text="Search..." Foreground="Gray" VerticalContentAlignment="Center"/>
-
             <Button Grid.Column="1" Content="+ Add Machine" Background="#007ACC" Foreground="White" 
-                    FontWeight="Bold" Padding="10,5" Margin="10,0,0,0"
+                    FontWeight="Bold" Padding="50, 10"
                     Click="AddMachine_Click"/>
-            
+
+            <TextBlock x:Name="CountTextBlock"
+               Foreground="Black"
+               FontSize="20"
+               FontWeight="Bold"
+               Visibility="Collapsed"
+               Margin="10, 10,10 ,10"
+               Text="Loading..."
+               />
         </Grid>
         
             <ListView x:Name="MachinesListView" Grid.Row="2" Margin="30,10" 

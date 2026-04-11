@@ -1,8 +1,11 @@
 ﻿using Microsoft.Win32;
 using Models;
+using StoreOwnerApplication.Frames;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,8 +16,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.IO;
 using WebApiClient;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace StoreOwnerApplication.Frames
 {
@@ -69,21 +72,77 @@ namespace StoreOwnerApplication.Frames
         private async void Save_Btn_Click(object sender, RoutedEventArgs e)
         {
             GymMachine gymMachine = new GymMachine();
-            //gymMachine.MachineName = MachineNameTextBox.Text;
-            //gymMachine.MachinePrice = MachinePriceTextBox.Text;
-            //gymMachine.MachineDescription = MachineDescriptionTextBox.Text;
-            gymMachine.MachineName = "Oriel";
-            gymMachine.MachinePrice = "100";
-            gymMachine.MachineDescription = "adsdsd wasdasd";
-            gymMachine.MachineImage = System.IO.Path.GetExtension(this.imagePath);
-            if (string.IsNullOrEmpty(imagePath))
+            MachineNameError.Visibility = Visibility.Collapsed;
+            MachineNameTextBox.BorderBrush = Brushes.Gray;
+            MachinePriceError.Visibility = Visibility.Collapsed;
+            MachinePriceTextBox.BorderBrush = Brushes.Gray;
+            MachineDescriptionError.Visibility = Visibility.Collapsed;
+            MachineDescriptionTextBox.BorderBrush = Brushes.Gray;
+            MachineImageError.Visibility = Visibility.Collapsed;
+            MachineBrandError.Visibility = Visibility.Collapsed;
+
+
+
+            //Name
+            if (string.IsNullOrWhiteSpace(MachineNameTextBox.Text))
             {
-                MessageBox.Show("Please choose an image");
+                MachineNameError.Text = "Please fill in a name";
+                MachineNameError.Visibility = Visibility.Visible;
+                MachineNameTextBox.BorderBrush = Brushes.Red;
                 return;
             }
+            if (MachineNameTextBox.Text.Trim().Length < 3)
+            {
+                MachineNameError.Text = "Name must be at least 3 characters"; 
+                MachineNameError.Visibility = Visibility.Visible;
+                MachineNameTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
+            gymMachine.MachineName = MachineNameTextBox.Text;
+
+            //Price
+            if (!double.TryParse(MachinePriceTextBox.Text, out double price))
+            {
+                MachinePriceError.Text = "Please fill in a price";
+                MachinePriceError.Visibility = Visibility.Visible;
+                MachinePriceTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
+            gymMachine.MachinePrice = MachinePriceTextBox.Text;
+
+            //Description
+            if (string.IsNullOrWhiteSpace(MachineDescriptionTextBox.Text))
+            {
+                MachineDescriptionError.Text = "Please fill in a description";
+                MachineDescriptionError.Visibility = Visibility.Visible;
+                MachineDescriptionTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
+            if (MachineDescriptionTextBox.Text.Trim().Length < 10)
+            {
+                MachineDescriptionError.Text = "Name must be at least 10 characters";
+                MachineDescriptionError.Visibility = Visibility.Visible;
+                MachineDescriptionTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
+            gymMachine.MachineDescription = MachineDescriptionTextBox.Text;
+
+            //Image
+            if (string.IsNullOrEmpty(imagePath))
+            {
+                MachineImageError.Text = "Please choose an image";
+                MachineImageError.Visibility = Visibility.Visible;
+                return;
+            }
+            gymMachine.MachineImage = System.IO.Path.GetExtension(this.imagePath);
+
+            gymMachine.IsActive = true;
+            
+            //Brand
             if (BrandComboBox.SelectedValue == null)
             {
-                MessageBox.Show("Please select a brand");
+                MachineBrandError.Text = "Please select a brand";
+                MachineBrandError.Visibility = Visibility.Visible;
                 return;
             }
             gymMachine.BrandId = this.BrandComboBox.SelectedValue.ToString();
@@ -101,6 +160,7 @@ namespace StoreOwnerApplication.Frames
                 if (ok)
                 {
                     MessageBox.Show("The Machine Add Successfully!");
+                    this.DialogResult = true;
                     this.Close();
                 }
                 else

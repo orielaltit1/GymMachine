@@ -13,18 +13,19 @@ namespace GymMachineWS.DataAccessLayer
         {
             string sql = $@"INSERT INTO GymMachine
                             ( 
-                            MachineName, MachineDescription, MachinePrice, MachineImage, BrandId
+                            MachineName, MachineDescription, MachinePrice, MachineImage, BrandId, IsActive
                             )
                             VALUES
                             (
                             @machineName, @machineDescription, 
-                            @bachinePrice, @machineImage, @brandId            
-                            )";
+                            @machinePrice, @machineImage, @brandId, IsActive = yes   
+                            );";
             this.dbContext.AddParamter("@machineName", item.MachineName);
             this.dbContext.AddParamter("@machineDescription", item.MachineDescription);
             this.dbContext.AddParamter("@machinePrice", item.MachinePrice);
             this.dbContext.AddParamter("@machineImage", item.MachineImage);
             this.dbContext.AddParamter("@brandId", item.BrandId.ToString());
+            this.dbContext.AddParamter("@isActive", item.IsActive);
             return this.dbContext.Insert(sql) > 0;
         }
 
@@ -134,6 +135,16 @@ namespace GymMachineWS.DataAccessLayer
                 }
             }
             return gymMachines;
+        }
+
+        public bool UpdateImage(GymMachine item)
+        {
+            string sql = $@"UPDATE GymMachine SET MachineImage=@machineImage
+                            WHERE MachineId=@machineId";
+            this.dbContext.AddParamter("@machineImage", item.MachineImage);
+            this.dbContext.AddParamter("@machineId", item.MachineId);
+            return this.dbContext.Update(sql) > 0;
+
         }
     }
 }

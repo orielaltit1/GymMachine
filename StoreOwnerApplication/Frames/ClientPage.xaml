@@ -22,8 +22,6 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="SearchTextBox" Padding="5" Height="30" 
-                 Text="Search..." Foreground="Gray" VerticalContentAlignment="Center"/>
 
         </Grid>
 

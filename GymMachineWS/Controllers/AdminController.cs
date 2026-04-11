@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Models;
 using Models.ViewModel;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
 
 namespace GymMachineWS.Controllers
@@ -102,13 +103,19 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.OpenTransaction();
                 bool ok = this.repositoryUnitOfWork.GymMachineRepository.Create(newMachine);
                 string machineId = this.repositoryUnitOfWork.GetLastInsertedId().ToString();
+                string imageName = machineId + newMachine.MachineImage;
+                newMachine.MachineId = int.Parse(machineId).ToString();
+                
                 // Image saving logic here
                 using (var stream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(),
                                                                 "wwwroot", "DataImages", "MachineImages",
-                                                                machineId + newMachine.MachineImage), FileMode.Create))
+                                                                imageName), FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }
+                newMachine.MachineImage = imageName;
+                this.repositoryUnitOfWork.GymMachineRepository.UpdateImage(newMachine);
+
                 this.repositoryUnitOfWork.Commit();
                 return true;
             }
@@ -128,8 +135,25 @@ namespace GymMachineWS.Controllers
         {
             try
             {
-                this.repositoryUnitOfWork.ConnectDb();                
+                this.repositoryUnitOfWork.ConnectDb();
                 bool result = this.repositoryUnitOfWork.GymMachineRepository.Delete(id);
+                if (result) 
+                {
+                    var machine = repositoryUnitOfWork.GymMachineRepository.GetById(id);
+                    string imageName = machine.MachineImage;
+                    string imagePath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "DataImages",
+                    "MachineImages",
+                    imageName);   
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
+
                 return result;
             }
             catch (Exception ex)
