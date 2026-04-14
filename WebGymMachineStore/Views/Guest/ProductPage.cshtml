@@ -4,10 +4,22 @@
     ViewData["Title"] = "ProductPage";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
-
+@{
+    if (Context.Session.GetString("ClientId") != null)
+    {
+        Layout = "~/Views/Shared/ClientMasterPage.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/MasterPage.cshtml";
+    }
+}
+<link href="~/stylesheets/productpage.css" rel="stylesheet" />
 <div class="image-of-product">
     <img src="http://localhost:5138/DataImages/MachineImages/@Model.Machine.MachineImage" />
 </div>
+
+<button type="button" class="go-back-btn" onclick="history.back()"><img src="~/images/gobackicon.png" width="20" height="10" /></button>
 
 <div class="product-info">
     <h1>@Model.Machine.MachineName</h1>

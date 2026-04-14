@@ -131,14 +131,23 @@ hr {
         block-size: 650px;
     }
 
-.article {
+.go-back-btn {
+    position: fixed;
+    top: 100px;
+    left: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .product-info {
     float: right;
     margin-left: 800px;
     justify-content: space-between;
-    font-size: 40px;
+    font-size: 30px;
 }
 
     .product-info p {
