@@ -2,6 +2,7 @@
 using Models.Models;
 using System.Net;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using WebApiClient;
 
@@ -9,10 +10,11 @@ namespace Tests
 {
     public class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.ReadLine();
-            TestWebClient();
+            // TestWebClient();
+            await JsonChat();
             Console.ReadLine();
         }
         
@@ -30,6 +32,88 @@ namespace Tests
             Console.WriteLine(machine.Machine.MachineDescription);
             Console.WriteLine(machine.SelectAmount);
         
+        }
+
+        static async Task JsonChat()
+        {
+            string apiKey = "apiKey";
+            string model = "openrouter/free";
+            string url = "https://openrouter.ai/api/v1/chat/completions/";
+            WebClient<string> webClient = new WebClient<string>();
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(url);
+            HttpRequestHeader httpRequestHeader = new HttpRequestHeader();
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+
+           
+
+            //var json = JsonSerializer.Serialize(requestBody);
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+
+
+
+
+            //WebClient.AiWebClient aiWebClient = new WebClient.AiWebClient(apiKey, model);
+            webClient.Schema = "https";
+            webClient.Host = "openrouter.ai";
+            webClient.Path = "api/v1/chat/completions";
+            //List<WebClient.Message> chatHistory = new List<WebClient.Message>();
+           // chatHistory.Add(new WebClient.Message { Role = "system", Content = "You are my assistent" });
+
+
+            Console.Write("You : >> ");
+            string machineName = "Treadmill";
+            string level = "Beginner";
+
+            string template = @"""trainings""""
+                                [
+                                   { """"Warm-up"""": """"5 mins walking (2.5 to 3 mph)"""",
+                                     """"Workout"""": """"20 mins alternating 2 min fast walk"""",
+                                     """"Cooldown"""": """"25 mins slow walking"""",
+                                     """"Picture"""": """"realy picture internet link  """"
+                                   }
+                              ]";
+            string userInput =$@"You are a strict data assistant.
+                         Given the question, you MUST answer with a JSON object that contains all type of training plan for {machineName}  gym machines to {level}.
+                         You MUST return ONLY valid JSON.
+                         With realy links to pictures of the machines.
+                         Do not add any greetings, explanations, or markdown formatting (like ```json).
+                         Your output must exactly match this structure:
+                         {
+                              template  
+                         }";
+
+            
+            var requestBody = new
+            {
+                model = model,
+                messages = new[]
+                {
+                       new { role = "user", content = userInput }
+                }
+            };
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage();
+            httpRequestMessage.Method = HttpMethod.Post;
+            string json = JsonSerializer.Serialize(requestBody); 
+           // client.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            httpRequestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            // chatHistory.Add(new WebClient.Message { Role = "user", Content = userInput });
+            object responseFormat = new { type = "json_object" };
+            string resp = "";
+          try
+            {
+                var response = await client.SendAsync(httpRequestMessage);
+                resp = resp.ToString();
+            }
+            catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+           
+            Console.Write("Ai : >> ");
+            Console.WriteLine(resp);    
         }
 
         static string GanerateSalt()//מחשב את המלח

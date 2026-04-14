@@ -148,6 +148,64 @@ namespace GymMachineWS.Controllers
             }
         }
 
-    
+        //[HttpPost]
+        //public bool AddToCart(int clientId, int machineId)
+        //{
+        //    try
+        //    {
+        //        this.repositoryUnitOfWork.ConnectDb();
+
+        //        // 🔹 1. בודק אם יש הזמנה פתוחה
+        //        Order order = this.repositoryUnitOfWork.OrderRepository
+        //            .GetAll()
+        //            .FirstOrDefault(o => o.ClientId == clientId && o.orderPayet);
+
+        //        // 🔹 2. אם אין – יוצר חדשה
+        //        if (order == null)
+        //        {
+        //            order = new Order
+        //            {
+        //                ClientId = clientId,
+        //                OrderDate = DateTime.Now,
+        //                IsOpen = true
+        //            };
+
+        //            this.repositoryUnitOfWork.OrderRepository.Insert(order);
+        //            this.repositoryUnitOfWork.Save();
+        //        }
+
+        //        // 🔹 3. בודק אם המוצר כבר בעגלה
+        //        CartItem existingItem = this.repositoryUnitOfWork.CartItemRepository
+        //            .GetAll()
+        //            .FirstOrDefault(c => c.OrderId == order.OrderId && c.MachineId == machineId);
+
+        //        if (existingItem != null)
+        //        {
+        //            // 🔹 4. אם כן – מגדיל כמות
+        //            existingItem.Quantity++;
+        //            this.repositoryUnitOfWork.CartItemRepository.Update(existingItem);
+        //        }
+        //        else
+        //        {
+        //            // 🔹 5. אם לא – מוסיף חדש
+        //            CartItem newItem = new CartItem
+        //            {
+        //                OrderId = order.OrderId,
+        //                MachineId = machineId,
+        //                Quantity = 1
+        //            };
+
+        //            this.repositoryUnitOfWork.CartItemRepository.Insert(newItem);
+        //        }
+
+        //        this.repositoryUnitOfWork.Save();
+
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }
