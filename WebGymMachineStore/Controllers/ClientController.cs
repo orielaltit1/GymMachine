@@ -110,6 +110,12 @@ namespace WebGymMachineStore.Controllers
             return View(vm);
         }
 
+        [HttpGet]
+        public IActionResult AddToCart()
+        {
+
+        }
+
        //[HttpGet]
         //public Task<IActionResult>  JsonChat()
         //{

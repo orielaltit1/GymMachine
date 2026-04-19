@@ -90,7 +90,6 @@ namespace GymMachineWS.DataAccessLayer
             }
             return cartItems;
         }
-
         public Order GetOpenOrderByClientId(int clientId)
         {
             string sql = @"SELECT *

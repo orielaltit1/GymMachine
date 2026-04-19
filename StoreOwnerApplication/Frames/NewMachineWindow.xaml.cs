@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WebApiClient;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoreOwnerApplication.Frames
 {
@@ -101,9 +102,16 @@ namespace StoreOwnerApplication.Frames
             gymMachine.MachineName = MachineNameTextBox.Text;
 
             //Price
+            if (MachinePriceTextBox.Text == "")
+            {
+                MachinePriceError.Text = "Please fill in the price section";
+                MachinePriceError.Visibility = Visibility.Visible;
+                MachinePriceTextBox.BorderBrush = Brushes.Red;
+                return;
+            }
             if (!double.TryParse(MachinePriceTextBox.Text, out double price))
             {
-                MachinePriceError.Text = "Please fill in a price";
+                MachinePriceError.Text = "Please use only numbers digits";
                 MachinePriceError.Visibility = Visibility.Visible;
                 MachinePriceTextBox.BorderBrush = Brushes.Red;
                 return;
@@ -126,6 +134,15 @@ namespace StoreOwnerApplication.Frames
                 return;
             }
             gymMachine.MachineDescription = MachineDescriptionTextBox.Text;
+            
+            //Brand
+            if (BrandComboBox.SelectedValue == null)
+            {
+                MachineBrandError.Text = "Please select a brand";
+                MachineBrandError.Visibility = Visibility.Visible;
+                return;
+            }
+            gymMachine.BrandId = this.BrandComboBox.SelectedValue.ToString();
 
             //Image
             if (string.IsNullOrEmpty(imagePath))
@@ -138,14 +155,7 @@ namespace StoreOwnerApplication.Frames
 
             gymMachine.IsActive = true;
             
-            //Brand
-            if (BrandComboBox.SelectedValue == null)
-            {
-                MachineBrandError.Text = "Please select a brand";
-                MachineBrandError.Visibility = Visibility.Visible;
-                return;
-            }
-            gymMachine.BrandId = this.BrandComboBox.SelectedValue.ToString();
+            
             
             WebClient<GymMachine> webClient = new WebClient<GymMachine>();
             webClient.Schema = "http";

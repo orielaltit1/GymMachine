@@ -148,6 +148,16 @@ namespace GymMachineWS.Controllers
             }
         }
 
+        public ActionResult<CartItem> AddItemToCart(string machineId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                CartItem item = repositoryUnitOfWork.OrderRepository.GetById(machineId)
+
+            }
+        }
+
         //[HttpPost]
         //public bool AddToCart(int clientId, int machineId)
         //{

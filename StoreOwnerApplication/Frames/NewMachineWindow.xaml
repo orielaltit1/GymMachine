@@ -127,9 +127,7 @@
 
                     <TextBlock x:Name="MachineBrandError"
                        Foreground="Red"
-                       FontSize="10"
-                       
-                       />
+                       FontSize="10"/>
                     <!--Machine Brand-->
                     <TextBlock Text="Machine Brand" FontWeight="Bold"/>
                     <ComboBox x:Name="BrandComboBox"
