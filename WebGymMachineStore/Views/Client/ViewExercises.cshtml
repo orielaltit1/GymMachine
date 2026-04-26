@@ -1,0 +1,16 @@
+﻿@using WebGymMachineStore
+@model MachineVideoViewModel
+@{
+    ViewData["Title"] = "ViewExercises";
+    Layout = "~/Views/Shared/ClientMasterPage.cshtml";
+}
+
+<div class="exercise">
+    <h1 class="exerciseName">@Model.Title</h1>
+    <div class="exercisedescription">@Model.Videos[0].ExerciseDescription</div>
+    @foreach(ExerciseVideo exerciseVideo in Model.Videos)
+    {
+        <iframe class="iframe" width="200" height="200" src="@exerciseVideo.VideoUrl"></iframe>
+    }
+</div>
+

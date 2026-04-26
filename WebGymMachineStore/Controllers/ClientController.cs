@@ -3,8 +3,12 @@ using Microsoft.Build.Experimental;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.ViewModel;
+using Newtonsoft.Json.Linq;
+using System.Collections;
 using System.Net;
 using WebApiClient;
+using SerpApi;
+using WebGymMachineStore;
 
 
 namespace WebGymMachineStore.Controllers
@@ -111,89 +115,153 @@ namespace WebGymMachineStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddToCart()
+        public  async Task<IActionResult> ViewExercises(string machineName)
         {
+            string apiAi = "";
+            string googleApi = "";
+            HttpClient httpClient = new HttpClient();
+            FitnessApiService fitnessApiService = new FitnessApiService(httpClient);
+            try
+            {
+
+
+                List<Exercise> exercises = await fitnessApiService.GetExercisesForMachineAsync(machineName);
+                foreach (var exercise in exercises)
+                {
+                    Console.WriteLine($"ExerciseName : {exercise.ExerciseName}");
+                    List<string> videoUrls = await GetGoogleVideos($@"Gym Machine:{machineName},
+                                                                  Exercise:{exercise.ExerciseName}");
+                    MachineVideoViewModel machineVideoViewModel = new MachineVideoViewModel();
+                    machineVideoViewModel.Title = machineName;
+                    machineVideoViewModel.Videos = new List<ExerciseVideo>();
+                    foreach (var videoUrl in videoUrls)
+                    {
+                        ExerciseVideo exerciseVideo = new ExerciseVideo();
+                        exerciseVideo.VideoUrl = videoUrl;
+                        exerciseVideo.ExerciseDescription = exercise.ExerciseDescription;
+
+                    }
+                    return View(machineVideoViewModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            return View(null);
 
         }
 
-       //[HttpGet]
-        //public Task<IActionResult>  JsonChat()
-        //{
-        //    string apiKey = "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";
-        //    string model = "openrouter/free";
-        //    string url = "https://openrouter.ai/api/v1/chat/completions/";
-        //    WebClient<Order> orderClient = new WebClient<Order>();
-        //    WebClient.AiWebClient aiWebClient = new WebClient.AiWebClient(apiKey, model);
-        //    aiWebClient.Scheme = "https";
-        //    aiWebClient.Host = "openrouter.ai";
-        //    aiWebClient.Path = "api/v1/chat/completions";
-        //    List<WebClient.Message> chatHistory = new List<WebClient.Message>();
-        //    chatHistory.Add(new WebClient.Message { Role = "system", Content = "You are my assistent" });
+        private async Task<List<string>> GetGoogleVideos(string query)
+        {
+            //https://serpapi.com/google-videos-api
+            string apiKey = "";
+            Hashtable ht = new Hashtable();
+            ht.Add("engine", "google_videos");
+            ht.Add("q", query);
+
+            try
+            {
+                GoogleSearch search = new GoogleSearch(ht, apiKey);
+                JObject data = search.GetJson();
+                var video_results = data["video_results"];
+                if (video_results != null && video_results.HasValues)
+                {
+                    List<string> videoUrls = new List<string>();
+                    foreach (var video in video_results)
+                        videoUrls.Add(video["link"]?.ToString());
 
 
-        //    Console.Write("You : >> ");
-        //    string userInput = @"You are a strict data assistant.
-        //                 Given the question, you MUST answer with a JSON object that contains all type gym machines.
-        //                 You MUST return ONLY valid JSON.
-        //                 With realy links to pictures of the machines.
-        //                 Do not add any greetings, explanations, or markdown formatting (like ```json).
-        //                 Your output must exactly match this structure:
-        //                  {
-        //                      ""Machines""
-        //                        [
-        //                           { ""Name"": ""Power Cage or Squat Rack"",
-        //                           ""Picture"": ""https://cdn.shopify.com/s/files/1/0252/3155/6686/files/Squat_Rack_3_600x600.jpg?v=1719216632 "" }
-        //                      ]
-        //                    }";
-        //    chatHistory.Add(new WebClient.Message { Role = "user", Content = userInput });
-        //    object responseFormat = new { type = "json_object" };
-        //    //  = new
-        //    // {
-        //    //    type = "json_schema",
-        //    //    json_schema = new
-        //    //    {
-        //    //        name = "top_countries_schema",
-        //    //        strict = true, // מבטיח שהמודל לא יסטה מהמבנה
-        //    //        schema = new
-        //    //        {
-        //    //            type = "object",
-        //    //            properties = new
-        //    //            {
-        //    //                // המאפיין הראשי שלנו הוא מערך של מדינות
-        //    //                Countries = new
-        //    //                {
-        //    //                    type = "array",
-        //    //                    description = "List of top 10 most populated countries",
-        //    //                    items = new // איך נראה כל פריט במערך?
-        //    //                    {
-        //    //                        type = "object",
-        //    //                        properties = new
-        //    //                        {
-        //    //                            Name = new { type = "string", description = "שם המדינה בעברית" },
-        //    //                            Population = new { type = "integer", description = "מספר התושבים הכולל" }
-        //    //                        },
-        //    //                        required = new[] { "Name", "Population" }, // חובה להחזיר את שני השדות
-        //    //                        additionalProperties = false // בלי שדות שה-AI ממציא
-        //    //                    }
-        //    //                }
-        //    //            },
-        //    //            required = new[] { "Countries" }, // חובה להחזיר את המערך עצמו
-        //    //            additionalProperties = false
-        //    //        }
-        //    //    }
-        //    //};
-        //    // aiWebClient.AddJsonSchema(responseFormat);
-        //    var response = await aiWebClient.GetChatRequest(chatHistory);
-        //    MachinesResponse machines = JsonSerializer.Deserialize<MachinesResponse>(response.Content);
-        //    // Console.WriteLine($"AI : >> {response.Content}");
-        //    foreach (var machine in machines.Machines)
-        //    {
-        //        Console.WriteLine($"Country: {machine.Name}, Population: {machine.Picture}");
-        //    }
-        //    chatHistory.Add(response);
-        //}
+                    return videoUrls;
+                }
+
+            }
+            catch (SerpApiSearchException ex)
+            {
+
+            }
+            return null;
+        }
     }
 
+    //[HttpGet]
+    //public Task<IActionResult>  JsonChat()
+    //{
+    //    string apiKey = "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";
+    //    string model = "openrouter/free";
+    //    string url = "https://openrouter.ai/api/v1/chat/completions/";
+    //    WebClient<Order> orderClient = new WebClient<Order>();
+    //    WebClient.AiWebClient aiWebClient = new WebClient.AiWebClient(apiKey, model);
+    //    aiWebClient.Scheme = "https";
+    //    aiWebClient.Host = "openrouter.ai";
+    //    aiWebClient.Path = "api/v1/chat/completions";
+    //    List<WebClient.Message> chatHistory = new List<WebClient.Message>();
+    //    chatHistory.Add(new WebClient.Message { Role = "system", Content = "You are my assistent" });
 
 
+    //    Console.Write("You : >> ");
+    //    string userInput = @"You are a strict data assistant.
+    //                 Given the question, you MUST answer with a JSON object that contains all type gym machines.
+    //                 You MUST return ONLY valid JSON.
+    //                 With realy links to pictures of the machines.
+    //                 Do not add any greetings, explanations, or markdown formatting (like ```json).
+    //                 Your output must exactly match this structure:
+    //                  {
+    //                      ""Machines""
+    //                        [
+    //                           { ""Name"": ""Power Cage or Squat Rack"",
+    //                           ""Picture"": ""https://cdn.shopify.com/s/files/1/0252/3155/6686/files/Squat_Rack_3_600x600.jpg?v=1719216632 "" }
+    //                      ]
+    //                    }";
+    //    chatHistory.Add(new WebClient.Message { Role = "user", Content = userInput });
+    //    object responseFormat = new { type = "json_object" };
+    //    //  = new
+    //    // {
+    //    //    type = "json_schema",
+    //    //    json_schema = new
+    //    //    {
+    //    //        name = "top_countries_schema",
+    //    //        strict = true, // מבטיח שהמודל לא יסטה מהמבנה
+    //    //        schema = new
+    //    //        {
+    //    //            type = "object",
+    //    //            properties = new
+    //    //            {
+    //    //                // המאפיין הראשי שלנו הוא מערך של מדינות
+    //    //                Countries = new
+    //    //                {
+    //    //                    type = "array",
+    //    //                    description = "List of top 10 most populated countries",
+    //    //                    items = new // איך נראה כל פריט במערך?
+    //    //                    {
+    //    //                        type = "object",
+    //    //                        properties = new
+    //    //                        {
+    //    //                            Name = new { type = "string", description = "שם המדינה בעברית" },
+    //    //                            Population = new { type = "integer", description = "מספר התושבים הכולל" }
+    //    //                        },
+    //    //                        required = new[] { "Name", "Population" }, // חובה להחזיר את שני השדות
+    //    //                        additionalProperties = false // בלי שדות שה-AI ממציא
+    //    //                    }
+    //    //                }
+    //    //            },
+    //    //            required = new[] { "Countries" }, // חובה להחזיר את המערך עצמו
+    //    //            additionalProperties = false
+    //    //        }
+    //    //    }
+    //    //};
+    //    // aiWebClient.AddJsonSchema(responseFormat);
+    //    var response = await aiWebClient.GetChatRequest(chatHistory);
+    //    MachinesResponse machines = JsonSerializer.Deserialize<MachinesResponse>(response.Content);
+    //    // Console.WriteLine($"AI : >> {response.Content}");
+    //    foreach (var machine in machines.Machines)
+    //    {
+    //        Console.WriteLine($"Country: {machine.Name}, Population: {machine.Picture}");
+    //    }
+    //    chatHistory.Add(response);
+    //}
 }
+
+
+
+

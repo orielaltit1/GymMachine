@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.ViewModel;
 
+
 namespace GymMachineWS.Controllers
 {
     [Route("Api/[controller]/[action]")]
@@ -148,15 +149,18 @@ namespace GymMachineWS.Controllers
             }
         }
 
-        public ActionResult<CartItem> AddItemToCart(string machineId)
-        {
-            try
-            {
-                this.repositoryUnitOfWork.ConnectDb();
-                CartItem item = repositoryUnitOfWork.OrderRepository.GetById(machineId)
+        //[HttpPost("{clientId}")]
+        //public ActionResult<bool> AddItemToCart([FromBody] CartItem item, int clientId)
+        //{
+        //    try
+        //    {
+        //        this.repositoryUnitOfWork.ConnectDb();
+                
+        //        int orderId = repositoryUnitOfWork.OrderRepository.GetOpenOrderByClientId(clientId);
 
-            }
-        }
+
+        //    }
+        //}
 
         //[HttpPost]
         //public bool AddToCart(int clientId, int machineId)
