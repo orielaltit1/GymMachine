@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\Script\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="google-search-results-dotnet" Version="2.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.AnalyzerUtilities" Version="3.3.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />

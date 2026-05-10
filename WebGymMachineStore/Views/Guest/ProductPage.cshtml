@@ -30,6 +30,7 @@
     @if (Context.Session.GetString("ClientId") != null)
     {
         <button type="button">Add To Cart</button>
+        <a class="exerciseLink" href="http://localhost:5086/Client/ViewExercises?machineName=@Model.Machine.MachineName">View Exercises</a>
     }
     
 </div>

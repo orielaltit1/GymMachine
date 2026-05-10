@@ -123,8 +123,6 @@ namespace WebGymMachineStore.Controllers
             FitnessApiService fitnessApiService = new FitnessApiService(httpClient);
             try
             {
-
-
                 List<Exercise> exercises = await fitnessApiService.GetExercisesForMachineAsync(machineName);
                 foreach (var exercise in exercises)
                 {
@@ -139,14 +137,14 @@ namespace WebGymMachineStore.Controllers
                         ExerciseVideo exerciseVideo = new ExerciseVideo();
                         exerciseVideo.VideoUrl = videoUrl;
                         exerciseVideo.ExerciseDescription = exercise.ExerciseDescription;
-
+                        machineVideoViewModel.Videos.Add(exerciseVideo);    
                     }
                     return View(machineVideoViewModel);
                 }
             }
             catch (Exception ex)
             {
-                
+                string msgError = ex.Message; 
             }
             return View(null);
 
@@ -155,7 +153,7 @@ namespace WebGymMachineStore.Controllers
         private async Task<List<string>> GetGoogleVideos(string query)
         {
             //https://serpapi.com/google-videos-api
-            string apiKey = "";
+            string apiKey = "c989a2512c0a9f0d9b7b7f86d109dc61929e4b7ba734e0adfae6677fc8973898";
             Hashtable ht = new Hashtable();
             ht.Add("engine", "google_videos");
             ht.Add("q", query);
