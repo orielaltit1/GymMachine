@@ -17,8 +17,5 @@ namespace Models
         public string SelectedBrandId { get; set; }
 
         public string Sort { get; set; }
-        
-
     }
 }
-    

@@ -25,22 +25,7 @@ namespace GymMachineWS.DataAccessLayer
             this.dbContext.AddParamter("@orderPayet", item.OrderPayet.ToString());
             return this.dbContext.Insert(sql) > 0;
         }
-        public bool CreateCartItem(CartItem item)
-        {
-            string sql = $@"INSERT INTO [OrderItem]
-                            ( 
-                            MachineId, OrderId, Price, Amount
-                            )
-                            VALUES
-                            (
-                            @machineId, @orderId, @price, @amount
-                            )";
-            this.dbContext.AddParamter("@machineId", item.MachineId.ToString());
-            this.dbContext.AddParamter("@orderId", item.OrderId.ToString());
-            this.dbContext.AddParamter("@price", item.Price.ToString());
-            this.dbContext.AddParamter("@amount", item.Amount.ToString());
-            return this.dbContext.Insert(sql) > 0;
-        }
+        
         public bool Delete(string id)
         {
             string sql = $@"Delete FROM [Order]
@@ -85,27 +70,8 @@ namespace GymMachineWS.DataAccessLayer
             this.dbContext.AddParamter("@orderDate", item.OrderDate.ToString());
             this.dbContext.AddParamter("@orderPayet", item.OrderPayet.ToString());
             return this.dbContext.Update(sql) > 0;
-        }
-
-        public List<CartItem> GetCartItems(string orderId)
-        {
-            List<CartItem> cartItems = new List<CartItem>();
-            string sql = $@"SELECT
-                                *
-                            FROM
-                                OrderItem
-                            WHERE
-                                OrderId = @orderId;";
-            this.dbContext.AddParamter("@orderId", orderId);
-            using (IDataReader reader = this.dbContext.Select(sql))
-            {
-                while (reader.Read())
-                {
-                    cartItems.Add(this.factoryModles.CartItemCreator.CreateMoldel(reader));
-                }
-            }
-            return cartItems;
-        }
+        }        
+                
         public Order GetOpenOrderByClientId(int clientId)
         {
             string sql = @"SELECT *

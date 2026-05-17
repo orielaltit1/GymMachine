@@ -114,6 +114,89 @@ namespace WebGymMachineStore.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        public IActionResult AddToCart(string machineId)
+        {
+            string clientIdStr = HttpContext.Session.GetString("ClientId");
+
+            if (clientIdStr == null)
+            {
+                return RedirectToAction("LoginPage", "Guest");
+            }
+
+            int clientId = int.Parse(clientIdStr);
+
+            // מביא Order פתוחה
+            WebClient<Order> orderClient = new WebClient<Order>();
+            orderClient.Schema = "http";
+            orderClient.Host = "localhost";
+            orderClient.Port = 5138;
+            orderClient.Path = $"Api/Client/GetOpenOrder/{clientId}";
+
+            Order order = orderClient.Get();
+
+            if (order == null)
+            {
+                Order newOrder = new Order
+                {
+                    ClientId = clientId,
+                    OrderPayet = false
+                };
+
+                WebClient<Order> createOrderClient = new WebClient<Order>();
+                createOrderClient.Schema = "http";
+                createOrderClient.Host = "localhost";
+                createOrderClient.Port = 5138;
+                createOrderClient.Path = "Api/Client/CreateOrder";
+
+                createOrderClient.Post(newOrder);
+                order = newOrder;
+            }
+
+            WebClient<List<CartItem>> cartClient = new WebClient<List<CartItem>>();
+            cartClient.Schema = "http";
+            cartClient.Host = "localhost";
+            cartClient.Port = 5138;
+            cartClient.Path = $"Api/Client/GetCartItem/{order.OrderId}";
+
+            List<CartItem> cartItems = cartClient.Get();
+
+            CartItem existingItem = cartItems.FirstOrDefault(x => x.MachineId == machineId);
+
+            if (existingItem != null)
+            {
+                existingItem.Amount++;
+
+                WebClient<CartItem> updateClient = new WebClient<CartItem>();
+                updateClient.Schema = "http";
+                updateClient.Host = "localhost";
+                updateClient.Port = 5138;
+                updateClient.Path = "Api/Client/UpdateCartItem";
+
+                updateClient.Post(existingItem);
+            }
+
+            else
+            {
+                CartItem newItem = new CartItem
+                {
+                    OrderId = order.OrderId,
+                    MachineId = machineId,
+                    Amount = 1
+                };
+
+                WebClient<CartItem> addClient = new WebClient<CartItem>();
+                addClient.Schema = "http";
+                addClient.Host = "localhost";
+                addClient.Port = 5138;
+                addClient.Path = "Api/Client/AddCartItem";
+
+                addClient.Post(newItem);
+            }
+
+            return RedirectToAction("Cart");
+        }
+
         [HttpGet]
         public  async Task<IActionResult> ViewExercises(string machineName)
         {

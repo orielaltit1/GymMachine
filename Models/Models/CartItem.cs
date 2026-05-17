@@ -9,7 +9,7 @@ namespace Models
     public class CartItem
     {
        public string MachineId { get; set; }
-       public string OrderId { get; set; }
+       public int OrderId { get; set; }
        public decimal Price { get; set; }
        public int Amount { get; set; }
 

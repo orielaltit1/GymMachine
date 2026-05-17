@@ -29,7 +29,14 @@
     <p>@Model.Machine.MachinePrice$</p>
     @if (Context.Session.GetString("ClientId") != null)
     {
-        <button type="button">Add To Cart</button>
+        <form asp-controller="Client" asp-action="AddToCart" method="post">
+            <input type="hidden" name="machineId" value="@Model.Machine.MachineId" />
+
+            <button type="submit">
+                Add To Cart
+            </button>
+        </form>
+        
         <a class="exerciseLink" href="http://localhost:5086/Client/ViewExercises?machineName=@Model.Machine.MachineName">View Exercises</a>
     }
     

@@ -12,7 +12,7 @@ namespace GymMachineWS
             {
                  Amount = Convert.ToUInt16(reader["Amount"]),
                  MachineId = Convert.ToString(reader["MachineId"]),
-                 OrderId = Convert.ToString(reader["OrderId"]),
+                 OrderId = Convert.ToInt16(reader["OrderId"]),
                  Price = Convert.ToDecimal(reader["Price"]),
             };
         }

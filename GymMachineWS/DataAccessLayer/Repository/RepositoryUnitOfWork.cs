@@ -11,6 +11,7 @@
         GymMachineBrandRepository brandRepository;
         OrderRepository orderRepository;
         CityRepository cityRepository;
+        CartItemRepository cartItemRepository;
         public RepositoryUnitOfWork()
         {
             this.oleDbContext = new OleDbContext();
@@ -87,6 +88,17 @@
             }
         }
 
+        public CartItemRepository CartItemRepository
+        {
+            get
+            {
+                if(this.cartItemRepository == null)
+                {
+                    this.cartItemRepository = new CartItemRepository(this.oleDbContext, this.modelFactory);
+                }
+                return cartItemRepository;
+            }
+        }
 
         public void ConnectDb()
         {
