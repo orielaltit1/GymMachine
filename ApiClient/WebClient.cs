@@ -97,15 +97,30 @@ namespace WebApiClient
         {
             using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
-                requestMessage.Method = HttpMethod.Post;//
-                requestMessage.RequestUri = this.uriBuilder.Uri;//כתובת של בקשה
+                requestMessage.Method = HttpMethod.Post;
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+
                 string jsonData = JsonSerializer.Serialize(data);
-                requestMessage.Content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                using(HttpResponseMessage response = this.httpClient.SendAsync(requestMessage).Result)
+
+                Console.WriteLine(jsonData);
+                Console.WriteLine(requestMessage.RequestUri);
+
+                requestMessage.Content =
+                    new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                using (HttpResponseMessage response =
+                       this.httpClient.SendAsync(requestMessage).Result)
                 {
+                    Console.WriteLine((int)response.StatusCode);
+                    Console.WriteLine(response.StatusCode);
+
+                    string responseContent =
+                        response.Content.ReadAsStringAsync().Result;
+
+                    Console.WriteLine(responseContent);
+
                     return response.IsSuccessStatusCode;
                 }
-
             }
         }
 

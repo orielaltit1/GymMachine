@@ -49,6 +49,8 @@ namespace GymMachineWS
                             AND MachineId = @machineId";
             this.dbContext.AddParamter("@price", item.Price.ToString());
             this.dbContext.AddParamter("@amount", item.Amount.ToString());
+            this.dbContext.AddParamter("@orderId", item.OrderId.ToString());
+            this.dbContext.AddParamter("@machineId", item.MachineId);
             return this.dbContext.Update(sql) > 0;
         }
 

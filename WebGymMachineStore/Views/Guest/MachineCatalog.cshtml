@@ -97,8 +97,23 @@
     </form>
 
     <section class="products">
-
-        @foreach(GymMachine gymMachine in Model.Machines)
+        @if (Context.Session.GetString("ClientId") != null)
+        {
+            @foreach(GymMachine gymMachine in Model.Machines)
+            {
+                <div class="product-card">
+                    <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
+                        <img class="image-size" src="http://localhost:5138/DataImages/MachineImages/@gymMachine.MachineImage">
+                    </a>
+                    <div class="product-info">
+                        <span>@gymMachine.MachineName</span>
+                        <span>@gymMachine.MachinePrice$</span>
+                        <span class="cart">🛒</span>
+                    </div>
+                </div>
+            }
+        }
+        @foreach (GymMachine gymMachine in Model.Machines)
         {
             <div class="product-card">
                 <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
@@ -107,7 +122,6 @@
                 <div class="product-info">
                     <span>@gymMachine.MachineName</span>
                     <span>@gymMachine.MachinePrice$</span>
-                    <span class="cart">🛒</span>
                 </div>
             </div>
         }

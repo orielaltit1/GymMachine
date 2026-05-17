@@ -11,6 +11,7 @@
         <h2>Shopping Cart</h2>
         @foreach(GymMachine gymMachine in Model.Machines)
         {
+            
             <div class="item">
             <div class="img">@gymMachine.MachineImage</div>
             <div class="info">
@@ -21,7 +22,7 @@
                     <span class="price">@gymMachine.MachinePrice$</span>
                     <div class="qty-box">
                         <button onclick="updateQty(this, -1)">−</button>
-                        <span class="qty">1</span>
+                        <span class="qty"></span>
                         <button onclick="updateQty(this, 1)">+</button>
                     </div>
                 </div>

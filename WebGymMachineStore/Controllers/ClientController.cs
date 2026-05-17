@@ -102,6 +102,9 @@ namespace WebGymMachineStore.Controllers
                 machineClient.Path = $"Api/Client/GetMachine/{item.MachineId}";
 
                 GymMachine machine = machineClient.Get();
+
+                
+
                 machines.Add(machine);
             }
 
@@ -109,6 +112,7 @@ namespace WebGymMachineStore.Controllers
             {
                 Order = order,
                 Machines = machines
+                
             };
 
             return View(vm);
@@ -171,9 +175,8 @@ namespace WebGymMachineStore.Controllers
                 updateClient.Schema = "http";
                 updateClient.Host = "localhost";
                 updateClient.Port = 5138;
-                updateClient.Path = "Api/Client/UpdateCartItem";
-
-                updateClient.Post(existingItem);
+                updateClient.Path = $"Api/Client/UpdateCartItem";
+                updateClient.Post(existingItem); 
             }
 
             else

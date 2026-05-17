@@ -12,5 +12,7 @@ namespace Models
         public Order Order { get; set; }
 
         public List<GymMachine> Machines { get; set; }
+
+       public List<CartItem> CartItems { get; set; }
     }
 }

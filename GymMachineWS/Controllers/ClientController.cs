@@ -83,6 +83,7 @@ namespace GymMachineWS.Controllers
         }
 
         //Creates new Order
+        [HttpGet]
         public ActionResult<Order> CreateOrder(Order order)
         {
             try
@@ -100,8 +101,9 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.DisconnectDb();
             }
-        }  
-        
+        }
+
+        [HttpPost]
         public ActionResult<CartItem> UpdateCartItem(CartItem cartItem)
         {
             try
@@ -122,7 +124,6 @@ namespace GymMachineWS.Controllers
         }
 
         [HttpPost]
-        [Route("Api/Client/AddCartItem")]
         public ActionResult AddCartItem(CartItem item)
         {
             try
