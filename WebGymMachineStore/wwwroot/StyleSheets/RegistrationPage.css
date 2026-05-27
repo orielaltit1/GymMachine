@@ -120,6 +120,75 @@ hr {
     padding: 20px 50px;
     font-weight: 700;
 }
+.error-message {
+    display: block;
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    min-height: 18px;
+}
+
+.input-validation-error {
+    border: 1px solid #d93025 !important;
+    background-color: #fff5f5;
+}
+
+.field-validation-valid {
+    display: block;
+    min-height: 18px;
+}
+
+.field-validation-error {
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.formRegistration input,
+.formRegistration select {
+    border: 1px solid #cfcfcf;
+    border-radius: 6px;
+    padding: 8px 10px;
+    transition: 0.2s;
+}
+
+    .formRegistration input:focus,
+    .formRegistration select:focus {
+        outline: none;
+        border-color: black;
+        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    background: black;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .button:hover {
+        opacity: 0.9;
+    }
 .under-page-title {
     margin-top: -20px;
     padding: 2px 50px;
@@ -131,7 +200,7 @@ hr {
     border: 1px solid #c1c1c1;
     padding: 20px;
     box-shadow: 10px 10px 5px #d1d1d1;
-    block-size: 600px;
+    min-height: 600px;
 }
 .fields {
     list-style: none;
@@ -169,7 +238,7 @@ hr {
 }
 .city {
     width: 200px;
-    block-size: 26px;
+    block-size: 34px;
     margin: 8px 0px;
 }
 .button {

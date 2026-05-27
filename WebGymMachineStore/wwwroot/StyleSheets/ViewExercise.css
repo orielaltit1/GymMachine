@@ -116,149 +116,91 @@ hr {
     border: 0.5px solid #ccc;
     margin: 0;
 }
-.page {
-    display: flex;
-    padding: 40px;
-    gap: 30px;
-}
 
-.cart {
-    flex: 3;
-}
-
-    .cart h2 {
-        margin-bottom: 20px;
-    }
-
-.item {
+/* Container */
+.exercise {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 35px;
     background: white;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.img {
-    width: 100px;
-    height: 80px;
-    background: #ddd;
-    border-radius: 8px;
-    margin-right: 20px;
-}
-
-.info {
-    flex: 1;
-}
-
-    .info h4 {
-        margin: 0 0 5px;
-    }
-
-.controls {
-    text-align: right;
-}
-
-.price {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.qty-box {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid #ccc;
     border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* Main title */
+.exerciseName {
+    font-size: 42px;
+    color: #1e293b;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Description */
+.exercisedescription {
+    background: #eef4ff;
+    color: #334155;
+    padding: 20px;
+    border-radius: 14px;
+    line-height: 1.8;
+    font-size: 18px;
+    margin-bottom: 35px;
+    border-left: 6px solid #3b82f6;
+}
+
+/* Video links container */
+.video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Each video item */
+.video-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    transition: 0.25s;
     overflow: hidden;
 }
 
-    .qty-box button {
-        background: none;
-        border: none;
-        padding: 6px 12px;
-        cursor: pointer;
+    .video-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        border-color: #3b82f6;
+    }
+
+    /* Link */
+    .video-card a {
+        display: block;
+        padding: 18px 22px;
+        text-decoration: none;
+        color: #1e293b;
+        font-size: 18px;
+        font-weight: bold;
+        transition: 0.25s;
+    }
+
+        .video-card a:hover {
+            color: #2563eb;
+        }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .exercise {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .exerciseName {
+        font-size: 30px;
+    }
+
+    .exercisedescription {
         font-size: 16px;
     }
 
-.qty {
-    width: 30px;
-    text-align: center;
-}
-
-.summary {
-    flex: 1.5;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    height: fit-content;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-    .summary h3 {
-        margin-top: 0;
+    .video-card a {
+        font-size: 16px;
     }
-
-.line {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    margin: 20px 0;
 }
-
-.empty-cart {
-    width: 100%;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.no-machines-message {
-    margin: 0;
-    font-size: 34px;
-    font-weight: 700;
-    color: #555;
-    text-align: center;
-}
-
-.return-catalog {
-    margin-top: 20px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    color: black;
-    border: 1px solid #000;
-    padding: 12px 28px;
-    border-radius: 30px;
-    transition: all 0.2s ease;
-}
-
-    .return-catalog:hover {
-        background: black;
-        color: white;
-    }
-
-.checkout {
-    width: 100%;
-    padding: 12px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.continue {
-    margin-top: 10px;
-    background: none;
-    border: none;
-    color: #555;
-    cursor: pointer;
-}
-
-
     

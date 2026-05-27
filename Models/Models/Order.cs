@@ -14,13 +14,12 @@ namespace Models
         string orderDate;
         bool orderPayet;//אם ההזמנה שולמה או לא
 
-        [RegularExpression("^\\d+$", ErrorMessage = "Please Enter Only Numbers")]
         public int ClientId
         {
             get { return clientId; }
             set { clientId = value; }
         }
-        [RegularExpression("^\\d+$", ErrorMessage = "Please Enter Only Numbers")]
+
         public int OrderId
         {
             get { return orderId; }

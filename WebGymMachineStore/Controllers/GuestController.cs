@@ -13,9 +13,9 @@ namespace WebGymMachineStore.Controllers
         [HttpGet]
         public IActionResult HomePage()//html
         {
-            // doofdogodigl
             return View();
         }
+
         [HttpGet]
         public IActionResult MachineCatalog(string selectedBrandId = "0", string sort = "-1")
         {   // 1. Get data from WebService
@@ -35,6 +35,7 @@ namespace WebGymMachineStore.Controllers
             MachineCatalogeViewModel catalogeViewModel = Client.Get();
             return View(catalogeViewModel); 
         }
+
         [HttpGet]
         public IActionResult ProductPage(string id)
         {
@@ -46,10 +47,13 @@ namespace WebGymMachineStore.Controllers
             client.AddParameter("id", id);
             MachineViewModel machineView = client.Get(); 
             return View(machineView);
-
         }
 
-        
+        [HttpGet]
+        public IActionResult LoginPage()
+        {
+            return View();
+        }
 
         [HttpGet]
         public IActionResult Registration()
@@ -61,62 +65,106 @@ namespace WebGymMachineStore.Controllers
             Client.Path = "Api/Guest/GetCities";
             RegitrationViewModel list = Client.Get();
             return View(list);
-
         }
         
-
         [HttpPost]
         public async Task<IActionResult> RegistrationClient(Client client, IFormFile file)//IFormFile formFile 
         {
-            if(ModelState.IsValid == false)
+            try
             {
-                WebClient<RegitrationViewModel> Client = new WebClient<RegitrationViewModel>();
-                Client.Schema = "http";
-                Client.Host = "localhost";
-                Client.Port = 5138;
-                Client.Path = "Api/Guest/GetCities";
-                RegitrationViewModel list = Client.Get();
-                list.Client = client;
-                return View("Registration", list);
-            }
-            if (file != null && file.Length > 0)
-            {
-                string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
-
-                string folderPath = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/DataImages/ClientPicture"
-                );
-
-                if (!Directory.Exists(folderPath))
+                if (!ModelState.IsValid)
                 {
-                    Directory.CreateDirectory(folderPath);
+                    WebClient<RegitrationViewModel> webClient =
+                        new WebClient<RegitrationViewModel>();
+
+                    webClient.Schema = "http";
+                    webClient.Host = "localhost";
+                    webClient.Port = 5138;
+                    webClient.Path = "Api/Guest/GetCities";
+
+                    RegitrationViewModel model = webClient.Get();
+                    model.Client = client;
+
+                    if (file == null || file.Length == 0)
+                    {
+                        ModelState.AddModelError(
+                            "Client.ClientPicture",
+                            "Please Enter a Picture");
+                    }
+
+                    return View("Registration", model);
                 }
 
-                string fullPath = Path.Combine(folderPath, fileName);
-
-                using (var stream = new FileStream(fullPath, FileMode.Create))
+                // העלאת תמונה
+                if (file != null && file.Length > 0)
                 {
-                    await file.CopyToAsync(stream);
+                    // בדיקת סוג קובץ
+                    string[] allowedExtensions = { ".jpg", ".jpeg", ".png" };
+
+                    string extension =
+                        Path.GetExtension(file.FileName).ToLower();
+
+                    if (!allowedExtensions.Contains(extension))
+                    {
+                        ViewBag.Message = "Only image files are allowed";
+                        return View(GetRegitrationViewModel(client));
+                    }
+
+                    string fileName = client.ClientId + extension;
+
+                    string folderPath = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot/images/clients"
+                    );
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string fullPath = Path.Combine(folderPath, fileName);
+
+                    using (FileStream stream =
+                           new FileStream(fullPath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    //client.ClientPicture = "wwwroot/images/clients" + fileName;
+                    client.ClientPicture = fileName;
                 }
 
-                client.ClientPicture = "/images/clients/" + fileName;
+                WebClient<Client> user = new WebClient<Client>();
+
+                user.Schema = "http";
+                user.Host = "localhost";
+                user.Port = 5138;
+                user.Path = "Api/Guest/Registration";
+
+                bool ok = user.Post(client);
+
+                if (ok)
+                {
+                    HttpContext.Session.SetString(
+                        "clientId",
+                        client.ClientId
+                    );
+                    
+                    return RedirectToAction("Profile", "Client");
+                }
+
+                ViewBag.Message = "Registration failed. Try again";
+
+                return View(GetRegitrationViewModel(client));
             }
-            WebClient<Client> user = new WebClient<Client>();
-            user.Schema = "http";
-            user.Host = "localhost";
-            user.Port = 5138;
-            user.Path = "Api/Guest/Registration";
-            bool ok = user.Post(client);
-            if (ok == true)
+            catch (Exception ex)
             {
-                 HttpContext.Session.SetString("clientId", client.ClientId);// session is an object - hashtable 
-                return RedirectToAction("Profile", "Client");
+                ViewBag.Message = ex.Message;
+
+                return View(GetRegitrationViewModel(client));
             }
-            ViewBag.Messege = "Registration faild. Try again";
-            return View(GetRegitrationViewModel(client));
-            
         }
+
         private RegitrationViewModel GetRegitrationViewModel(Client client)
         {
             WebClient<RegitrationViewModel> Client = new WebClient<RegitrationViewModel>();
@@ -128,6 +176,7 @@ namespace WebGymMachineStore.Controllers
             list.Client = client;
             return list;
         }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -135,6 +184,7 @@ namespace WebGymMachineStore.Controllers
             return View("LoginPage", loginViewModel);
         }
         [HttpPost]
+
         public IActionResult LoginClient(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid == false)
@@ -149,10 +199,14 @@ namespace WebGymMachineStore.Controllers
             Client.AddParameter("email", loginViewModel.Email);
             Client.AddParameter("password", loginViewModel.Password);
             string id = Client.Get();
-            if (id != null)     
+            if (id != null && id != "fail")
             {
-                HttpContext.Session.SetString("ClientId", id);// session is an object - hashtable 
-                return RedirectToAction("ClientHomePage", "Client");
+                HttpContext.Session.SetString("clientId", id);
+
+                return RedirectToAction(
+                    "ClientHomePage",
+                    "Client"
+                );
             }
             ViewBag.Messege = "Email or password are incorrect";
             return View("LoginPage", loginViewModel);

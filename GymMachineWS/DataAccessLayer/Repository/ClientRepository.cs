@@ -17,29 +17,50 @@ namespace GymMachineWS
         public bool Create(Client item)
         {
             string sql = $@"INSERT INTO Clients
-                            ( 
-                            ClientFirstName, ClientLastName, ClientId, 
-                            ClientGender, ClientEmail, ClientPassword, ClientPicture
-                            ClientAdress, CityId, ClientSalt
-                            )
-                            VALUES
-                            (
-                            @ClientFirstName, @ClientLastName, @ClientId, 
-                            @ClientGender, @ClientEmail, @ClientPassword, @ClientPicture
-                            @ClientAdress, @CityId, @ClientSalt
-                            )";
+                    ( 
+                    ClientFirstName,
+                    ClientLastName,
+                    ClientId, 
+                    ClientGender,
+                    ClientEmail,
+                    ClientPassword,
+                    ClientPicture,
+                    ClientAdress,
+                    CityId,
+                    ClientSalt
+                    )
+                    VALUES
+                    (
+                    @ClientFirstName,
+                    @ClientLastName,
+                    @ClientId, 
+                    @ClientGender,
+                    @ClientEmail,
+                    @ClientPassword,
+                    @ClientPicture,
+                    @ClientAdress,
+                    @CityId,
+                    @ClientSalt
+                    )";
+
             this.dbContext.AddParamter("@ClientFirstName", item.ClientFirstName);
             this.dbContext.AddParamter("@ClientLastName", item.ClientLastName);
             this.dbContext.AddParamter("@ClientId", item.ClientId);
             this.dbContext.AddParamter("@ClientGender", item.ClientGender);
             this.dbContext.AddParamter("@ClientEmail", item.ClientEmail);
-            this.dbContext.AddParamter("@ClientPassword", item.ClientPassword);
+
+            string salt = GanerateSalt();
+
+            this.dbContext.AddParamter(
+                "@ClientPassword",
+                CalculateHash(item.ClientPassword, salt)
+            );
+
             this.dbContext.AddParamter("@ClientPicture", item.ClientPicture);
             this.dbContext.AddParamter("@ClientAdress", item.ClientAdress);
             this.dbContext.AddParamter("@CityId", item.CityId);
-            string salt = GanerateSalt();
-            this.dbContext.AddParamter("@ClientPassword", CalculateHash(item.ClientPassword, salt));
             this.dbContext.AddParamter("@ClientSalt", salt);
+
             return this.dbContext.Insert(sql) > 0;
         }
 

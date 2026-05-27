@@ -16,9 +16,9 @@ namespace Models
         string clientGender;
         string clientEmail;
         string clientPassword;
-        string clientPicture;
+        string? clientPicture;
         string clientAdress;
-        int cityId;
+        int? cityId;
         string? clientSalt;
 
         public string FullName => $"{ClientFirstName} {ClientLastName}";
@@ -81,7 +81,7 @@ namespace Models
                 ValidateProperty(value, "ClientPassword");
             }
         }
-       
+
         public string? ClientPicture
         {
             get { return clientPicture; }
@@ -96,7 +96,7 @@ namespace Models
             }
         }
         [Required(ErrorMessage = "Please Enter Your City")]
-        public int CityId
+        public int? CityId
         {
             get { return cityId; }
             set {

@@ -62,32 +62,51 @@ namespace WebApiClient
 
         }
 
-        public T Get()//רוצים לקחת משהו מהווב סרוויס
+        public T Get()
         {
-            using(HttpRequestMessage requestMessage = new HttpRequestMessage())
+            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
             {
-                requestMessage.Method = HttpMethod.Get;//
-                requestMessage.RequestUri = this.uriBuilder.Uri;
-                using(HttpResponseMessage responseMessage = this.httpClient.SendAsync(requestMessage).Result)
-                {
-                    if(responseMessage.IsSuccessStatusCode == true)
-                    {
-                        string result = responseMessage.Content.ReadAsStringAsync().Result;
-                        JsonSerializerOptions options = new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        };
+                requestMessage.Method = HttpMethod.Get;
 
-                        if (responseMessage.StatusCode == HttpStatusCode.NoContent)
+                requestMessage.RequestUri = this.uriBuilder.Uri;
+
+                using (HttpResponseMessage responseMessage =
+                       this.httpClient.SendAsync(requestMessage).Result)
+                {
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        // אם אין תוכן
+                        if (responseMessage.StatusCode ==
+                            HttpStatusCode.NoContent)
                         {
                             return default(T);
                         }
-                        T data = JsonSerializer.Deserialize<T>(result, options);
+
+                        string result =
+                            responseMessage.Content
+                            .ReadAsStringAsync()
+                            .Result;
+
+                        // אם התוכן ריק
+                        if (string.IsNullOrWhiteSpace(result))
+                        {
+                            return default(T);
+                        }
+
+                        JsonSerializerOptions options =
+                            new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };
+
+                        T data =
+                            JsonSerializer.Deserialize<T>(result, options);
+
                         return data;
                     }
                     else
                     {
-                        return default(T); 
+                        return default(T);
                     }
                 }
             }

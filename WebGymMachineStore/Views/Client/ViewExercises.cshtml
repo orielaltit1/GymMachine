@@ -3,16 +3,27 @@
 @{
     ViewData["Title"] = "ViewExercises";
     Layout = "~/Views/Shared/ClientMasterPage.cshtml";
-    int exNumber = 1;
+    int exNumber = 0;
 }
+
+<link href="~/stylesheets/viewexercise.css" rel="stylesheet" />
 
 <div class="exercise">
     <h1 class="exerciseName">@Model.Title</h1>
     <div class="exercisedescription">@Model.Videos[0].ExerciseDescription</div>
-    @foreach(ExerciseVideo exerciseVideo in Model.Videos)
-    {
-        exNumber++;
-        <div> <a href="@exerciseVideo.VideoUrl"> Video NO: @exNumber </a></div>
-    }
+    <div class="video-list">
+
+        @foreach (ExerciseVideo exerciseVideo in Model.Videos)
+        {
+            exNumber++;
+
+            <div class="video-card">
+                <a href="@exerciseVideo.VideoUrl" target="_blank">
+                     Video NO: @exNumber
+                </a>
+            </div>
+        }
+
+    </div>
 </div>
 

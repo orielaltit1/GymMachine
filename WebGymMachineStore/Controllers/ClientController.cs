@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.ViewModel;
 using Newtonsoft.Json.Linq;
+using SerpApi;
 using System.Collections;
 using System.Net;
+using System.Reflection.PortableExecutable;
 using WebApiClient;
-using SerpApi;
 using WebGymMachineStore;
 
 
@@ -17,7 +18,7 @@ namespace WebGymMachineStore.Controllers
     {
         public IActionResult ClientHomePage()
         {
-            if (HttpContext.Session.GetString("ClientId") == null)
+            if (HttpContext.Session.GetString("clientId") == null)
             {
                 return RedirectToAction("LoginPage", "Guest");
             }
@@ -29,13 +30,13 @@ namespace WebGymMachineStore.Controllers
         public IActionResult Profile()
         {
             Response.Headers["Cache-Control"] = "no-store";
-            string clientIdStr = HttpContext.Session.GetString("ClientId");
+            string clientIdStr = HttpContext.Session.GetString("clientId");
 
             if (clientIdStr == null)
             {
                 return RedirectToAction("LoginPage", "Guest");
             }
-            int clientId = int.Parse(clientIdStr);
+            string clientId = clientIdStr;
             WebClient<Client> webClient = new WebClient<Client>();
             webClient.Schema = "http";
             webClient.Host = "localhost";
@@ -44,6 +45,7 @@ namespace WebGymMachineStore.Controllers
             Client client = webClient.Get();
             return View("Profile", client);
         }
+
         [HttpGet]
         public IActionResult Logout()
         {
@@ -54,14 +56,14 @@ namespace WebGymMachineStore.Controllers
         [HttpGet]
         public IActionResult Cart()
         {
-            string clientIdStr = HttpContext.Session.GetString("ClientId");
+            string clientIdStr = HttpContext.Session.GetString("clientId");
 
             if (clientIdStr == null)
             {
                 return RedirectToAction("LoginPage", "Guest");
             }
 
-            int clientId = int.Parse(clientIdStr);
+            string clientId = clientIdStr;
 
             // מביא Order פתוחה
             WebClient<Order> orderClient = new WebClient<Order>();
@@ -93,6 +95,8 @@ namespace WebGymMachineStore.Controllers
             // כאן אתה צריך להביא את המכונות לפי ה-MachineId
             List<GymMachine> machines = new List<GymMachine>();
 
+            decimal total = 0;
+
             foreach (CartItem item in cartItems)
             {
                 WebClient<GymMachine> machineClient = new WebClient<GymMachine>();
@@ -103,7 +107,9 @@ namespace WebGymMachineStore.Controllers
 
                 GymMachine machine = machineClient.Get();
 
-                
+                machine.Amount = item.Amount;
+
+                total += Convert.ToDecimal(machine.MachinePrice) * item.Amount;
 
                 machines.Add(machine);
             }
@@ -111,17 +117,35 @@ namespace WebGymMachineStore.Controllers
             ShoppingCartViewModel vm = new ShoppingCartViewModel
             {
                 Order = order,
-                Machines = machines
-                
+                Machines = machines,
+                TotalPrice = total
+
             };
 
             return View(vm);
         }
 
+        [HttpGet]
+        public IActionResult DeleteFromCart(string machineId, int orderId)
+        {
+            WebClient<bool> webClient = new WebClient<bool>();
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5138;
+            webClient.Path = "Api/Client/DeleteItem";
+
+            webClient.AddParameter("machineId", machineId);
+            webClient.AddParameter("orderId", orderId.ToString());
+            
+            bool success = webClient.Get();
+            
+            return RedirectToAction("Cart");
+        }
+
         [HttpPost]
         public IActionResult AddToCart(string machineId)
         {
-            string clientIdStr = HttpContext.Session.GetString("ClientId");
+            string clientIdStr = HttpContext.Session.GetString("clientId");
 
             if (clientIdStr == null)
             {
@@ -144,7 +168,8 @@ namespace WebGymMachineStore.Controllers
                 Order newOrder = new Order
                 {
                     ClientId = clientId,
-                    OrderPayet = false
+                    OrderPayet = false,
+                    OrderDate = DateTime.Now.ToString()
                 };
 
                 WebClient<Order> createOrderClient = new WebClient<Order>();
@@ -154,7 +179,9 @@ namespace WebGymMachineStore.Controllers
                 createOrderClient.Path = "Api/Client/CreateOrder";
 
                 createOrderClient.Post(newOrder);
-                order = newOrder;
+
+                // שולף מחדש
+                order = orderClient.Get();
             }
 
             WebClient<List<CartItem>> cartClient = new WebClient<List<CartItem>>();
@@ -178,7 +205,7 @@ namespace WebGymMachineStore.Controllers
                 updateClient.Path = $"Api/Client/UpdateCartItem";
                 updateClient.Post(existingItem); 
             }
-
+            
             else
             {
                 CartItem newItem = new CartItem
@@ -203,8 +230,8 @@ namespace WebGymMachineStore.Controllers
         [HttpGet]
         public  async Task<IActionResult> ViewExercises(string machineName)
         {
-            string apiAi = "";
-            string googleApi = "";
+            string apiAi = "";//sk
+            string googleApi = "";//52
             HttpClient httpClient = new HttpClient();
             FitnessApiService fitnessApiService = new FitnessApiService(httpClient);
             try
@@ -239,11 +266,11 @@ namespace WebGymMachineStore.Controllers
         private async Task<List<string>> GetGoogleVideos(string query)
         {
             //https://serpapi.com/google-videos-api
-            string apiKey = "c989a2512c0a9f0d9b7b7f86d109dc61929e4b7ba734e0adfae6677fc8973898";
+            string apiKey = "";//52
             Hashtable ht = new Hashtable();
             ht.Add("engine", "google_videos");
             ht.Add("q", query);
-
+            Console.WriteLine($"API KEY = {apiKey}");
             try
             {
                 GoogleSearch search = new GoogleSearch(ht, apiKey);

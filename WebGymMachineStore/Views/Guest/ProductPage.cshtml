@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 @{
-    if (Context.Session.GetString("ClientId") != null)
+    if (Context.Session.GetString("clientId") != null)
     {
         Layout = "~/Views/Shared/ClientMasterPage.cshtml";
     }
@@ -27,7 +27,7 @@
         @Model.Machine.MachineDescription
     </p>
     <p>@Model.Machine.MachinePrice$</p>
-    @if (Context.Session.GetString("ClientId") != null)
+    @if (Context.Session.GetString("clientId") != null)
     {
         <form asp-controller="Client" asp-action="AddToCart" method="post">
             <input type="hidden" name="machineId" value="@Model.Machine.MachineId" />

@@ -16,6 +16,7 @@ namespace Models
         string machineImage;
         string brandId;
         bool isActive;
+        public int Amount { get; set; }
 
         [Required(ErrorMessage = "Please Enter Machine Name")]
         [RegularExpression("^[A-Za-z]+$", ErrorMessage = "Please Enter Only English Letters")]

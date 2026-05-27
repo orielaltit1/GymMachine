@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 @{
-    if (Context.Session.GetString("ClientId") != null)
+    if (Context.Session.GetString("clientId") != null)
     {
         Layout = "~/Views/Shared/ClientMasterPage.cshtml";
     }

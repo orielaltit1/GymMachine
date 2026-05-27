@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 @{
-    if (Context.Session.GetString("ClientId") != null)
+    if (Context.Session.GetString("clientId") != null)
     {
         Layout = "~/Views/Shared/ClientMasterPage.cshtml";
     }
@@ -97,34 +97,31 @@
     </form>
 
     <section class="products">
-        @if (Context.Session.GetString("ClientId") != null)
-        {
-            @foreach(GymMachine gymMachine in Model.Machines)
+            @if (Model.Machines != null && Model.Machines.Any())
             {
-                <div class="product-card">
-                    <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
-                        <img class="image-size" src="http://localhost:5138/DataImages/MachineImages/@gymMachine.MachineImage">
-                    </a>
-                    <div class="product-info">
-                        <span>@gymMachine.MachineName</span>
-                        <span>@gymMachine.MachinePrice$</span>
-                        <span class="cart">🛒</span>
+                @foreach(GymMachine gymMachine in Model.Machines)
+                {
+                    <div class="product-card">
+                        <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
+                            <img class="image-size" src="http://localhost:5138/DataImages/MachineImages/@gymMachine.MachineImage">
+                        </a>
+                        <div class="product-info">
+                            <span>@gymMachine.MachineName</span>
+                            <span>@gymMachine.MachinePrice$</span>
+                            @if (Context.Session.GetString("ClientId") != null)
+                            {
+                              <span class="cart">🛒</span>  
+                            }
+                        </div>
                     </div>
-                </div>
+                }
             }
-        }
-        @foreach (GymMachine gymMachine in Model.Machines)
-        {
-            <div class="product-card">
-                <a href="http://localhost:5086/Guest/ProductPage/?id=@gymMachine.MachineId">
-                    <img class="image-size" src="http://localhost:5138/DataImages/MachineImages/@gymMachine.MachineImage">
-                </a>
-                <div class="product-info">
-                    <span>@gymMachine.MachineName</span>
-                    <span>@gymMachine.MachinePrice$</span>
-                </div>
-            </div>
-        }
+            else
+            {
+               <div class="no-machines-message">
+                <h2>There is no machines availabe right now for this brand</h2>
+               </div> 
+            }
     </section>
 
 </div>

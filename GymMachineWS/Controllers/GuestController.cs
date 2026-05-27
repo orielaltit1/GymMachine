@@ -18,33 +18,33 @@ namespace GymMachineWS.Controllers
         }
 
         [HttpGet]
-        public MachineCatalogeViewModel GetMachineCatalog(string selectedBrandId="0", string sort="-1")
+        public MachineCatalogeViewModel GetMachineCatalog(string selectedBrandId = "0", string sort = "-1")
         {
 
 
             MachineCatalogeViewModel machineCatalogeViewModel = new MachineCatalogeViewModel();
-            try 
+            try
             {
                 this.repositoryUnitOfWork.ConnectDb(); //Open Connection
                 if (selectedBrandId == "0" && sort == "-1")//   
                     machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetAll();
-                else if(selectedBrandId != "0" && sort == "-1")//
+                else if (selectedBrandId != "0" && sort == "-1")//
                     machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetMachineByBrand(selectedBrandId);
-                else if(selectedBrandId != "0" && sort != "-1")//
-                { 
-                   machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetMachineByBrand(selectedBrandId,sort);
-                   
-                }
-                else if(selectedBrandId == "0" && sort != "-1")//
+                else if (selectedBrandId != "0" && sort != "-1")//
                 {
-                   machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetAll(sort);
+                    machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetMachineByBrand(selectedBrandId, sort);
+
+                }
+                else if (selectedBrandId == "0" && sort != "-1")//
+                {
+                    machineCatalogeViewModel.Machines = this.repositoryUnitOfWork.GymMachineRepository.GetAll(sort);
                 }
                 machineCatalogeViewModel.Brands = this.repositoryUnitOfWork.GymMachineBrandRepository.GetAll();
                 machineCatalogeViewModel.SelectedBrandId = selectedBrandId;
                 machineCatalogeViewModel.Sort = sort;
                 return machineCatalogeViewModel;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string error = ex.Message;
                 Console.WriteLine(error);
@@ -54,12 +54,12 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
-            
+
         }
 
         [HttpPost]
         public bool Registration([FromBody] Client client)
-        {
+        { 
             try
             {
                 this.repositoryUnitOfWork.ConnectDb();

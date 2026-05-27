@@ -25,9 +25,14 @@ namespace GymMachineWS
             return this.dbContext.Insert(sql) > 0;
         }
 
-        public bool Delete(string id)
+        public bool DeleteItem(string machineId, int orderId)
         {
-            throw new NotImplementedException();
+            string sql = $@"DELETE FROM [OrderItem]
+                            WHERE MachineId = @MachineId
+                            AND OrderId = @OrderId";
+            this.dbContext.AddParamter("@MachineId", machineId);
+            this.dbContext.AddParamter("@OrderId", orderId);
+            return this.dbContext.Delete(sql) > 0;
         }
 
         public List<CartItem> GetAll()
@@ -72,6 +77,34 @@ namespace GymMachineWS
                 }
             }
             return cartItems;
+        }
+
+        public CartItem GetItem(string machineId, int orderId)
+        {
+            
+            string sql =
+                        @"SELECT *
+                          FROM OrderItem
+                          WHERE MachineId = @machineId
+                          AND OrderId = @orderId";
+            this.dbContext.AddParamter("@orderId", orderId.ToString());
+            this.dbContext.AddParamter("@machineId", machineId);
+            using (IDataReader reader = this.dbContext.Select(sql))
+            {
+                if (reader.Read())
+                {
+                    return this.factoryModles
+                        .CartItemCreator
+                        .CreateMoldel(reader);
+                }
+
+                return null;
+            }
+        }
+
+        public bool Delete(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace WebGymMachineStore
         {
             client = httpClient;
         }
-        private readonly string _apiKey = "";
+        private readonly string _apiKey = "";//sk
         private readonly string _model = "openrouter/free";
         private readonly string _url = "https://openrouter.ai/api/v1/chat/completions";
         private readonly string imagesApiKey = "";
@@ -59,6 +59,7 @@ namespace WebGymMachineStore
 
             string responseJson = await response.Content.ReadAsStringAsync();
 
+            Console.WriteLine(responseJson);
             // המרת התשובה מהשרת לאובייקט C#
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var apiResponse = JsonSerializer.Deserialize<OpenRouterResponse>(responseJson, options);

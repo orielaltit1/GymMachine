@@ -13,6 +13,8 @@ namespace Models
 
         public List<GymMachine> Machines { get; set; }
 
-       public List<CartItem> CartItems { get; set; }
+        public List<CartItem> CartItems { get; set; }
+
+        public decimal TotalPrice { get; set; }
     }
 }

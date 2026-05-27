@@ -9,38 +9,56 @@
 <main class="page">
     <section class="cart">
         <h2>Shopping Cart</h2>
-        @foreach(GymMachine gymMachine in Model.Machines)
+        @if (Model.Machines != null && Model.Machines.Any())
         {
-            
-            <div class="item">
-            <div class="img">@gymMachine.MachineImage</div>
-            <div class="info">
-                <h4>@gymMachine.MachineName</h4>
-                <p>@gymMachine.MachineDescription</p>
-            </div>
-                <div class="controls">
-                    <span class="price">@gymMachine.MachinePrice$</span>
-                    <div class="qty-box">
-                        <button onclick="updateQty(this, -1)">−</button>
-                        <span class="qty"></span>
-                        <button onclick="updateQty(this, 1)">+</button>
+            @foreach(GymMachine gymMachine in Model.Machines)
+            {
+
+                <a asp-action="DeleteFromCart" asp-controller="Client"
+                   asp-route-machineId="@gymMachine.MachineId"
+                   asp-route-orderId="@Model.Order.OrderId">
+
+                    <img src="~/images/trash.png"
+                         width="20"
+                         height="20" />
+
+                </a>
+                    <div class="item">
+                        <div class="img">@gymMachine.MachineImage</div>
+                    <div class="info">
+                        <h4>@gymMachine.MachineName</h4>
+                        <p>@gymMachine.MachineDescription</p>
+                    </div>
+                    <div class="controls">
+                        <span class="price">@gymMachine.MachinePrice$</span>
+                        <div class="qty-box">
+                            <button onclick="updateQty(this, -1)">−</button>
+                            <span class="qty">@gymMachine.Amount</span>
+                            <button onclick="updateQty(this, 1)">+</button>
+                        </div>
                     </div>
                 </div>
-            </div> 
+            }
+        }
+        else
+        {   
+            <div class="empty-cart">
+                <h2 class="no-machines-message">Your cart is empty</h2>
+                <a href="http://localhost:5086/Guest/MachineCatalog/" class="return-catalog">Return to catalog</a>
+            </div>
+            
         }
 
-            
-        
     </section>
 
     <aside class="summary">
         <h3>Order Summary</h3>
         <div class="line">
             <span>Total</span>
-            <span id="total">$200</span>
+            <span id="total">$@Model.TotalPrice</span>
         </div>
         <button class="checkout">CHECK OUT</button>
-        <button class="continue">Continue Shopping</button>
+        <a href="http://localhost:5086/Guest/MachineCatalog/" class="continue">Continue Shopping</a>
     </aside>
 </main>
 

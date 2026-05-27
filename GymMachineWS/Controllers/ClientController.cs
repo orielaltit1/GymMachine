@@ -15,8 +15,8 @@ namespace GymMachineWS.Controllers
         public ClientController()
         {
             this.repositoryUnitOfWork = new RepositoryUnitOfWork();
-        }
 
+        }
 
         [HttpGet]
         public List<CartItem> GetCart(string orderId)
@@ -35,9 +35,8 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.DisconnectDb();
             }
-
-
         }
+
         [HttpGet("{machineId}")]
         public GymMachine GetMachine(string machineId)
         {
@@ -74,7 +73,27 @@ namespace GymMachineWS.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return StatusCode(500);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
+
+        [HttpGet]
+        public bool DeleteItem(string machineId, int orderId)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                return this.repositoryUnitOfWork.CartItemRepository.DeleteItem(machineId, orderId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
             }
             finally
             {
@@ -83,8 +102,8 @@ namespace GymMachineWS.Controllers
         }
 
         //Creates new Order
-        [HttpGet]
-        public ActionResult<Order> CreateOrder(Order order)
+        [HttpPost]
+        public ActionResult<Order> CreateOrder([FromBody]Order order)
         {
             try
             {

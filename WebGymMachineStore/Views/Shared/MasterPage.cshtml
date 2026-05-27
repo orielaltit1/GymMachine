@@ -16,12 +16,12 @@
 <link href="~/stylesheets/homepage.css" rel="stylesheet" />
 <nav class="navbar">
     <div class="left-section">
-        <img src="https://via.placeholder.com/50" class="logo-img" alt="logo">
+        <img src="~/images/weight.png" class="logo-img" alt="logo" width="40" height="30" />
         <h1 class="store-name">Gym Machine Store</h1>
         <a asp-controller="Guest" asp-action="HomePage" class="nav-link">Home Page</a>
         <a asp-controller="Guest" asp-action="MachineCatalog" class="nav-link">Catalog</a>
         <!-- כפתור שפותח את החלון -->
-        <a href="#" class="nav-link" onclick="openModal()">Login</a>
+        <a href="#" class="nav-link" onclick="openModal()">Login/Register</a>
 
         <!-- הרקע הכהה -->
         <div id="modalOverlay" class="modal-overlay" onclick="closeModal()"></div>
@@ -39,13 +39,6 @@
             </a>
         </div>
     </div>
-
-    <div class="right-section">
-        <div class="search-box">
-            <img src="../Images/Search-Image.gif" />
-            <input type="text" placeholder="Search">
-        </div>
-
 </nav>
 
 <hr>
@@ -53,3 +46,4 @@
     @RenderBody()
 </div>
 
+@RenderSection("Scripts", required: false)

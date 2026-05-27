@@ -7,9 +7,9 @@
 }
 <link href="~/stylesheets/profilepage.css" rel="stylesheet" />
 <div class="profile-container">
-    
+
     <div class="profile-card">
-        <img src="http://localhost:5138/DataImages/ClientPicture/@Model.ClientPicture" class="profile-img" />
+        <img src="/images/clients/@Model.ClientPicture" class="profile-img" />
         <h2>@Model.ClientFirstName @Model.ClientLastName</h2>        
         <button class="edit-btn">Edit Profile</button>
         <a href="/Client/Logout" class="nav-link">Logout</a>

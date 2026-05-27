@@ -1,70 +1,166 @@
 ﻿@using Models;
 @using Models.ViewModel
 @model RegitrationViewModel
+
 @{
     ViewData["Title"] = "Registration";
     Layout = "~/Views/Shared/MasterPage.cshtml";
 }
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
 <link href="~/stylesheets/registrationpage.css" rel="stylesheet" />
-<form  asp-action="RegistrationClient" asp-controller="Guest"
-      method="post" class="formRegistration">
+<form asp-action="RegistrationClient"
+      asp-controller="Guest"
+      enctype="multipart/form-data"
+      method="post"
+      class="formRegistration">
+
     <header class="header">
         <h1 class="page-title">Sign Up</h1>
-        <p class="under-page-title">Fill in this page to create an account</p>
+        <p class="under-page-title">
+            Fill in this page to create an account
+        </p>
     </header>
-    
+
     <ul class="fields">
-        <li class="fields">
-            <input  asp-for="Client.ClientFirstName" class="first-name" type="text" placeholder="First Name" size="30" value="Oriel" />
-            <span asp-validation-for=Client.ClientFirstName class="error-message" ></span>
 
-            <input asp-for="Client.ClientLastName" class="last-name" type="text"  placeholder="Last Name" size="30" value="Altit"/>
-            <span asp-validation-for="Client.ClientLastName" class="error-message" ></span>
+        <li class="fields">
+            <input asp-for="Client.ClientFirstName"
+                   class="first-name"
+                   type="text"
+                   placeholder="First Name" />
+
+            <span asp-validation-for="Client.ClientFirstName"
+                  class="error-message"></span>
+
+            <input asp-for="Client.ClientLastName"
+                   class="last-name"
+                   type="text"
+                   placeholder="Last Name" />
+
+            <span asp-validation-for="Client.ClientLastName"
+                  class="error-message"></span>
         </li>
 
         <li class="fields">
-            <input class="gender" asp-for="Client.ClientGender" type="radio" value="Male" checked /><span class="option">Male</span>
-            <input class="gender" asp-for="Client.ClientGender" type="radio" value="Female" /><span class="option">Female</span>
+
+            <input class="gender"
+                   asp-for="Client.ClientGender"
+                   type="radio"
+                   value="Male" />
+
+            <span class="option">Male</span>
+
+            <input class="gender"
+                   asp-for="Client.ClientGender"
+                   type="radio"
+                   value="Female" />
+
+            <span class="option">Female</span>
+
+            <br />
+
+            <span asp-validation-for="Client.ClientGender"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <input type="file" asp-for="Client.ClientPicture" accept="image/*" />
-            <span asp-validation-for="Client.ClientPicture">Add an image of your self</span>
+
+            <input name="file"
+                   type="file"
+                   accept="image/*" />
+
+            <span asp-validation-for="Client.ClientPicture"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <input asp-for="Client.ClientId" class="id" type="text" placeholder="Id" size="66" value="123456789" />
-            <span asp-valiation-for="Client.ClientId" class="error-message"></span>
+
+            <input asp-for="Client.ClientId"
+                   class="id"
+                   type="text"
+                   placeholder="Id"
+                   maxlength="9" />
+
+            <span asp-validation-for="Client.ClientId"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <input asp-for="Client.ClientEmail" class="email"  type="text" placeholder="Email" size="66" value="orielatit@gmail.com" />
+
+            <input asp-for="Client.ClientEmail"
+                   class="email"
+                   type="email"
+                   placeholder="Email" />
+
+            <span asp-validation-for="Client.ClientEmail"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <input asp-for="Client.ClientPassword" class="password"  type="text" placeholder="Password" size="66" value="oriel123"/>
+
+            <input asp-for="Client.ClientPassword"
+                   class="password"
+                   type="password"
+                   placeholder="Password" />
+
+            <span asp-validation-for="Client.ClientPassword"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <input asp-for="Client.ClientAdress" class="adress"  type="text" placeholder="Adress" size="66" value="ashkelon"/>
+
+            <input asp-for="Client.ClientAdress"
+                   class="adress"
+                   type="text"
+                   placeholder="Address" />
+
+            <span asp-validation-for="Client.ClientAdress"
+                  class="error-message"></span>
+
         </li>
 
         <li class="fields">
-            <select asp-for="Client.CityId" class="city">
-                <option value="2" >*Select City</option>
+
+            <select asp-for="Client.CityId"
+                    class="city">
+
+                <option value="">*Select City</option>
+
                 @foreach (City city in Model.Cities)
                 {
-                    <option value="@city.CityId">@city.CityName</option>
+                    <option value="@city.CityId">
+                        @city.CityName
+                    </option>
                 }
+
             </select>
+
+            <span asp-validation-for="Client.CityId"
+                  class="error-message"></span>
+
         </li>
 
-        <li class="fields">
-            <button class="button" type="submit">Send Request</button>
-            <button class="button" type="reset">Clear Form</button>
+        <li class="fields buttons-container">
+
+            <button class="button" type="submit">
+                Send Request
+            </button>
+
+            <button class="button" type="reset">
+                Clear Form
+            </button>
+
         </li>
 
     </ul>
-</form>
 
+</form>
