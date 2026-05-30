@@ -81,6 +81,31 @@ namespace GymMachineWS.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Payment(CheckOutDto dto)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+
+                this.repositoryUnitOfWork
+                    .OrderRepository
+                    .CheckOut(dto.ClientId);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return StatusCode(500);
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
+
         [HttpGet]
         public bool DeleteItem(string machineId, int orderId)
         {
@@ -121,6 +146,34 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();
             }
         }
+
+        [HttpPost]
+        public IActionResult UpdateClient(UpdateProfileDto dto)
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+
+                this.repositoryUnitOfWork.ClientRepository
+                    .UpdateEmailAndAdress(dto.ClientId,
+                                          dto.ClientEmail,
+                                          dto.ClientAdress);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return StatusCode(500);
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
+            }
+        }
+
+
 
         [HttpPost]
         public ActionResult<CartItem> UpdateCartItem(CartItem cartItem)

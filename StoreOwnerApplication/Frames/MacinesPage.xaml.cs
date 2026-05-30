@@ -33,7 +33,7 @@ namespace StoreOwnerApplication.Frames
         public MacinesPage()
         {
             InitializeComponent(); // טוען את רכיבי ה-XAML
-            
+
             MachinesList = new ObservableCollection<AdminMachineViewModel>();
             MachinesListView.ItemsSource = MachinesList;
 
@@ -63,7 +63,7 @@ namespace StoreOwnerApplication.Frames
             }
         }
 
-       
+
         // פונקציה המופעלת בלחיצה על כפתור "Add Machine"
         private async void AddMachine_Click(object sender, RoutedEventArgs e)
         {
@@ -105,7 +105,6 @@ namespace StoreOwnerApplication.Frames
                     webClient.Port = 5138;
                     webClient.Path = $"api/Admin/DeleteMachine/{viewModel.Machine.MachineId}";
 
-
                     bool ok = await webClient.GetAsync();
 
                     if (ok)
@@ -119,6 +118,30 @@ namespace StoreOwnerApplication.Frames
                         MessageBox.Show("The system failed to delete the machine.");
                     }
                 }
+            }
+        }
+
+        private async void Edit_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+
+            AdminMachineViewModel item =
+                btn.DataContext as AdminMachineViewModel;
+
+            if (item == null)
+            {
+                MessageBox.Show("Machine not found");
+                return;
+            }
+
+            EditMachinePage window =
+                new EditMachinePage(item.Machine);
+
+            bool? result = window.ShowDialog();
+
+            if (result == true)
+            {
+                await GetMachines();
             }
         }
     }

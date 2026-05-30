@@ -22,6 +22,7 @@ namespace StoreOwnerApplication
         LoginPage loginPage;
         MacinesPage macinesPage;
         ClientPage clientPage;
+        OrderPage orderPage;
         public MainWindow()
         {
             InitializeComponent();
@@ -61,10 +62,15 @@ namespace StoreOwnerApplication
                 this.clientPage = new ClientPage();
             this.ContentFrame.Content = this.clientPage;//החלפת מסך
         }
-        
-        
-        
-        
+        private void ViewOrderPage()
+        {
+            if (this.orderPage == null)
+                this.orderPage = new OrderPage();
+            this.ContentFrame.Content = this.orderPage;//החלפת מסך
+        }
+
+
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -84,6 +90,10 @@ namespace StoreOwnerApplication
         private void Client_btn_Click(object sender, RoutedEventArgs e)
         {
             ViewClientPage();
+        }
+        private void Order_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ViewOrderPage();
         }
 
         private void Logout_btn_Click(object sender, RoutedEventArgs e)
@@ -119,5 +129,6 @@ namespace StoreOwnerApplication
         }
         public Visibility MenuTextVisibility{ get; set; } = Visibility.Collapsed;
 
+        
     }
 }

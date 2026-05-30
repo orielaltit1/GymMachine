@@ -11,7 +11,7 @@
     <div class="profile-card">
         <img src="/images/clients/@Model.ClientPicture" class="profile-img" />
         <h2>@Model.ClientFirstName @Model.ClientLastName</h2>        
-        <button class="edit-btn">Edit Profile</button>
+        <button class="edit-btn" onclick="openEditModal()">Edit Profile</button>
         <a href="/Client/Logout" class="nav-link">Logout</a>
     </div>
 
@@ -35,4 +35,71 @@
     </div>
 
 </div>
+
+
+<!-- רקע כהה -->
+<div id="editModalOverlay" class="modal-overlay" onclick="closeEditModal()"></div>
+
+<!-- חלון Edit -->
+<div id="editModalBox" class="modal-box">
+
+    <span class="close-btn" onclick="closeEditModal()">×</span>
+
+    <h2>Edit Profile</h2>
+
+    <form asp-action="EditProfile"
+          asp-controller="Client"
+          method="post">
+
+        <input type="hidden" name="ClientId" value="@Model.ClientId" />
+
+        <input type="hidden" name="ClientFirstName" value="@Model.ClientFirstName" />
+
+        <input type="hidden" name="ClientLastName" value="@Model.ClientLastName" />
+
+        <input type="hidden" name="ClientGender" value="@Model.ClientGender" />
+
+        <input type="hidden" name="ClientPassword" value="@Model.ClientPassword" />
+
+        <input type="hidden" name="CityId" value="@Model.CityId" />
+
+        <div class="input-group">
+            <label>Email</label>
+
+            <input type="email"
+                   name="ClientEmail"
+                   value="@Model.ClientEmail" />
+        </div>
+
+        <div class="input-group">
+            <label>Address</label>
+
+            <input type="text"
+                   name="ClientAdress"
+                   value="@Model.ClientAdress" />
+        </div>
+
+        <button type="submit" class="save-btn">
+            Save Changes
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    function openEditModal() {
+
+        document.getElementById("editModalOverlay").style.display = "block";
+        document.getElementById("editModalBox").style.display = "block";
+    }
+
+    function closeEditModal() {
+
+        document.getElementById("editModalOverlay").style.display = "none";
+        document.getElementById("editModalBox").style.display = "none";
+    }
+
+</script>
 

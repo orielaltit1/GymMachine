@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Experimental;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -44,6 +45,37 @@ namespace WebGymMachineStore.Controllers
             webClient.Path = $"Api/Client/GetClientById/{clientId}";
             Client client = webClient.Get();
             return View("Profile", client);
+        }
+
+        [HttpPost]
+        public IActionResult EditProfile(string ClientEmail, string ClientAdress)
+        {
+            string clientIdStr = HttpContext.Session.GetString("clientId");
+
+            if (clientIdStr == null)
+            {
+                return RedirectToAction("LoginPage", "Guest");
+            }
+
+            // שולח עדכון לשרת
+            UpdateProfileDto dto =
+        new UpdateProfileDto();
+
+            dto.ClientId = clientIdStr;
+            dto.ClientEmail = ClientEmail;
+            dto.ClientAdress = ClientAdress;
+
+            WebClient<UpdateProfileDto> updateClient =
+                new WebClient<UpdateProfileDto>();
+
+            updateClient.Schema = "http";
+            updateClient.Host = "localhost";
+            updateClient.Port = 5138;
+            updateClient.Path = "Api/Client/UpdateClient";
+
+            updateClient.Post(dto);
+
+            return RedirectToAction("Profile");
         }
 
         [HttpGet]
@@ -223,6 +255,30 @@ namespace WebGymMachineStore.Controllers
 
                 addClient.Post(newItem);
             }
+
+            return RedirectToAction("Cart");
+        }
+
+        [HttpPost]
+        public IActionResult CloseCart()
+        {
+            string clientId =
+                HttpContext.Session.GetString("clientId");
+
+            CheckOutDto dto =
+                new CheckOutDto();
+
+            dto.ClientId = clientId;
+
+            WebClient<CheckOutDto> webClient =
+                new WebClient<CheckOutDto>();
+
+            webClient.Schema = "http";
+            webClient.Host = "localhost";
+            webClient.Port = 5138;
+            webClient.Path = "Api/Client/Payment";
+
+            webClient.Post(dto);
 
             return RedirectToAction("Cart");
         }

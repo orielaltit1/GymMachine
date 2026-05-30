@@ -56,6 +56,9 @@
                             <Button x:Name="Delete_btn" Grid.Column="1" Content="Delete" Background="#FF4444" Foreground="White" 
                                     Padding="10,5" BorderThickness="0"
                                     Click="Delete_btn_Click_1"/>
+                            <Button x:Name="Edit_btn" Grid.Column="0" Width="55.22" HorizontalAlignment="Right" Content="Edit" Background="Gray" Foreground="White" 
+                                    Padding="10,5" BorderThickness="0"
+                                    Click="Edit_btn_Click"/>
                             <TextBlock Text="{Binding Brand.BrandName}" Foreground="Gray" FontSize="12" Margin="9,34,0,6" d:LayoutOverrides="Width"/>
                             <TextBlock Text="{Binding Machine.MachinePrice}" Foreground="Gray" FontSize="12" Margin="90,34,286,-3" Width="84"/>
                         </Grid>

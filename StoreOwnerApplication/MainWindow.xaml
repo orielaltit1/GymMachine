@@ -74,10 +74,17 @@
                 <Button x:Name="Client_btn" Style="{StaticResource MenuButtonStyle}" Click="Client_btn_Click">
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <Image Source="/Images/ClientIcon.png" Width="20" Margin="9,0,8,0" />
-
                         <TextBlock Text="ClientCatalog"
                            Margin="20,0,0,0"
                            Visibility="Visible"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="Order_btn" Style="{StaticResource MenuButtonStyle}" Click="Order_btn_Click">
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Image Source="/Images/shopping-cart.png" Width="20" Margin="9,0,8,0" />
+                        <TextBlock Text="OrderCatalog"
+                           Margin="20,0,0,0"
+                           Visibility="Visible"/>           
                     </StackPanel>
                 </Button>
                 <Button x:Name="Logout_btn" Style="{StaticResource MenuButtonStyle}" Click="Logout_btn_Click">

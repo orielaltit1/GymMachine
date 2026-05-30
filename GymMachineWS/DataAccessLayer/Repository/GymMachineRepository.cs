@@ -104,16 +104,32 @@ namespace GymMachineWS.DataAccessLayer
 
         public bool Update(GymMachine item)
         {
-            string sql = $@"UPDATE GymMachine SET MachineName=@machineName, MachineId=@machineId, 
-                            MachineDescription=@machineDescription, MachinePrice=@machinePrice, 
-                            MachineImage=@machineImage, BrandId=@brandId 
-                            WHERE MachineId=@machineId";
-            this.dbContext.AddParamter("@machineName", item.MachineName);
-            this.dbContext.AddParamter("@machineId", item.MachineId.ToString());
-            this.dbContext.AddParamter("@machineDescription", item.MachineDescription);
-            this.dbContext.AddParamter("@machinePrice", item.MachinePrice);
-            this.dbContext.AddParamter("@machineImage", item.MachineImage);
-            this.dbContext.AddParamter("@brandId", item.BrandId.ToString());
+            string sql = @"UPDATE GymMachine 
+                   SET MachineName=@machineName,
+                       MachineDescription=@machineDescription,
+                       MachinePrice=@machinePrice,
+                       MachineImage=@machineImage,
+                       BrandId=@brandId
+                   WHERE MachineId=@machineId";
+
+            this.dbContext.AddParamter("@machineName",
+                item.MachineName);
+
+            this.dbContext.AddParamter("@machineDescription",
+                item.MachineDescription);
+
+            this.dbContext.AddParamter("@machinePrice",
+                item.MachinePrice);
+
+            this.dbContext.AddParamter("@machineImage",
+                item.MachineImage);
+
+            this.dbContext.AddParamter("@brandId",
+                item.BrandId);
+
+            this.dbContext.AddParamter("@machineId",
+                item.MachineId);
+
             return this.dbContext.Update(sql) > 0;
         }
 

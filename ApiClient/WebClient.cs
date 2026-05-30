@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace WebApiClient
 {
@@ -229,25 +230,50 @@ namespace WebApiClient
             }
         }
 
-        public async Task<bool> PostAsync(T data, Stream file)
+        public async Task<bool> PostAsync(T data, Stream file = null)
         {
-            using (HttpRequestMessage requestMessage = new HttpRequestMessage())
+            using (HttpRequestMessage requestMessage =
+                new HttpRequestMessage())
             {
                 requestMessage.Method = HttpMethod.Post;
                 requestMessage.RequestUri = this.uriBuilder.Uri;
-                MultipartFormDataContent multipartContent = new MultipartFormDataContent();
-                string jsonData = JsonSerializer.Serialize(data);
-                StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                MultipartFormDataContent multipartContent =
+                    new MultipartFormDataContent();
+
+                string jsonData =
+                    JsonSerializer.Serialize(data);
+
+                StringContent stringContent =
+                    new StringContent(
+                        jsonData,
+                        Encoding.UTF8,
+                        "application/json");
+
                 multipartContent.Add(stringContent, "data");
-                StreamContent fileContent = new StreamContent(file);
-                multipartContent.Add(fileContent, "file", "file");
+
+                // רק אם יש קובץ
+                if (file != null)
+                {
+                    StreamContent fileContent =
+                        new StreamContent(file);
+
+                    multipartContent.Add(
+                        fileContent,
+                        "file",
+                        System.IO.Path.GetFileName(((FileStream)file).Name));
+                }
+
                 requestMessage.Content = multipartContent;
-                using (HttpResponseMessage responseMessage = await this.httpClient.SendAsync(requestMessage))
+
+                using (HttpResponseMessage responseMessage =
+                    await this.httpClient.SendAsync(requestMessage))
                 {
                     return responseMessage.IsSuccessStatusCode;
                 }
             }
         }
+        
 
         public async Task<bool> PostAsync(T data, List<Stream> files)
         {

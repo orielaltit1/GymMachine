@@ -160,6 +160,10 @@ hr {
     height: 240px;
 }
 
+.reset-btn{
+    margin-top: 20px;
+}
+
 .no-machines-message {
     grid-column: 1 / -1;
     width: 100%;
@@ -181,5 +185,7 @@ hr {
 .cart {
     cursor: pointer;
 }
+
+
 
     

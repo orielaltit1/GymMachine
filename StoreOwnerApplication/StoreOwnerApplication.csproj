@@ -26,6 +26,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Resource Include="Images\shopping-cart.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +53,12 @@
     <Resource Include="Images\LogoutIcon.png" />
     <Resource Include="Images\MenuIcon.png" />
     <Resource Include="Images\XButton.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Frames\OrderPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

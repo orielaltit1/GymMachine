@@ -96,5 +96,16 @@ namespace GymMachineWS.DataAccessLayer
 
             return null;
         }
+
+        public bool CheckOut(string clientId)
+        {
+            string sql = @"UPDATE [Order]
+                   SET OrderPayet = true
+                   WHERE ClientId = @ClientId";
+
+            this.dbContext.AddParamter("@ClientId", clientId);
+
+            return this.dbContext.Update(sql) > 0;
+        }
     }
 }

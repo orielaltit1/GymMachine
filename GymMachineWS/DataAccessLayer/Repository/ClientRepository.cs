@@ -135,6 +135,16 @@ namespace GymMachineWS
 
         }
 
+        public bool UpdateEmailAndAdress(string id, string email, string address)
+        {
+            string sql = $@"UPDATE Clients SET ClientEmail=@ClientEmail, ClientAdress=@ClientAdress
+                            WHERE ClientId=@ClientId";
+            this.dbContext.AddParamter("@ClientEmail", email);
+            this.dbContext.AddParamter("@ClientAdress", address);
+            this.dbContext.AddParamter("@ClientId", id);
+            return this.dbContext.Update(sql) > 0;
+        }
+
         public string Login(string email, string password)
         {
             string sql = $@"SELECT ClientId, ClientPassword, ClientSalt FROM Clients
@@ -157,9 +167,9 @@ namespace GymMachineWS
                 return readerId;
             }
             return null;
-
-            
         }
+
+        
 
         
     }

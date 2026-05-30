@@ -22,13 +22,13 @@ namespace GymMachineWS.Controllers
         [HttpGet]
         public List<AdminMachineViewModel> GetMachines()
         {
-            
+
             List<AdminMachineViewModel> machines = new List<AdminMachineViewModel>();
             try
             {
                 this.repositoryUnitOfWork.ConnectDb(); //Open Connection
                 List<GymMachine> machine = this.repositoryUnitOfWork.GymMachineRepository.GetAllActives();
-                foreach(GymMachine gymMachine in machine)
+                foreach (GymMachine gymMachine in machine)
                 {
                     AdminMachineViewModel machineViewModel = new AdminMachineViewModel();
                     machineViewModel.Machine = gymMachine;
@@ -70,6 +70,28 @@ namespace GymMachineWS.Controllers
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
             }
         }
+
+        [HttpGet]
+        public List<Order> GetOrders()
+        {
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                List<Order> orders = this.repositoryUnitOfWork.OrderRepository.GetAll();
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                Console.WriteLine(error);
+                return null;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
+
         [HttpGet]
         public List<GymMachineBrand> GetBrands()
         {
@@ -91,6 +113,8 @@ namespace GymMachineWS.Controllers
             }
         }
 
+
+
         [HttpPost]
         public bool AddNewMachine()
         {
@@ -105,7 +129,7 @@ namespace GymMachineWS.Controllers
                 string machineId = this.repositoryUnitOfWork.GetLastInsertedId().ToString();
                 string imageName = machineId + newMachine.MachineImage;
                 newMachine.MachineId = int.Parse(machineId).ToString();
-                
+
                 // Image saving logic here
                 using (var stream = new FileStream(Path.Combine(Directory.GetCurrentDirectory(),
                                                                 "wwwroot", "DataImages", "MachineImages",
@@ -137,7 +161,7 @@ namespace GymMachineWS.Controllers
             {
                 this.repositoryUnitOfWork.ConnectDb();
                 bool result = this.repositoryUnitOfWork.GymMachineRepository.Delete(id);
-                if (result) 
+                if (result)
                 {
                     var machine = repositoryUnitOfWork.GymMachineRepository.GetById(id);
                     string imageName = machine.MachineImage;
@@ -146,7 +170,7 @@ namespace GymMachineWS.Controllers
                     "wwwroot",
                     "DataImages",
                     "MachineImages",
-                    imageName);   
+                    imageName);
 
                     if (System.IO.File.Exists(imagePath))
                     {
@@ -165,6 +189,61 @@ namespace GymMachineWS.Controllers
             finally
             {
                 this.repositoryUnitOfWork.DisconnectDb();//Close Connection
+            }
+        }
+
+        [HttpPost]
+        public bool EditMachine()
+        {
+            string jsonString = Request.Form["data"];
+            GymMachine updatedMachine = JsonSerializer.Deserialize<GymMachine>(jsonString);
+            IFormFile file = Request.Form.Files.Count > 0 ? Request.Form.Files[0] : null;
+            try
+            {
+                this.repositoryUnitOfWork.ConnectDb();
+                this.repositoryUnitOfWork.OpenTransaction();
+                if (file != null)
+                {
+                    string extension =
+                        Path.GetExtension(file.FileName);
+
+                    string imageName =
+                        updatedMachine.MachineId + extension;
+
+                    using (var stream = new FileStream(
+                        Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "wwwroot",
+                            "DataImages",
+                            "MachineImages",
+                            imageName),
+                        FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    updatedMachine.MachineImage = imageName;
+                }
+                bool ok = this.repositoryUnitOfWork.GymMachineRepository.Update(updatedMachine);
+                if (ok)
+                {
+                    this.repositoryUnitOfWork.Commit();
+                    return true;
+                }
+                else
+                {
+                    this.repositoryUnitOfWork.Rollback();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.repositoryUnitOfWork.Rollback();
+                return false;
+            }
+            finally
+            {
+                this.repositoryUnitOfWork.DisconnectDb();
             }
         }
     }
